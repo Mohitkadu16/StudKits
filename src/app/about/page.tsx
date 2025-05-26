@@ -1,0 +1,100 @@
+
+'use client';
+
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Users, Target, Lightbulb, Zap } from 'lucide-react';
+
+export default function AboutUsPage() {
+  return (
+    <div className="space-y-8">
+      <section className="text-center py-8 bg-card rounded-lg shadow">
+        <h1 className="text-4xl font-bold text-primary mb-2">About ProjectPro</h1>
+        <p className="text-lg text-muted-foreground">
+          Your partner in innovative project kits and learning.
+        </p>
+      </section>
+
+      <Card className="shadow-lg">
+        <CardHeader>
+          <CardTitle className="flex items-center text-2xl">
+            <Users className="mr-3 h-7 w-7 text-primary" />
+            Our Mission
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-lg text-foreground/80 leading-relaxed">
+          <p>
+            At ProjectPro, we are passionate about empowering students, hobbyists, and professionals
+            by providing high-quality, ready-to-assemble project kits. We believe that hands-on
+            experience is key to mastering technical skills, and our goal is to make innovative
+            projects accessible to everyone.
+          </p>
+        </CardContent>
+      </Card>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="shadow-md">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <Target className="mr-2 h-6 w-6 text-accent" />
+              What We Offer
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-foreground/80 space-y-2">
+            <p>
+              We specialize in a wide range of project kits across various domains including:
+            </p>
+            <ul className="list-disc list-inside pl-4">
+              <li>IoT-Based Projects</li>
+              <li>Robotics & Automation</li>
+              <li>Embedded Systems (Arduino, ESP32, Raspberry Pi)</li>
+              <li>PCB Design & Prototyping Services</li>
+            </ul>
+            <p>
+              Each kit comes with all necessary components and clear instructions to ensure a smooth
+              building experience.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-md">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <Lightbulb className="mr-2 h-6 w-6 text-accent" />
+              Our Vision
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-foreground/80">
+            <p>
+              To be the leading provider of project-based learning solutions, fostering innovation
+              and practical skills in the tech community. We aim to constantly expand our offerings
+              with the latest technologies and project ideas.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="shadow-lg">
+        <CardHeader>
+          <CardTitle className="flex items-center text-2xl">
+            <Zap className="mr-3 h-7 w-7 text-primary" />
+            Why Choose ProjectPro?
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-foreground/80 space-y-3">
+          <p>
+            <strong className="text-foreground">Quality Components:</strong> We source high-quality components to ensure your projects work reliably.
+          </p>
+          <p>
+            <strong className="text-foreground">Curated Projects:</strong> Our projects are carefully selected to be engaging, educational, and relevant to current industry trends.
+          </p>
+          <p>
+            <strong className="text-foreground">Support:</strong> While we provide comprehensive guides, we're here to help if you get stuck.
+          </p>
+          <p>
+            <strong className="text-foreground">Customization:</strong> Have a unique idea? We offer custom project design services to bring your vision to life.
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
