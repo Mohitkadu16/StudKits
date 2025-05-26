@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useParams, useRouter }_from 'next/navigation';
@@ -131,7 +132,7 @@ export default function ProjectDetailPage() {
             <div className="mt-8 pt-6 border-t">
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <p className="text-3xl font-bold text-accent-foreground bg-accent/20 px-4 py-2 rounded-md">
-                  ${project.price.toLocaleString()}
+                  ₹{project.price.toLocaleString()}
                 </p>
                 <div className="flex gap-3">
                   <Button size="lg" onClick={handleDownloadKit} className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-md hover:shadow-lg transition-shadow">

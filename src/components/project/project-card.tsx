@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Project } from '@/lib/projects';
@@ -42,7 +43,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
         <p className="text-lg font-bold text-primary">
-          ${project.price.toLocaleString()}
+          ₹{project.price.toLocaleString()}
         </p>
         <Button asChild variant="ghost" size="sm" className="text-primary hover:bg-primary/10">
           <Link href={`/projects/${project.id}`}>
