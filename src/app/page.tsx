@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -24,7 +25,9 @@ export default function HomePage() {
       const matchesCategory = selectedCategory ? project.category === selectedCategory : true;
       const matchesSearch = searchTerm
         ? project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          project.description.toLowerCase().includes(searchTerm.toLowerCase())
+          project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          project.longDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          project.category.toLowerCase().includes(searchTerm.toLowerCase())
         : true;
       return matchesCategory && matchesSearch;
     });
@@ -39,18 +42,19 @@ export default function HomePage() {
         </p>
       </section>
 
-      <div className="flex flex-col md:flex-row gap-4 mb-6 items-center">
-        <div className="relative flex-grow w-full md:w-auto">
+      {/* Container for Search and Filters */}
+      <div className="space-y-6 mb-8">
+        <div className="relative w-full"> {/* Search Input Container */}
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search projects..."
+            placeholder="Search projects by title, description, or category..."
             className="pl-10 w-full shadow-sm"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-         <ProjectFilters
+        <ProjectFilters
           categories={uniqueCategories}
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}

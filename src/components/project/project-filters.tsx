@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -12,7 +13,7 @@ interface ProjectFiltersProps {
 
 export function ProjectFilters({ categories, selectedCategory, onSelectCategory }: ProjectFiltersProps) {
   return (
-    <div className="mb-8 flex flex-wrap gap-2 items-center">
+    <div className="flex flex-wrap gap-2 items-center justify-center md:justify-start">
       <Button
         variant={selectedCategory === null ? 'default' : 'outline'}
         onClick={() => onSelectCategory(null)}
