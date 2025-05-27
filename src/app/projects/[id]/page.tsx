@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useParams, useRouter }_from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getProjectById, Project } from '@/lib/projects';
