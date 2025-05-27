@@ -139,7 +139,7 @@ export default function ProjectDetailPage() {
                     <Download className="mr-2 h-5 w-5" /> Download Project Kit
                   </Button>
                   <Button size="lg" variant="outline" asChild className="shadow-md hover:shadow-lg transition-shadow">
-                    <a href={`mailto:provider@example.com?subject=Inquiry about ${project.title}`}>
+                    <a href={`mailto:contact.projectpro@gmail.com?subject=Inquiry about ${project.title}`}>
                       <Mail className="mr-2 h-5 w-5" /> Contact Provider
                     </a>
                   </Button>
