@@ -78,14 +78,27 @@ export default function ProjectDetailPage() {
       <Card className="overflow-hidden shadow-lg">
         <div className="grid md:grid-cols-2 gap-0">
           <div className="relative aspect-[4/3] md:aspect-auto">
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-              data-ai-hint={project.dataAiHint || "project detail"}
-            />
+            {project.sketchfabEmbedUrl ? (
+              <iframe
+                title={project.title}
+                src={project.sketchfabEmbedUrl}
+                className="absolute top-0 left-0 w-full h-full"
+                frameBorder="0"
+                allow="autoplay; fullscreen; xr-spatial-tracking"
+                allowFullScreen
+                mozallowfullscreen="true"
+                webkitallowfullscreen="true"
+              />
+            ) : (
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                data-ai-hint={project.dataAiHint || "project detail"}
+              />
+            )}
           </div>
           <div className="p-6 md:p-8 flex flex-col">
             <CardHeader className="p-0 mb-4">
