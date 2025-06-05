@@ -17,20 +17,6 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  // Kept from original "Mobile App"
-  {
-    id: '2',
-    title: 'Mobile Task Manager App',
-    description: 'Cross-platform mobile app for efficient task management.',
-    longDescription: 'A sleek and intuitive mobile application for iOS and Android, designed to help users organize their tasks, set reminders, and collaborate with teams. Built using React Native for optimal performance and native feel.',
-    price: 3500,
-    category: 'Mobile App',
-    categoryIcon: Smartphone,
-    image: 'https://placehold.co/600x400.png',
-    features: ['iOS & Android', 'Offline Access', 'Push Notifications', 'Team Collaboration', 'Calendar Sync'],
-    benefits: ['Enhanced Productivity', 'Better Organization', 'Seamless Collaboration', 'Accessible Anywhere'],
-    dataAiHint: 'mobile productivity'
-  },
   // New IoT-Based Projects
   {
     id: 'iot-1',
