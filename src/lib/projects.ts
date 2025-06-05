@@ -28,7 +28,7 @@ export const projects: Project[] = [
     category: 'IoT-Based Projects',
     categoryIcon: Network,
     image: 'https://placehold.co/600x400.png', // Fallback image
-    sketchfabEmbedUrl: 'https://sketchfab.com/models/13a414f0a89545a8a0355fd861c72c8c/embed', // Sketchfab URL
+    sketchfabEmbedUrl: 'https://sketchfab.com/models/ed9b38c2324c4f61bf89f3a7abeecead/embed?autostart=1&ui_theme=dark', // Updated Sketchfab URL
     features: ['ESP32 Microcontroller', 'Relay Modules', 'Environment Sensors', 'Voice Control Integration', 'Mobile App Interface'],
     benefits: ['Convenient Home Control', 'Energy Savings', 'Enhanced Security', 'Customizable Automation'],
     dataAiHint: 'iot smart-home'
