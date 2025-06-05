@@ -17,46 +17,6 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  // Kept from original "Web Development"
-  {
-    id: '1',
-    title: 'E-commerce Platform Development',
-    description: 'A full-featured e-commerce platform with modern UI/UX.',
-    longDescription: 'Comprehensive development of a scalable e-commerce platform, including frontend, backend, payment gateway integration, and admin panel. Built with Next.js, Node.js, and PostgreSQL. Perfect for businesses looking to establish a strong online presence.',
-    price: 5000,
-    category: 'Web Development',
-    categoryIcon: Laptop,
-    image: 'https://placehold.co/600x400.png',
-    features: ['Responsive Design', 'Shopping Cart', 'User Accounts', 'Admin Dashboard', 'Payment Integration'],
-    benefits: ['Increased Sales', 'Wider Reach', 'Improved Customer Experience', 'Efficient Management'],
-    dataAiHint: 'web online-store'
-  },
-  {
-    id: '6',
-    title: 'Custom API Development',
-    description: 'Build robust and scalable APIs tailored to your business needs.',
-    longDescription: 'Development of custom RESTful or GraphQL APIs to power your applications or integrate third-party services. Focus on security, performance, and scalability. Includes documentation and testing.',
-    price: 4500,
-    category: 'Web Development',
-    categoryIcon: Code2,
-    image: 'https://placehold.co/600x400.png',
-    features: ['REST/GraphQL', 'Secure Endpoints', 'Scalable Architecture', 'API Documentation', 'Automated Testing'],
-    benefits: ['Seamless Integration', 'Improved Data Flow', 'Enhanced Functionality', 'Future-Proof Solution'],
-    dataAiHint: 'software backend'
-  },
-  {
-    id: '7',
-    title: 'Inventory Management System',
-    description: 'A web-based system to track and manage inventory effectively.',
-    longDescription: 'A comprehensive inventory management system designed to help businesses track stock levels, manage orders, and reduce waste. Features real-time updates, reporting, and barcode scanning support.',
-    price: 6000,
-    category: 'Web Development',
-    categoryIcon: ShoppingCart,
-    image: 'https://placehold.co/600x400.png',
-    features: ['Real-time Tracking', 'Order Management', 'Supplier Database', 'Reporting & Analytics', 'Barcode Support'],
-    benefits: ['Optimized Stock Levels', 'Reduced Operational Costs', 'Improved Efficiency', 'Data-driven Decisions'],
-    dataAiHint: 'business stock'
-  },
   // Kept from original "Mobile App"
   {
     id: '2',
@@ -290,6 +250,7 @@ export const getCategoryIcon = (categoryName: string): LucideIcon | undefined =>
   // Fallback: if no project has a specific icon, try to return a general icon for the category if needed
   // For now, this relies on at least one project in the category defining the icon.
   // Or, you could have a mapping here:
-  // if (categoryName === 'Web Development') return Laptop;
+  // if (categoryName === 'Mobile App') return Smartphone;
   return undefined;
 };
+
