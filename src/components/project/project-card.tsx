@@ -16,16 +16,31 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card className="flex flex-col h-full overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
       <CardHeader className="p-0">
-        <div className="aspect-[3/2] relative w-full">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
-            data-ai-hint={project.dataAiHint || "project image"}
-          />
-        </div>
+        {project.sketchfabEmbedUrl ? (
+          <div className="aspect-[3/2] relative w-full">
+            <iframe
+              title={project.title}
+              src={project.sketchfabEmbedUrl}
+              className="absolute top-0 left-0 w-full h-full"
+              frameBorder="0"
+              allow="autoplay; fullscreen; xr-spatial-tracking; vr"
+              allowFullScreen
+              mozallowfullscreen="true"
+              webkitallowfullscreen="true"
+            />
+          </div>
+        ) : (
+          <div className="aspect-[3/2] relative w-full">
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+              data-ai-hint={project.dataAiHint || "project image"}
+            />
+          </div>
+        )}
       </CardHeader>
       <CardContent className="p-4 flex-grow">
         <div className="flex justify-between items-start mb-2">

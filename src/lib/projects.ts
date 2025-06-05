@@ -10,10 +10,11 @@ export interface Project {
   price: number;
   category: string;
   categoryIcon?: LucideIcon;
-  image: string;
+  image: string; // Fallback image if no 3D model
   features: string[];
   benefits: string[];
   dataAiHint?: string;
+  sketchfabEmbedUrl?: string; // Optional Sketchfab embed URL
 }
 
 export const projects: Project[] = [
@@ -26,7 +27,8 @@ export const projects: Project[] = [
     price: 1700,
     category: 'IoT-Based Projects',
     categoryIcon: Network,
-    image: 'https://placehold.co/600x400.png',
+    image: 'https://placehold.co/600x400.png', // Fallback image
+    sketchfabEmbedUrl: 'https://sketchfab.com/models/13a414f0a89545a8a0355fd861c72c8c/embed', // Sketchfab URL
     features: ['ESP32 Microcontroller', 'Relay Modules', 'Environment Sensors', 'Voice Control Integration', 'Mobile App Interface'],
     benefits: ['Convenient Home Control', 'Energy Savings', 'Enhanced Security', 'Customizable Automation'],
     dataAiHint: 'iot smart-home'
