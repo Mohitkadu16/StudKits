@@ -13,7 +13,7 @@ interface ProjectFiltersProps {
 
 export function ProjectFilters({ categories, selectedCategory, onSelectCategory }: ProjectFiltersProps) {
   return (
-    <div className="flex flex-wrap gap-2 items-center justify-center md:justify-start">
+    <div className="flex flex-wrap gap-2 items-center justify-start">
       <Button
         variant={selectedCategory === null ? 'default' : 'outline'}
         onClick={() => onSelectCategory(null)}
