@@ -23,7 +23,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               src={project.sketchfabEmbedUrl}
               className="absolute top-0 left-0 w-full h-full"
               frameBorder="0"
-              allow="autoplay; fullscreen; xr-spatial-tracking; vr"
+              allow="autoplay; fullscreen; xr-spatial-tracking"
               allowFullScreen
               mozallowfullscreen="true"
               webkitallowfullscreen="true"
