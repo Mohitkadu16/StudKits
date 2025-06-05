@@ -13,31 +13,35 @@ interface ProjectFiltersProps {
 
 export function ProjectFilters({ categories, selectedCategory, onSelectCategory }: ProjectFiltersProps) {
   return (
-    <div className="flex flex-wrap gap-2 items-center justify-start">
-      <Button
-        variant={selectedCategory === null ? 'default' : 'outline'}
-        onClick={() => onSelectCategory(null)}
-        className={cn(
-            selectedCategory === null && "bg-primary text-primary-foreground hover:bg-primary/90",
-            "shadow-sm"
-        )}
-      >
-        All Projects
-      </Button>
-      {categories.map(({ name, icon: Icon }) => (
+    // Outer div to handle overflow and provide some padding for the scrollbar
+    <div className="overflow-x-auto py-1">
+      {/* Inner div for the flex container of buttons */}
+      <div className="flex flex-nowrap gap-2 items-center justify-start">
         <Button
-          key={name}
-          variant={selectedCategory === name ? 'default' : 'outline'}
-          onClick={() => onSelectCategory(name)}
+          variant={selectedCategory === null ? 'default' : 'outline'}
+          onClick={() => onSelectCategory(null)}
           className={cn(
-            selectedCategory === name && "bg-primary text-primary-foreground hover:bg-primary/90",
-            "shadow-sm"
+              selectedCategory === null && "bg-primary text-primary-foreground hover:bg-primary/90",
+              "shadow-sm shrink-0" // shrink-0 to prevent buttons from shrinking
           )}
         >
-          {Icon && <Icon className="mr-2 h-4 w-4" />}
-          {name}
+          All Projects
         </Button>
-      ))}
+        {categories.map(({ name, icon: Icon }) => (
+          <Button
+            key={name}
+            variant={selectedCategory === name ? 'default' : 'outline'}
+            onClick={() => onSelectCategory(name)}
+            className={cn(
+              selectedCategory === name && "bg-primary text-primary-foreground hover:bg-primary/90",
+              "shadow-sm shrink-0" // shrink-0 to prevent buttons from shrinking
+            )}
+          >
+            {Icon && <Icon className="mr-2 h-4 w-4" />}
+            {name}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 }
