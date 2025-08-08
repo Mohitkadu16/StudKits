@@ -1,6 +1,6 @@
 
 import type { LucideIcon } from 'lucide-react';
-import { Laptop, Smartphone, Code2, ShoppingCart, Network, Bot, Cpu, CircuitBoard } from 'lucide-react';
+import { Laptop, Smartphone, Code2, ShoppingCart, Network, Bot, Cpu, CircuitBoard, Presentation } from 'lucide-react';
 
 export interface Project {
   id: string;
@@ -15,6 +15,7 @@ export interface Project {
   benefits: string[];
   dataAiHint?: string;
   sketchfabEmbedUrl?: string; // Optional Sketchfab embed URL
+  isService?: boolean; // To differentiate services from projects
 }
 
 export const projects: Project[] = [
@@ -217,6 +218,21 @@ export const projects: Project[] = [
     features: ['Battery Charging Circuit Design', 'Solar Charge Controller Design', 'Voltage Regulation', 'Protection Circuitry (overcharge, over-discharge)', 'Gerber Files Provided'],
     benefits: ['Reliable Power for Projects', 'Efficient Energy Use', 'Safe Battery Operation', 'Compact Power Solution'],
     dataAiHint: 'pcb power'
+  },
+  // New Presentation Service
+  {
+    id: 'service-1',
+    title: 'Custom Presentation Service',
+    description: 'Get a professional presentation for your project.',
+    longDescription: 'We create custom, informative presentations for your projects. Whether it\'s for a college submission, a business pitch, or for your own understanding, our presentations are tailored to highlight the key features, design, and outcomes of your work. Contact us for a quote.',
+    price: 500,
+    category: 'Services',
+    categoryIcon: Presentation,
+    image: 'https://placehold.co/600x400.png',
+    features: ['Tailored Content', 'Professional Design', 'Clear Explanations of Technical Details', 'Inclusion of Diagrams and Visuals', 'Source File Delivery (PPTX)'],
+    benefits: ['Saves Time and Effort', 'Clearly Communicates Your Project\'s Value', 'Improves Grades or Pitch Success', 'Professional Quality'],
+    dataAiHint: 'presentation service',
+    isService: true
   }
 ];
 
@@ -241,4 +257,3 @@ export const getCategoryIcon = (categoryName: string): LucideIcon | undefined =>
   // if (categoryName === 'Mobile App') return Smartphone;
   return undefined;
 };
-

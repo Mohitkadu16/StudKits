@@ -2,7 +2,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Users, Target, Lightbulb, Zap } from 'lucide-react';
+import { Users, Target, Lightbulb, Zap, Presentation } from 'lucide-react';
 
 export default function AboutUsPage() {
   return (
@@ -48,6 +48,7 @@ export default function AboutUsPage() {
               <li>Robotics & Automation</li>
               <li>Embedded Systems (Arduino, ESP32, Raspberry Pi)</li>
               <li>PCB Design & Prototyping Services</li>
+              <li>Custom Project Presentations</li>
             </ul>
             <p>
               Each kit comes with all necessary components and clear instructions to ensure a smooth

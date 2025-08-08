@@ -5,7 +5,7 @@ import type { Project } from '@/lib/projects';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Presentation } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;
@@ -55,14 +55,21 @@ export function ProjectCard({ project }: ProjectCardProps) {
          {!CategoryIcon && <Badge variant="outline" className="mb-2">{project.category}</Badge>}
         <CardDescription className="text-sm text-muted-foreground mb-3 line-clamp-3">{project.description}</CardDescription>
         
+        {!project.isService && (
+          <div className="flex items-center text-xs text-green-600 bg-green-100 rounded-md p-2">
+            <Presentation className="h-4 w-4 mr-2" />
+            <span>Includes an informative presentation!</span>
+          </div>
+        )}
+
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
         <p className="text-lg font-bold text-primary">
-          ₹{project.price.toLocaleString()}
+          {project.price > 0 ? `₹${project.price.toLocaleString()}`: 'Contact Us'}
         </p>
         <Button asChild variant="ghost" size="sm" className="text-primary hover:bg-primary/10">
-          <Link href={`/projects/${project.id}`}>
-            View Details <ArrowRight className="ml-2 h-4 w-4" />
+          <Link href={project.isService ? '/contact' : `/projects/${project.id}`}>
+            {project.isService ? 'Inquire Now' : 'View Details'} <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
       </CardFooter>
