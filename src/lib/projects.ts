@@ -16,6 +16,7 @@ export interface Project {
   dataAiHint?: string;
   sketchfabEmbedUrl?: string; // Optional Sketchfab embed URL
   isService?: boolean; // To differentiate services from projects
+  servicePageUrl?: string; // Custom URL for services
 }
 
 export const projects: Project[] = [
@@ -223,16 +224,17 @@ export const projects: Project[] = [
   {
     id: 'service-1',
     title: 'Custom Presentation Service',
-    description: 'Get a professional presentation for your project.',
-    longDescription: 'We create custom, informative presentations for your projects. Whether it\'s for a college submission, a business pitch, or for your own understanding, our presentations are tailored to highlight the key features, design, and outcomes of your work. Contact us for a quote.',
+    description: 'Get a professional presentation for any project or topic.',
+    longDescription: 'We create custom, informative presentations for any need. Whether for a college submission, a business pitch, or academic purposes, our presentations are tailored to highlight key information with a professional design. Contact us for a quote.',
     price: 500,
     category: 'Services',
     categoryIcon: Presentation,
     image: 'https://placehold.co/600x400.png',
-    features: ['Tailored Content', 'Professional Design', 'Clear Explanations of Technical Details', 'Inclusion of Diagrams and Visuals', 'Source File Delivery (PPTX)'],
-    benefits: ['Saves Time and Effort', 'Clearly Communicates Your Project\'s Value', 'Improves Grades or Pitch Success', 'Professional Quality'],
+    features: ['Tailored Content on Any Topic', 'Professional & Modern Design', 'Clear Explanations of Technical Details', 'Inclusion of Diagrams and Visuals', 'Source File Delivery (PPTX)'],
+    benefits: ['Saves Time and Effort', 'Clearly Communicates Your Ideas', 'Improves Grades or Pitch Success', 'Professional Quality'],
     dataAiHint: 'presentation service',
-    isService: true
+    isService: true,
+    servicePageUrl: '/custom-presentation'
   }
 ];
 

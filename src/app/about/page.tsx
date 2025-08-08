@@ -24,9 +24,9 @@ export default function AboutUsPage() {
         <CardContent className="text-lg text-foreground/80 leading-relaxed">
           <p>
             At ProjectPro, we are passionate about empowering students, hobbyists, and professionals
-            by providing high-quality, ready-to-assemble project kits. We believe that hands-on
+            by providing high-quality, ready-to-assemble project kits and expert services. We believe that hands-on
             experience is key to mastering technical skills, and our goal is to make innovative
-            projects accessible to everyone.
+            projects and professional presentations accessible to everyone.
           </p>
         </CardContent>
       </Card>
@@ -41,14 +41,14 @@ export default function AboutUsPage() {
           </CardHeader>
           <CardContent className="text-foreground/80 space-y-2">
             <p>
-              We specialize in a wide range of project kits across various domains including:
+              We specialize in a wide range of project kits and services including:
             </p>
             <ul className="list-disc list-inside pl-4">
               <li>IoT-Based Projects</li>
               <li>Robotics & Automation</li>
               <li>Embedded Systems (Arduino, ESP32, Raspberry Pi)</li>
               <li>PCB Design & Prototyping Services</li>
-              <li>Custom Project Presentations</li>
+              <li>Custom Project Presentations for any topic</li>
             </ul>
             <p>
               Each kit comes with all necessary components and clear instructions to ensure a smooth
@@ -88,11 +88,14 @@ export default function AboutUsPage() {
           <p>
             <strong className="text-foreground">Curated Projects:</strong> Our projects are carefully selected to be engaging, educational, and relevant to current industry trends.
           </p>
+           <p>
+            <strong className="text-foreground">Expert Services:</strong> From PCB design to custom presentations, our services are designed to help you succeed.
+          </p>
           <p>
             <strong className="text-foreground">Support:</strong> While we provide comprehensive guides, we're here to help if you get stuck.
           </p>
           <p>
-            <strong className="text-foreground">Customization:</strong> Have a unique idea? We offer custom project design services to bring your vision to life.
+            <strong className="text-foreground">Customization:</strong> Have a unique idea? We offer custom project and presentation design services to bring your vision to life.
           </p>
         </CardContent>
       </Card>

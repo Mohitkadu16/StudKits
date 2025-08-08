@@ -8,8 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Lightbulb, Settings, Package, Presentation } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Send, Lightbulb, Settings, Package } from 'lucide-react';
 
 interface CustomProjectFormState {
   name: string;
@@ -19,7 +18,6 @@ interface CustomProjectFormState {
   components: string;
   description: string;
   budget: string;
-  includePresentation: boolean;
 }
 
 export default function CustomProjectPage() {
@@ -32,16 +30,11 @@ export default function CustomProjectPage() {
     components: '',
     description: '',
     budget: '',
-    includePresentation: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
-  
-  const handleCheckboxChange = (checked: boolean) => {
-    setFormData(prev => ({ ...prev, includePresentation: checked }));
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -64,7 +57,6 @@ export default function CustomProjectPage() {
       Key Components: ${formData.components || 'Not specified'}
       Project Description: ${formData.description}
       Estimated Budget: ${formData.budget || 'Not specified'}
-      Include Presentation: ${formData.includePresentation ? 'Yes' : 'No'}
     `;
     const mailtoLink = `mailto:provider@example.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
 
@@ -83,7 +75,6 @@ export default function CustomProjectPage() {
       components: '',
       description: '',
       budget: '',
-      includePresentation: false,
     });
   };
 
@@ -158,19 +149,6 @@ export default function CustomProjectPage() {
                 rows={5}
                 required
               />
-            </div>
-            
-            <div className="items-top flex space-x-2">
-                <Checkbox id="includePresentation" checked={formData.includePresentation} onCheckedChange={handleCheckboxChange} />
-                <div className="grid gap-1.5 leading-none">
-                    <Label htmlFor="includePresentation" className="flex items-center font-medium">
-                        <Presentation className="mr-2 h-4 w-4 text-muted-foreground" />
-                        Request a Project Presentation
-                    </Label>
-                    <p className="text-sm text-muted-foreground">
-                        Check this box if you would also like a custom presentation (PPT) for your project.
-                    </p>
-                </div>
             </div>
 
             <div className="space-y-2">

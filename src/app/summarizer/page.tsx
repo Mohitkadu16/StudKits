@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -45,7 +46,10 @@ export default function SummarizerPage() {
 
       <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle>Enter Project Description</CardTitle>
+          <CardTitle className="flex items-center">
+           <Wand2 className="mr-2 h-6 w-6 text-primary" />
+           Enter Project Description
+          </CardTitle>
           <CardDescription>Paste the full project description below to generate a concise summary.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

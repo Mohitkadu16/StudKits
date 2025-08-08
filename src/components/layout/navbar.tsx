@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Target, HomeIcon, Info, Edit3, Mail } from 'lucide-react';
+import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -14,8 +14,9 @@ export function Navbar() {
     { href: '/', label: 'Home', icon: HomeIcon },
     { href: '/about', label: 'About Us', icon: Info },
     { href: '/custom-project', label: 'Custom Project', icon: Edit3 },
+    { href: '/custom-presentation', label: 'Custom Presentation', icon: Presentation },
     { href: '/contact', label: 'Contact Us', icon: Mail },
-    { href: '/summarizer', label: 'AI Summarizer', icon: Target }, // Keeping Target for Summarizer as an example
+    { href: '/summarizer', label: 'AI Summarizer', icon: Wand2 },
   ];
 
   return (

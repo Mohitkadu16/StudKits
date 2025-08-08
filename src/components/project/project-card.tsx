@@ -5,7 +5,7 @@ import type { Project } from '@/lib/projects';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Presentation } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;
@@ -13,6 +13,8 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const CategoryIcon = project.categoryIcon;
+  const linkHref = project.isService ? (project.servicePageUrl || '/contact') : `/projects/${project.id}`;
+
   return (
     <Card className="flex flex-col h-full overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
       <CardHeader className="p-0">
@@ -54,13 +56,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
          {!CategoryIcon && <Badge variant="outline" className="mb-2">{project.category}</Badge>}
         <CardDescription className="text-sm text-muted-foreground mb-3 line-clamp-3">{project.description}</CardDescription>
-        
-        {!project.isService && (
-          <div className="flex items-center text-xs text-green-600 bg-green-100 rounded-md p-2">
-            <Presentation className="h-4 w-4 mr-2" />
-            <span>Includes an informative presentation!</span>
-          </div>
-        )}
 
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
@@ -68,7 +63,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.price > 0 ? `₹${project.price.toLocaleString()}`: 'Contact Us'}
         </p>
         <Button asChild variant="ghost" size="sm" className="text-primary hover:bg-primary/10">
-          <Link href={project.isService ? '/contact' : `/projects/${project.id}`}>
+          <Link href={linkHref}>
             {project.isService ? 'Inquire Now' : 'View Details'} <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
