@@ -8,7 +8,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Mail, User, MessageSquare, Send } from 'lucide-react';
+import { Mail, User, MessageSquare, Send, Instagram } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
 
 interface ContactFormState {
   name: string;
@@ -77,64 +79,86 @@ export default function ContactUsPage() {
         </p>
       </section>
 
-      <Card className="max-w-xl mx-auto shadow-lg">
-        <CardHeader>
-          <CardTitle className="flex items-center text-2xl">
-            <Mail className="mr-3 h-7 w-7 text-primary" />
-            Get in Touch
-          </CardTitle>
-          <CardDescription>
-            Fill out the form below, and we'll get back to you as soon as possible.
-          </CardDescription>
-        </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="flex items-center">
-                  <User className="mr-2 h-4 w-4 text-muted-foreground" />
-                  Your Name <span className="text-destructive">*</span>
-                </Label>
-                <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required />
+      <div className="max-w-xl mx-auto">
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center text-2xl">
+              <Mail className="mr-3 h-7 w-7 text-primary" />
+              Get in Touch
+            </CardTitle>
+            <CardDescription>
+              Fill out the form below, and we'll get back to you as soon as possible.
+            </CardDescription>
+          </CardHeader>
+          <form onSubmit={handleSubmit}>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="flex items-center">
+                    <User className="mr-2 h-4 w-4 text-muted-foreground" />
+                    Your Name <span className="text-destructive">*</span>
+                  </Label>
+                  <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="flex items-center">
+                    <Mail className="mr-2 h-4 w-4 text-muted-foreground" />
+                    Your Email <span className="text-destructive">*</span>
+                  </Label>
+                  <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required />
+                </div>
               </div>
+
               <div className="space-y-2">
-                <Label htmlFor="email" className="flex items-center">
-                  <Mail className="mr-2 h-4 w-4 text-muted-foreground" />
-                  Your Email <span className="text-destructive">*</span>
+                <Label htmlFor="subject" className="flex items-center">
+                  <MessageSquare className="mr-2 h-4 w-4 text-muted-foreground" />
+                  Subject <span className="text-destructive">*</span>
                 </Label>
-                <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required />
+                <Input id="subject" name="subject" value={formData.subject} onChange={handleChange} placeholder="What is your message about?" required />
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="subject" className="flex items-center">
-                <MessageSquare className="mr-2 h-4 w-4 text-muted-foreground" />
-                Subject <span className="text-destructive">*</span>
-              </Label>
-              <Input id="subject" name="subject" value={formData.subject} onChange={handleChange} placeholder="What is your message about?" required />
-            </div>
+              <div className="space-y-2">
+                <Label htmlFor="message">Message <span className="text-destructive">*</span></Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Write your message here..."
+                  rows={6}
+                  required
+                />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md">
+                <Send className="mr-2 h-4 w-4" />
+                Send Message
+              </Button>
+            </CardFooter>
+          </form>
+        </Card>
+        
+        <Separator className="my-8" />
 
-            <div className="space-y-2">
-              <Label htmlFor="message">Message <span className="text-destructive">*</span></Label>
-              <Textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Write your message here..."
-                rows={6}
-                required
-              />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md">
-              <Send className="mr-2 h-4 w-4" />
-              Send Message
+        <div className="text-center space-y-4">
+          <h3 className="text-lg font-semibold text-foreground">Or connect with us directly</h3>
+          <div className="flex justify-center items-center gap-6">
+            <Button variant="outline" asChild className="shadow-sm">
+              <Link href="mailto:contact.projectpro@gmail.com" target="_blank" rel="noopener noreferrer">
+                <Mail className="mr-2 h-5 w-5" />
+                Email Us
+              </Link>
             </Button>
-          </CardFooter>
-        </form>
-      </Card>
+            <Button variant="outline" asChild className="shadow-sm">
+               <Link href="https://instagram.com/your_profile" target="_blank" rel="noopener noreferrer">
+                <Instagram className="mr-2 h-5 w-5" />
+                Follow on Instagram
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
