@@ -29,6 +29,12 @@ const sendEmailFlow = ai.defineFlow(
     // IMPORTANT: You must configure your email provider's SMTP settings in the .env file.
     // For example, for Gmail, you might need to create an "App Password".
     // See nodemailer documentation for more info: https://nodemailer.com/
+    if (!process.env.EMAIL_HOST || process.env.EMAIL_HOST === 'smtp.example.com') {
+      const message = "Email provider is not configured. Please update the .env file with your SMTP credentials.";
+      console.error(message);
+      return { success: false, message };
+    }
+    
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: Number(process.env.EMAIL_PORT),
