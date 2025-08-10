@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/auth-context';
-import { signOut as firebaseSignOut } from '@/lib/firebase';
+import { signOut } from '@/lib/firebase';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,7 +46,7 @@ export function Navbar() {
 
   const handleSignOut = async () => {
     try {
-      await firebaseSignOut();
+      await signOut(auth);
       toast({ title: "Signed Out", description: "You have been successfully signed out." });
       router.push('/');
     } catch (error) {

@@ -5,9 +5,9 @@ import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/a
 import { 
   getAuth, 
   updateProfile,
-  createUserWithEmailAndPassword as firebaseCreateUserWithEmailAndPassword, 
-  signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword,
-  signOut as firebaseSignOut, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword,
+  signOut, 
   onAuthStateChanged,
   type User
 } from "firebase/auth";
@@ -38,9 +38,9 @@ export {
   app, 
   auth, // Export auth instance
   storage,
-  firebaseCreateUserWithEmailAndPassword as createUserWithEmailAndPassword, 
-  firebaseSignInWithEmailAndPassword as signInWithEmailAndPassword, 
-  firebaseSignOut as signOut,
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut,
   onAuthStateChanged,
   type User 
 };
