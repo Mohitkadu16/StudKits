@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User, PackageSearch } from 'lucide-react';
+import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User, PackageSearch, UserCog } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -27,6 +27,8 @@ export function Navbar() {
   const { toast } = useToast();
   const { user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const isAdmin = user?.email === 'studkits25@gmail.com';
 
   const navItems = [
     { href: '/', label: 'Home', icon: HomeIcon },
@@ -75,6 +77,12 @@ export function Navbar() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        {isAdmin && (
+          <DropdownMenuItem onClick={() => router.push('/admin')}>
+            <UserCog className="mr-2 h-4 w-4" />
+            <span>Admin Panel</span>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem onClick={() => router.push('/profile')}>
           <User className="mr-2 h-4 w-4" />
           <span>Profile</span>
