@@ -12,6 +12,25 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Loader2, User, Edit, Save, Upload, School, CreditCard } from 'lucide-react';
+import { updateProfile } from 'firebase/auth';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '@/lib/firebase';
+
+
+// Wrapper for updating user profile
+async function updateUserProfileClient(user: import('firebase/auth').User, profileData: { displayName?: string; photoURL?: string }) {
+  if (!user) throw new Error("User not authenticated");
+  await updateProfile(user, profileData);
+};
+
+// Wrapper for uploading profile photo
+async function uploadProfilePhotoClient(userId: string, file: File): Promise<string> {
+  const storageRef = ref(storage, `profile_photos/${userId}/${file.name}`);
+  const snapshot = await uploadBytes(storageRef, file);
+  const downloadURL = await getDownloadURL(snapshot.ref);
+  return downloadURL;
+};
+
 
 export default function ProfilePage() {
   const { user, isLoading: authLoading } = useAuth();
@@ -56,10 +75,10 @@ export default function ProfilePage() {
       let updatedPhotoURL = user.photoURL;
 
       if (newPhoto) {
-        updatedPhotoURL = await uploadProfilePhoto(user.uid, newPhoto);
+        updatedPhotoURL = await uploadProfilePhotoClient(user.uid, newPhoto);
       }
 
-      await updateUserProfile(user, {
+      await updateUserProfileClient(user, {
         displayName: displayName,
         photoURL: updatedPhotoURL,
       });
