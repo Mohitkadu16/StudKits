@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User } from 'lucide-react';
+import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User, PackageSearch } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -33,6 +33,7 @@ export function Navbar() {
     { href: '/about', label: 'About Us', icon: Info },
     { href: '/custom-project', label: 'Custom Project', icon: Edit3 },
     { href: '/custom-presentation', label: 'Custom Presentation', icon: Presentation },
+    { href: '/tracking', label: 'Track Order', icon: PackageSearch },
     { href: '/contact', label: 'Contact Us', icon: Mail },
     { href: '/summarizer', label: 'AI Summarizer', icon: Wand2 },
   ];
@@ -77,6 +78,10 @@ export function Navbar() {
         <DropdownMenuItem onClick={() => router.push('/profile')}>
           <User className="mr-2 h-4 w-4" />
           <span>Profile</span>
+        </DropdownMenuItem>
+         <DropdownMenuItem onClick={() => router.push('/tracking')}>
+          <PackageSearch className="mr-2 h-4 w-4" />
+          <span>Track My Projects</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
