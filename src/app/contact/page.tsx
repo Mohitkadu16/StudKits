@@ -53,7 +53,7 @@ export default function ContactUsPage() {
       Message:
       ${formData.message}
     `;
-    const mailtoLink = `mailto:provider@example.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
+    const mailtoLink = `mailto:contact.projectpro@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
 
     window.location.href = mailtoLink;
 
