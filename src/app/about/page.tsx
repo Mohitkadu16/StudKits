@@ -8,7 +8,7 @@ export default function AboutUsPage() {
   return (
     <div className="space-y-8">
       <section className="text-center py-8 bg-card rounded-lg shadow">
-        <h1 className="text-4xl font-bold text-primary mb-2">About ProjectPro</h1>
+        <h1 className="text-4xl font-bold text-primary mb-2">About StudKits</h1>
         <p className="text-lg text-muted-foreground">
           Your partner in innovative project kits and learning.
         </p>
@@ -23,7 +23,7 @@ export default function AboutUsPage() {
         </CardHeader>
         <CardContent className="text-lg text-foreground/80 leading-relaxed">
           <p>
-            At ProjectPro, we are passionate about empowering students, hobbyists, and professionals
+            At StudKits, we are passionate about empowering students, hobbyists, and professionals
             by providing high-quality, ready-to-assemble project kits and expert services. We believe that hands-on
             experience is key to mastering technical skills, and our goal is to make innovative
             projects and professional presentations accessible to everyone.
@@ -78,7 +78,7 @@ export default function AboutUsPage() {
         <CardHeader>
           <CardTitle className="flex items-center text-2xl">
             <Zap className="mr-3 h-7 w-7 text-primary" />
-            Why Choose ProjectPro?
+            Why Choose StudKits?
           </CardTitle>
         </CardHeader>
         <CardContent className="text-foreground/80 space-y-3">

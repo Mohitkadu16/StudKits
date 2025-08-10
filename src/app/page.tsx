@@ -46,7 +46,7 @@ export default function HomePage() {
       <section className="text-center py-16 bg-card rounded-lg shadow-lg">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Bring Your Tech Ideas to Life with ProjectPro
+            Bring Your Tech Ideas to Life with StudKits
           </h1>
           <p className="max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground mb-8">
             We provide high-quality, ready-to-assemble project kits and expert services to empower students, hobbyists, and professionals. From IoT and Robotics to custom PCB design, start building today!

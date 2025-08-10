@@ -92,7 +92,7 @@ export function Navbar() {
       <div className="container mx-auto flex items-center justify-between p-4 h-16">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold" onClick={handleLinkClick}>
           <Target className="h-7 w-7" />
-          <span>ProjectPro</span>
+          <span>StudKits</span>
         </Link>
         <nav className="hidden md:flex items-center space-x-1">
           {navItems.map((item) => {

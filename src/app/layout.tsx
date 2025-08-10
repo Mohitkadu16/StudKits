@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'ProjectPro - Your Project Marketplace',
+  title: 'StudKits - Your Project Marketplace',
   description: 'Discover and acquire innovative project kits.',
 };
 
