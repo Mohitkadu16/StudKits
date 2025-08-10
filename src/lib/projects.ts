@@ -29,8 +29,7 @@ export const projects: Project[] = [
     price: 1700,
     category: 'IoT-Based Projects',
     categoryIcon: Network,
-    image: 'https://placehold.co/600x400.png', // Fallback image
-    sketchfabEmbedUrl: 'https://sketchfab.com/models/ed9b38c2324c4f61bf89f3a7abeecead/embed?autostart=1&ui_theme=dark', // Updated Sketchfab URL
+    image: '/images/smart home automation.png',
     features: ['ESP32 Microcontroller', 'Relay Modules', 'Environment Sensors', 'Voice Control Integration', 'Mobile App Interface'],
     benefits: ['Convenient Home Control', 'Energy Savings', 'Enhanced Security', 'Customizable Automation'],
     dataAiHint: 'iot smart-home'
@@ -43,7 +42,7 @@ export const projects: Project[] = [
     price: 2000,
     category: 'IoT-Based Projects',
     categoryIcon: Network,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/agriculture iot.png',
     features: ['Soil Moisture Sensor', 'NodeMCU (ESP8266)', 'Water Pump Control', 'Automated Irrigation Logic', 'Data Logging (optional)'],
     benefits: ['Water Conservation', 'Improved Crop Yield', 'Reduced Manual Labor', 'Remote Monitoring Potential'],
     dataAiHint: 'iot agriculture'
