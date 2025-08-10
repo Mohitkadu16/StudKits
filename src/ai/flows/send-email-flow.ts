@@ -4,18 +4,13 @@
  * @fileOverview A flow for sending emails.
  *
  * - sendEmail - A function that handles sending an email with the given subject and body.
- * - SendEmailInput - The input type for the sendEmail function.
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import * as nodemailer from 'nodemailer';
+import { SendEmailInputSchema, type SendEmailInput } from './send-email-types';
 
-export const SendEmailInputSchema = z.object({
-  subject: z.string().describe('The subject of the email.'),
-  body: z.string().describe('The HTML body of the email.'),
-});
-export type SendEmailInput = z.infer<typeof SendEmailInputSchema>;
 
 export async function sendEmail(input: SendEmailInput): Promise<{ success: boolean; message: string }> {
   return sendEmailFlow(input);
