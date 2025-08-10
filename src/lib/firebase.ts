@@ -12,12 +12,14 @@ import {
   type User
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
 import { firebaseConfig } from "./firebase-config";
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig as FirebaseOptions) : getApp();
 const auth = getAuth(app);
 const storage = getStorage(app);
+const db = getFirestore(app);
 
 // Wrapper for updating user profile
 export const updateUserProfile = async (user: User, profileData: { displayName?: string; photoURL?: string }) => {
@@ -38,6 +40,7 @@ export {
   app, 
   auth, // Export auth instance
   storage,
+  db, // Export Firestore instance
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signOut,

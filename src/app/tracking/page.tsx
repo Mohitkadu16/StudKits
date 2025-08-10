@@ -2,30 +2,52 @@
 'use client';
 
 import { ProjectTracker } from '@/components/tracking/project-tracker';
-import { mockProject, type ProjectTrackingInfo } from '@/lib/tracking';
+import { type ProjectTrackingInfo } from '@/lib/tracking';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { PackageSearch } from 'lucide-react';
+import { PackageSearch, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
+import { db } from '@/lib/firebase';
+import { doc, onSnapshot } from "firebase/firestore";
 
 export default function TrackingPage() {
     const { user, isLoading: authLoading } = useAuth();
-    // In a real app, you would fetch the user's projects here.
-    // For now, we use mock data if the user is logged in.
     const [project, setProject] = useState<ProjectTrackingInfo | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (!authLoading && user) {
-            // Here you would typically fetch the user's project data from Firestore
-            // e.g., fetchProjectForUser(user.uid).then(setProject);
-            setProject(mockProject);
+        if (authLoading) {
+            setIsLoading(true);
+            return;
+        }
+
+        if (user) {
+            // For this demonstration, we'll listen to a specific document.
+            // In a real application, you would query for projects belonging to the logged-in user (user.uid).
+            const projectRef = doc(db, 'projects', 'SK-1024');
+
+            const unsubscribe = onSnapshot(projectRef, (doc) => {
+                if (doc.exists()) {
+                    setProject(doc.data() as ProjectTrackingInfo);
+                } else {
+                    console.log("No such project document!");
+                    setProject(null);
+                }
+                setIsLoading(false);
+            }, (error) => {
+                console.error("Error fetching project:", error);
+                setIsLoading(false);
+            });
+
+            // Cleanup the listener when the component unmounts or user changes
+            return () => unsubscribe();
         } else {
             setProject(null);
+            setIsLoading(false);
         }
     }, [user, authLoading]);
-
 
   return (
     <div className="space-y-8">
@@ -37,8 +59,10 @@ export default function TrackingPage() {
       </section>
 
       <div className="max-w-4xl mx-auto">
-        {authLoading ? (
-            <p>Loading...</p>
+        {isLoading || authLoading ? (
+            <div className="flex justify-center items-center py-10">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+            </div>
         ) : user ? (
             project ? (
                  <ProjectTracker project={project} />
