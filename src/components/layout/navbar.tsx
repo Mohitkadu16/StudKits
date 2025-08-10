@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/auth-context';
-import { signOut } from '@/lib/firebase';
+import { auth, signOut } from '@/lib/firebase';
 import {
   DropdownMenu,
   DropdownMenuContent,
