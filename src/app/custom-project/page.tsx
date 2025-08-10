@@ -58,7 +58,7 @@ export default function CustomProjectPage() {
       Project Description: ${formData.description}
       Estimated Budget: ${formData.budget || 'Not specified'}
     `;
-    const mailtoLink = `mailto:contact.projectpro@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
+    const mailtoLink = `mailto:studkits25@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
 
     window.location.href = mailtoLink;
 

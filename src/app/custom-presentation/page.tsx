@@ -64,7 +64,7 @@ export default function CustomPresentationPage() {
       (Please also attach any relevant documents in your email)
       ${formData.instructions}
     `;
-    const mailtoLink = `mailto:contact.projectpro@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
+    const mailtoLink = `mailto:studkits25@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
 
     window.location.href = mailtoLink;
 

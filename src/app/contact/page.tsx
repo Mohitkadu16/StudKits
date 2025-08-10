@@ -53,7 +53,7 @@ export default function ContactUsPage() {
       Message:
       ${formData.message}
     `;
-    const mailtoLink = `mailto:contact.projectpro@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
+    const mailtoLink = `mailto:studkits25@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
 
     window.location.href = mailtoLink;
 
@@ -145,7 +145,7 @@ export default function ContactUsPage() {
           <h3 className="text-lg font-semibold text-foreground">Or connect with us directly</h3>
           <div className="flex justify-center items-center gap-6">
             <Button variant="outline" asChild className="shadow-sm">
-              <Link href="mailto:contact.projectpro@gmail.com" target="_blank" rel="noopener noreferrer">
+              <Link href="mailto:studkits25@gmail.com" target="_blank" rel="noopener noreferrer">
                 <Mail className="mr-2 h-5 w-5" />
                 Email Us
               </Link>
