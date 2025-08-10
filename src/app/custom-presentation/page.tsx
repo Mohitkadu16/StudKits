@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Send, Presentation, FileText, Palette, Users, Loader2 } from 'lucide-react';
-import { sendEmail } from '@/ai/flows/send-email-flow';
+import { submitProjectRequest } from '@/app/admin/actions';
 
 interface CustomPresentationFormState {
   name: string;
@@ -51,28 +51,11 @@ export default function CustomPresentationPage() {
     }
 
     setIsLoading(true);
-
-    const emailSubject = `Custom Presentation Request: ${formData.topic}`;
-    const emailBody = `
-      <p>You have received a new custom presentation request.</p>
-      <hr>
-      <h3>Contact Details:</h3>
-      <p><b>Name:</b> ${formData.name}</p>
-      <p><b>Email:</b> ${formData.email}</p>
-      <hr>
-      <h3>Presentation Details:</h3>
-      <p><b>Topic/Subject:</b> ${formData.topic}</p>
-      <p><b>Target Audience:</b> ${formData.audience || 'Not specified'}</p>
-      <p><b>Purpose/Goal of Presentation:</b> ${formData.purpose || 'Not specified'}</p>
-      <p><b>Preferred Style/Theme:</b> ${formData.style || 'Not specified'}</p>
-      <h3>Key Instructions & Content:</h3>
-      <p>${formData.instructions.replace(/\n/g, '<br>')}</p>
-      <p><i>The user has been instructed to send any relevant documents in a separate email if needed.</i></p>
-      <hr>
-    `;
     
     try {
-      const result = await sendEmail({ subject: emailSubject, body: emailBody });
+      // The server action now handles both saving to Firestore and sending the email
+      const result = await submitProjectRequest({ type: 'presentation', ...formData });
+
       if (result.success) {
         toast({
           title: "Request Sent!",
@@ -93,9 +76,10 @@ export default function CustomPresentationPage() {
       }
     } catch (error) {
       console.error("Form submission error:", error);
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
         title: "Submission Failed",
-        description: "There was a problem sending your request. Please try again later.",
+        description: `There was a problem sending your request: ${errorMessage}`,
         variant: "destructive",
       });
     } finally {

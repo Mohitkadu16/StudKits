@@ -5,57 +5,58 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/auth-context';
 import { useRouter } from 'next/navigation';
 import { type ProjectTrackingInfo, type StageKey } from '@/lib/tracking';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { type ProjectRequest } from '@/lib/requests';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { UserCog, Loader2, Database, AlertCircle } from 'lucide-react';
+import { UserCog, Loader2, Database, AlertCircle, Inbox, Check, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { updateProjectInFirestore, seedInitialProject } from './actions';
+import { updateProjectInFirestore, seedInitialProject, approveProjectRequest, declineProjectRequest } from './actions';
 import { db } from '@/lib/firebase';
-import { doc, onSnapshot, getDoc } from 'firebase/firestore';
+import { doc, onSnapshot, getDoc, collection, query } from 'firebase/firestore';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-// For now, we'll work with a single mock project ID. In a real app, you'd fetch a list of all projects.
 const MOCK_PROJECT_ID = 'SK-1024';
 
 const AdminDashboard = () => {
   const [project, setProject] = useState<ProjectTrackingInfo | null>(null);
+  const [projectRequests, setProjectRequests] = useState<ProjectRequest[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSeeding, setIsSeeding] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if the document exists first
     const projectRef = doc(db, 'projects', MOCK_PROJECT_ID);
     getDoc(projectRef).then(docSnap => {
         if (!docSnap.exists()) {
-            setError("Project document not found in Firestore. Please seed the initial data.");
+            setError("Main project document not found. Seed data if needed for testing.");
         }
     });
 
-    // Set up a real-time listener for the project
-    const unsubscribe = onSnapshot(
-      projectRef,
-      (doc) => {
-        if (doc.exists()) {
-          setProject(doc.data() as ProjectTrackingInfo);
-          setError(null);
-        } else {
-          setProject(null);
-        }
-      },
-      (err) => {
-        console.error("Firestore snapshot error:", err);
-        setError("Failed to listen to project updates from Firestore.");
-      }
-    );
+    const unsubProject = onSnapshot(projectRef, (doc) => {
+        setProject(doc.exists() ? (doc.data() as ProjectTrackingInfo) : null);
+    }, (err) => {
+        console.error("Project snapshot error:", err);
+        setError("Failed to listen to project updates.");
+    });
 
-    // Cleanup listener on component unmount
-    return () => unsubscribe();
-  }, []);
+    const requestsQuery = query(collection(db, 'projectRequests'));
+    const unsubRequests = onSnapshot(requestsQuery, (snapshot) => {
+        const requests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as ProjectRequest));
+        setProjectRequests(requests);
+    }, (err) => {
+        console.error("Requests snapshot error:", err);
+        toast({ title: "Error", description: "Could not fetch project requests.", variant: "destructive" });
+    });
+
+    return () => {
+        unsubProject();
+        unsubRequests();
+    };
+  }, [toast]);
 
   const handleStageChange = (projectId: string, newStage: StageKey) => {
     if (!project) return;
@@ -72,39 +73,44 @@ const AdminDashboard = () => {
   const handleSaveChanges = async (projectId: string) => {
     if (!project) return;
     setIsLoading(true);
-    
-    const result = await updateProjectInFirestore(projectId, {
-      currentStage: project.currentStage,
-      stages: project.stages,
-    });
-    
+    const result = await updateProjectInFirestore(projectId, { currentStage: project.currentStage, stages: project.stages });
     if (result.success) {
-      toast({
-        title: "Project Updated",
-        description: result.message,
-      });
+      toast({ title: "Project Updated", description: result.message });
     } else {
-      toast({
-        title: "Update Failed",
-        description: result.message,
-        variant: 'destructive',
-      });
+      toast({ title: "Update Failed", description: result.message, variant: 'destructive' });
     }
-    
     setIsLoading(false);
   };
 
   const handleSeedData = async () => {
     setIsSeeding(true);
     const result = await seedInitialProject();
-    if(result.success) {
+    if (result.success) {
       toast({ title: "Success", description: result.message });
-      setError(null); // Clear error after successful seeding
+      setError(null);
     } else {
       toast({ title: "Error", description: result.message, variant: "destructive" });
     }
     setIsSeeding(false);
-  }
+  };
+  
+  const handleApprove = async (request: ProjectRequest) => {
+      const result = await approveProjectRequest(request);
+      if (result.success) {
+          toast({ title: "Request Approved", description: `Project ${result.projectId} has been created.` });
+      } else {
+          toast({ title: "Approval Failed", description: result.message, variant: "destructive" });
+      }
+  };
+  
+  const handleDecline = async (requestId: string) => {
+      const result = await declineProjectRequest(requestId);
+      if (result.success) {
+          toast({ title: "Request Declined", description: "The request has been removed." });
+      } else {
+          toast({ title: "Decline Failed", description: result.message, variant: "destructive" });
+      }
+  };
 
   return (
     <div className="space-y-8">
@@ -112,9 +118,7 @@ const AdminDashboard = () => {
         <h1 className="text-4xl font-bold text-primary mb-2 flex items-center justify-center">
           <UserCog className="mr-3 h-10 w-10" /> Admin Dashboard
         </h1>
-        <p className="text-lg text-muted-foreground">
-          Manage and update user project tracking information from Firestore.
-        </p>
+        <p className="text-lg text-muted-foreground">Manage and update user project tracking information from Firestore.</p>
       </section>
 
       {error && (
@@ -122,48 +126,70 @@ const AdminDashboard = () => {
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
-           <Button onClick={handleSeedData} disabled={isSeeding} className="mt-4">
-              <Database className="mr-2 h-4 w-4" />
-              {isSeeding ? 'Seeding...' : 'Seed Initial Project'}
-            </Button>
+          <Button onClick={handleSeedData} disabled={isSeeding} className="mt-4">
+            <Database className="mr-2 h-4 w-4" />
+            {isSeeding ? 'Seeding...' : 'Seed Test Project'}
+          </Button>
         </Alert>
       )}
 
-      {project ? (
+      <Card className="shadow-lg">
+        <CardHeader>
+            <CardTitle className="flex items-center text-2xl"><Inbox className="mr-3 h-7 w-7 text-primary"/> Project Requests</CardTitle>
+            <CardDescription>Review and approve new custom project and presentation requests.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+            {projectRequests.length > 0 ? (
+                projectRequests.map(req => (
+                    <Card key={req.id} className="bg-muted/50">
+                        <CardHeader>
+                             <CardTitle className="text-lg">{req.projectTitle || req.topic}</CardTitle>
+                             <CardDescription>From: {req.name} ({req.email})</CardDescription>
+                        </CardHeader>
+                        <CardContent className="text-sm space-y-2">
+                             {req.projectTitle && <p><strong>Type:</strong> Custom Project</p>}
+                             {req.topic && <p><strong>Type:</strong> Custom Presentation</p>}
+                             {req.description && <p><strong>Description:</strong> {req.description}</p>}
+                             {req.instructions && <p><strong>Instructions:</strong> {req.instructions}</p>}
+                             {req.components && <p><strong>Components:</strong> {req.components}</p>}
+                        </CardContent>
+                        <CardFooter className="flex justify-end gap-2">
+                            <Button variant="outline" size="sm" onClick={() => handleDecline(req.id)}><X className="mr-2 h-4 w-4"/>Decline</Button>
+                            <Button size="sm" onClick={() => handleApprove(req)}><Check className="mr-2 h-4 w-4"/>Approve & Create Project</Button>
+                        </CardFooter>
+                    </Card>
+                ))
+            ) : (
+                <p className="text-center text-muted-foreground py-4">No new project requests.</p>
+            )}
+        </CardContent>
+      </Card>
+
+      {project && (
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle>Project ID: {project.projectId}</CardTitle>
+            <CardTitle>Manage Existing Project: {project.projectId}</CardTitle>
             <CardDescription>User ID: {project.userId}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <Label htmlFor={`stage-select-${project.projectId}`}>Current Stage</Label>
-              <Select
-                value={project.currentStage}
-                onValueChange={(value: StageKey) => handleStageChange(project.projectId, value)}
-              >
-                <SelectTrigger id={`stage-select-${project.projectId}`}>
-                  <SelectValue placeholder="Select stage" />
-                </SelectTrigger>
+              <Select value={project.currentStage} onValueChange={(value: StageKey) => handleStageChange(project.projectId, value)}>
+                <SelectTrigger id={`stage-select-${project.projectId}`}><SelectValue placeholder="Select stage" /></SelectTrigger>
                 <SelectContent>
                   {Object.keys(project.stages).map(stageKey => (
-                    <SelectItem key={stageKey} value={stageKey}>
-                      {stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                    </SelectItem>
+                    <SelectItem key={stageKey} value={stageKey}>{stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-
             <div className="space-y-2">
               <h4 className="font-medium text-foreground">Stage Notes</h4>
               {Object.keys(project.stages).map(stage => {
                 const stageKey = stage as StageKey;
                 return (
                   <div key={stageKey}>
-                    <Label htmlFor={`notes-${project.projectId}-${stageKey}`}>
-                      Notes for {stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                    </Label>
+                    <Label htmlFor={`notes-${project.projectId}-${stageKey}`}>Notes for {stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</Label>
                     <Textarea
                       id={`notes-${project.projectId}-${stageKey}`}
                       placeholder={`Update notes for ${stageKey.replace(/_/g, ' ')}...`}
@@ -181,8 +207,6 @@ const AdminDashboard = () => {
             </Button>
           </CardContent>
         </Card>
-      ) : (
-        !error && <p className="text-center text-muted-foreground">Loading project data from Firestore...</p>
       )}
     </div>
   );

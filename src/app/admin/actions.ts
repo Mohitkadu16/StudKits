@@ -1,22 +1,23 @@
-// src/app/admin/actions.ts
+
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, setDoc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, getDoc, addDoc, collection, deleteDoc } from 'firebase/firestore';
 import type { ProjectTrackingInfo } from '@/lib/tracking';
+import type { ProjectRequest } from '@/lib/requests';
 import { revalidatePath } from 'next/cache';
+import { sendEmail } from '@/ai/flows/send-email-flow';
 
 const MOCK_PROJECT_ID = 'SK-1024';
-const MOCK_USER_ID = 'user-abc-123'; // In a real app, this would be dynamic
+const MOCK_USER_ID = 'user-abc-123'; 
 
-// Seed the database with initial mock data if it doesn't exist
 export async function seedInitialProject(): Promise<{ success: boolean; message: string }> {
   try {
     const projectRef = doc(db, 'projects', MOCK_PROJECT_ID);
     const projectSnap = await getDoc(projectRef);
 
     if (projectSnap.exists()) {
-      return { success: true, message: 'Project already exists.' };
+      return { success: true, message: 'Test project already exists.' };
     }
 
     const mockProjectData: ProjectTrackingInfo = {
@@ -24,81 +25,98 @@ export async function seedInitialProject(): Promise<{ success: boolean; message:
       userId: MOCK_USER_ID,
       currentStage: 'programming',
       stages: {
-        components_collected: {
-          status: 'completed',
-          timestamp: new Date('2023-10-26T10:00:00Z').toISOString(),
-          notes: 'All components received from suppliers.',
-        },
-        circuit_design: {
-          status: 'completed',
-          timestamp: new Date('2023-10-27T14:30:00Z').toISOString(),
-          notes: 'Schematic finalized and PCB layout sent for fabrication.',
-          imageUrl: 'https://placehold.co/600x400.png',
-        },
-        programming: {
-          status: 'in_progress',
-          timestamp: new Date('2023-10-28T11:00:00Z').toISOString(),
-          notes: 'Initial firmware flashed. Working on sensor integration logic.',
-        },
-        testing: {
-          status: 'pending',
-          timestamp: '',
-        },
-        shipping: {
-          status: 'pending',
-          timestamp: '',
-        },
+        components_collected: { status: 'completed', timestamp: new Date('2023-10-26T10:00:00Z').toISOString() },
+        circuit_design: { status: 'completed', timestamp: new Date('2023-10-27T14:30:00Z').toISOString(), imageUrl: 'https://placehold.co/600x400.png' },
+        programming: { status: 'in_progress', timestamp: new Date('2023-10-28T11:00:00Z').toISOString(), notes: 'Initial firmware flashed.' },
+        testing: { status: 'pending', timestamp: '' },
+        shipping: { status: 'pending', timestamp: '' },
       },
     };
     
     await setDoc(projectRef, mockProjectData);
     revalidatePath('/admin');
     revalidatePath('/tracking');
-    return { success: true, message: 'Initial project data seeded successfully!' };
+    return { success: true, message: 'Initial test project seeded successfully!' };
   } catch (error) {
     console.error('Error seeding data:', error);
-    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
-    return { success: false, message: `Failed to seed data: ${errorMessage}` };
+    return { success: false, message: `Failed to seed data: ${error instanceof Error ? error.message : "Unknown error"}` };
   }
 }
 
-// Update a project document in Firestore
-export async function updateProjectInFirestore(
-  projectId: string,
-  dataToUpdate: Partial<ProjectTrackingInfo>
-): Promise<{ success: boolean, message: string }> {
+export async function updateProjectInFirestore(projectId: string, dataToUpdate: Partial<ProjectTrackingInfo>): Promise<{ success: boolean, message: string }> {
   try {
     const projectRef = doc(db, 'projects', projectId);
-    
-    // To ensure a consistent update time for the stage that's being changed
-    const updatedData = { ...dataToUpdate };
-    if(updatedData.currentStage && updatedData.stages) {
-        const currentStageKey = updatedData.currentStage;
-        updatedData.stages[currentStageKey]!.timestamp = new Date().toISOString();
-        updatedData.stages[currentStageKey]!.status = 'in_progress';
-        
-        // Mark previous stages as completed
-        const stageKeys: (keyof typeof updatedData.stages)[] = ['components_collected', 'circuit_design', 'programming', 'testing', 'shipping'];
-        const currentStageIndex = stageKeys.indexOf(currentStageKey);
-        for(let i=0; i<currentStageIndex; i++){
-            const stageKey = stageKeys[i];
-            if(updatedData.stages[stageKey]!.status !== 'completed'){
-                updatedData.stages[stageKey]!.status = 'completed';
-                updatedData.stages[stageKey]!.timestamp = new Date().toISOString();
-            }
-        }
-    }
-    
-    await updateDoc(projectRef, updatedData);
-    
-    // Revalidate paths to ensure fresh data is served on next load
+    await updateDoc(projectRef, dataToUpdate);
     revalidatePath('/admin');
     revalidatePath('/tracking');
-    
     return { success: true, message: `Project ${projectId} updated successfully.` };
   } catch (error) {
     console.error('Error updating project:', error);
-    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
-    return { success: false, message: `Failed to update project: ${errorMessage}` };
+    return { success: false, message: `Failed to update project: ${error instanceof Error ? error.message : "Unknown error"}` };
   }
+}
+
+export async function submitProjectRequest(requestData: Omit<ProjectRequest, 'id' | 'createdAt'>) {
+    try {
+        await addDoc(collection(db, 'projectRequests'), {
+            ...requestData,
+            createdAt: new Date().toISOString(),
+        });
+        
+        // Also send an email notification
+        const emailSubject = `New Request: ${requestData.projectTitle || requestData.topic}`;
+        const emailBody = `<p>A new custom request has been submitted and is waiting for approval in the admin panel.</p><hr><pre>${JSON.stringify(requestData, null, 2)}</pre>`;
+        const emailResult = await sendEmail({ subject: emailSubject, body: emailBody });
+
+        if (!emailResult.success) {
+            console.warn("Firestore save succeeded, but email notification failed:", emailResult.message);
+            // Don't block success, just log the warning.
+        }
+
+        revalidatePath('/admin');
+        return { success: true, message: 'Request submitted successfully.' };
+    } catch(error) {
+        console.error("Error submitting project request:", error);
+        return { success: false, message: `Failed to submit request: ${error instanceof Error ? error.message : "Unknown error"}` };
+    }
+}
+
+export async function approveProjectRequest(request: ProjectRequest): Promise<{ success: boolean; message: string; projectId?: string }> {
+    try {
+        const newProjectId = `SK-${Math.floor(1000 + Math.random() * 9000)}`;
+        const newProject: ProjectTrackingInfo = {
+            projectId: newProjectId,
+            userId: request.email, // Use user's email as a temporary ID
+            currentStage: 'components_collected',
+            stages: {
+                components_collected: { status: 'in_progress', timestamp: new Date().toISOString(), notes: `Project created from request: ${request.projectTitle || request.topic}` },
+                circuit_design: { status: 'pending', timestamp: '' },
+                programming: { status: 'pending', timestamp: '' },
+                testing: { status: 'pending', timestamp: '' },
+                shipping: { status: 'pending', timestamp: '' },
+            }
+        };
+
+        await setDoc(doc(db, 'projects', newProjectId), newProject);
+        await deleteDoc(doc(db, 'projectRequests', request.id));
+
+        revalidatePath('/admin');
+        revalidatePath('/tracking');
+        
+        return { success: true, message: 'Project created successfully.', projectId: newProjectId };
+    } catch (error) {
+        console.error("Error approving request:", error);
+        return { success: false, message: `Failed to approve request: ${error instanceof Error ? error.message : "Unknown error"}` };
+    }
+}
+
+export async function declineProjectRequest(requestId: string): Promise<{ success: boolean; message: string }> {
+    try {
+        await deleteDoc(doc(db, 'projectRequests', requestId));
+        revalidatePath('/admin');
+        return { success: true, message: 'Request declined and removed.' };
+    } catch (error) {
+        console.error("Error declining request:", error);
+        return { success: false, message: `Failed to decline request: ${error instanceof Error ? error.message : "Unknown error"}` };
+    }
 }

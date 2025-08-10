@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Send, Lightbulb, Settings, Package, Loader2 } from 'lucide-react';
-import { sendEmail } from '@/ai/flows/send-email-flow';
+import { submitProjectRequest } from '@/app/admin/actions';
 
 interface CustomProjectFormState {
   name: string;
@@ -51,26 +51,11 @@ export default function CustomProjectPage() {
     }
 
     setIsLoading(true);
-
-    const emailSubject = `Custom Project Request: ${formData.projectTitle}`;
-    const emailBody = `
-      <p>You have received a new custom project request.</p>
-      <hr>
-      <h3>Contact Details:</h3>
-      <p><b>Name:</b> ${formData.name}</p>
-      <p><b>Email:</b> ${formData.email}</p>
-      <hr>
-      <h3>Project Details:</h3>
-      <p><b>Project Title/Idea:</b> ${formData.projectTitle}</p>
-      <p><b>Preferred Microcontroller:</b> ${formData.microcontroller || 'Not specified'}</p>
-      <p><b>Key Components:</b><br>${formData.components.replace(/\n/g, '<br>') || 'Not specified'}</p>
-      <p><b>Project Description:</b><br>${formData.description.replace(/\n/g, '<br>')}</p>
-      <p><b>Estimated Budget:</b> ${formData.budget || 'Not specified'}</p>
-      <hr>
-    `;
-
+    
     try {
-      const result = await sendEmail({ subject: emailSubject, body: emailBody });
+      // The server action now handles both saving to Firestore and sending the email
+      const result = await submitProjectRequest({ type: 'project', ...formData });
+
       if (result.success) {
         toast({
           title: "Request Submitted!",
@@ -91,9 +76,10 @@ export default function CustomProjectPage() {
       }
     } catch (error) {
       console.error("Form submission error:", error);
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
         title: "Submission Failed",
-        description: "There was a problem sending your request. Please try again.",
+        description: `There was a problem sending your request: ${errorMessage}`,
         variant: "destructive",
       });
     } finally {
