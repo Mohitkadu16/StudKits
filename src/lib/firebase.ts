@@ -4,25 +4,40 @@
 import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
 import { 
   getAuth, 
+  updateProfile,
   createUserWithEmailAndPassword as firebaseCreateUserWithEmailAndPassword, 
   signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword,
   signOut as firebaseSignOut, 
   onAuthStateChanged,
   type User
 } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { firebaseConfig } from "./firebase-config";
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig as FirebaseOptions) : getApp();
 const auth = getAuth(app);
+const storage = getStorage(app);
 
-// It's better to export the functions with the auth instance already passed in
-// or export the auth instance itself and pass it at the call site.
-// We'll pass it at the call site for clarity.
+// Wrapper for updating user profile
+export const updateUserProfile = async (user: User, profileData: { displayName?: string; photoURL?: string }) => {
+  if (!user) throw new Error("User not authenticated");
+  await updateProfile(user, profileData);
+};
+
+// Wrapper for uploading profile photo
+export const uploadProfilePhoto = async (userId: string, file: File): Promise<string> => {
+  const storageRef = ref(storage, `profile_photos/${userId}/${file.name}`);
+  const snapshot = await uploadBytes(storageRef, file);
+  const downloadURL = await getDownloadURL(snapshot.ref);
+  return downloadURL;
+};
+
 
 export { 
   app, 
   auth, // Export auth instance
+  storage,
   firebaseCreateUserWithEmailAndPassword as createUserWithEmailAndPassword, 
   firebaseSignInWithEmailAndPassword as signInWithEmailAndPassword, 
   firebaseSignOut as signOut,
