@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { signInWithEmailAndPassword } from '@/lib/firebase';
+import { auth, signInWithEmailAndPassword } from '@/lib/firebase';
 import { Loader2 } from 'lucide-react';
 
 const loginSchema = z.object({
@@ -40,7 +40,7 @@ export default function LoginPage() {
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(data.email, data.password);
+      await signInWithEmailAndPassword(auth, data.email, data.password);
       toast({
         title: 'Login Successful',
         description: "Welcome back!",

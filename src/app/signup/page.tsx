@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { createUserWithEmailAndPassword } from '@/lib/firebase';
+import { auth, createUserWithEmailAndPassword } from '@/lib/firebase';
 import { Loader2 } from 'lucide-react';
 
 const signupSchema = z.object({
@@ -39,7 +39,7 @@ export default function SignupPage() {
   const onSubmit: SubmitHandler<SignupFormValues> = async (data) => {
     setIsLoading(true);
     try {
-      await createUserWithEmailAndPassword(data.email, data.password);
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
       toast({
         title: 'Account Created',
         description: "Welcome! You have been successfully signed up.",
