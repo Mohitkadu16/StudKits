@@ -8,9 +8,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Mail, User, MessageSquare, Send, Instagram } from 'lucide-react';
+import { Mail, User, MessageSquare, Send, Instagram, Loader2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
+import { sendEmail } from '@/ai/flows/send-email-flow';
 
 interface ContactFormState {
   name: string;
@@ -21,6 +22,7 @@ interface ContactFormState {
 
 export default function ContactUsPage() {
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<ContactFormState>({
     name: '',
     email: '',
@@ -33,7 +35,7 @@ export default function ContactUsPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast({
@@ -43,31 +45,49 @@ export default function ContactUsPage() {
       });
       return;
     }
+    
+    setIsLoading(true);
 
-    const mailtoSubject = `Contact Form: ${formData.subject}`;
-    const mailtoBody = `
-      Name: ${formData.name}
-      Email: ${formData.email}
-      Subject: ${formData.subject}
-
-      Message:
-      ${formData.message}
+    const emailSubject = `Contact Form: ${formData.subject}`;
+    const emailBody = `
+      <p>You have received a new message from the contact form on your website.</p>
+      <hr>
+      <p><b>Name:</b> ${formData.name}</p>
+      <p><b>Email:</b> ${formData.email}</p>
+      <p><b>Subject:</b> ${formData.subject}</p>
+      <h3>Message:</h3>
+      <p>${formData.message.replace(/\n/g, '<br>')}</p>
+      <hr>
     `;
-    const mailtoLink = `mailto:studkits25@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
 
-    window.location.href = mailtoLink;
+    try {
+      const result = await sendEmail({ subject: emailSubject, body: emailBody });
 
-    toast({
-      title: "Message Prepared",
-      description: "Your message has been prepared. Please send the email via your mail client.",
-    });
-     // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-    });
+      if (result.success) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for contacting us. We'll get back to you shortly.",
+        });
+        // Reset form after submission
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast({
+        title: "Submission Failed",
+        description: "There was a problem sending your message. Please try again later or contact us directly via email.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -98,14 +118,14 @@ export default function ContactUsPage() {
                     <User className="mr-2 h-4 w-4 text-muted-foreground" />
                     Your Name <span className="text-destructive">*</span>
                   </Label>
-                  <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required />
+                  <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required disabled={isLoading}/>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email" className="flex items-center">
                     <Mail className="mr-2 h-4 w-4 text-muted-foreground" />
                     Your Email <span className="text-destructive">*</span>
                   </Label>
-                  <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required />
+                  <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required disabled={isLoading}/>
                 </div>
               </div>
 
@@ -114,7 +134,7 @@ export default function ContactUsPage() {
                   <MessageSquare className="mr-2 h-4 w-4 text-muted-foreground" />
                   Subject <span className="text-destructive">*</span>
                 </Label>
-                <Input id="subject" name="subject" value={formData.subject} onChange={handleChange} placeholder="What is your message about?" required />
+                <Input id="subject" name="subject" value={formData.subject} onChange={handleChange} placeholder="What is your message about?" required disabled={isLoading}/>
               </div>
 
               <div className="space-y-2">
@@ -127,13 +147,17 @@ export default function ContactUsPage() {
                   placeholder="Write your message here..."
                   rows={6}
                   required
+                  disabled={isLoading}
                 />
               </div>
             </CardContent>
             <CardFooter>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md">
-                <Send className="mr-2 h-4 w-4" />
-                Send Message
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md" disabled={isLoading}>
+                {isLoading ? (
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...</>
+                ) : (
+                    <><Send className="mr-2 h-4 w-4" /> Send Message</>
+                )}
               </Button>
             </CardFooter>
           </form>

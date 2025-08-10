@@ -8,7 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Lightbulb, Settings, Package } from 'lucide-react';
+import { Send, Lightbulb, Settings, Package, Loader2 } from 'lucide-react';
+import { sendEmail } from '@/ai/flows/send-email-flow';
 
 interface CustomProjectFormState {
   name: string;
@@ -22,6 +23,7 @@ interface CustomProjectFormState {
 
 export default function CustomProjectPage() {
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<CustomProjectFormState>({
     name: '',
     email: '',
@@ -37,7 +39,7 @@ export default function CustomProjectPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.projectTitle || !formData.description) {
       toast({
@@ -48,34 +50,55 @@ export default function CustomProjectPage() {
       return;
     }
 
-    const mailtoSubject = `Custom Project Request: ${formData.projectTitle}`;
-    const mailtoBody = `
-      Name: ${formData.name}
-      Email: ${formData.email}
-      Project Title/Idea: ${formData.projectTitle}
-      Preferred Microcontroller: ${formData.microcontroller || 'Not specified'}
-      Key Components: ${formData.components || 'Not specified'}
-      Project Description: ${formData.description}
-      Estimated Budget: ${formData.budget || 'Not specified'}
+    setIsLoading(true);
+
+    const emailSubject = `Custom Project Request: ${formData.projectTitle}`;
+    const emailBody = `
+      <p>You have received a new custom project request.</p>
+      <hr>
+      <h3>Contact Details:</h3>
+      <p><b>Name:</b> ${formData.name}</p>
+      <p><b>Email:</b> ${formData.email}</p>
+      <hr>
+      <h3>Project Details:</h3>
+      <p><b>Project Title/Idea:</b> ${formData.projectTitle}</p>
+      <p><b>Preferred Microcontroller:</b> ${formData.microcontroller || 'Not specified'}</p>
+      <p><b>Key Components:</b><br>${formData.components.replace(/\n/g, '<br>') || 'Not specified'}</p>
+      <p><b>Project Description:</b><br>${formData.description.replace(/\n/g, '<br>')}</p>
+      <p><b>Estimated Budget:</b> ${formData.budget || 'Not specified'}</p>
+      <hr>
     `;
-    const mailtoLink = `mailto:studkits25@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
 
-    window.location.href = mailtoLink;
-
-    toast({
-      title: "Request Submitted",
-      description: "Your custom project request has been prepared. Please send the email via your mail client.",
-    });
-     // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      projectTitle: '',
-      microcontroller: '',
-      components: '',
-      description: '',
-      budget: '',
-    });
+    try {
+      const result = await sendEmail({ subject: emailSubject, body: emailBody });
+      if (result.success) {
+        toast({
+          title: "Request Submitted!",
+          description: "Your custom project request has been sent. We'll review it and get back to you.",
+        });
+        // Reset form after submission
+        setFormData({
+          name: '',
+          email: '',
+          projectTitle: '',
+          microcontroller: '',
+          components: '',
+          description: '',
+          budget: '',
+        });
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast({
+        title: "Submission Failed",
+        description: "There was a problem sending your request. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -102,17 +125,17 @@ export default function CustomProjectPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Your Name <span className="text-destructive">*</span></Label>
-                <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required />
+                <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required disabled={isLoading}/>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Your Email <span className="text-destructive">*</span></Label>
-                <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required />
+                <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required disabled={isLoading}/>
               </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="projectTitle">Project Title / Idea <span className="text-destructive">*</span></Label>
-              <Input id="projectTitle" name="projectTitle" value={formData.projectTitle} onChange={handleChange} placeholder="e.g., Automated Pet Feeder" required />
+              <Input id="projectTitle" name="projectTitle" value={formData.projectTitle} onChange={handleChange} placeholder="e.g., Automated Pet Feeder" required disabled={isLoading}/>
             </div>
 
             <div className="space-y-2">
@@ -120,7 +143,7 @@ export default function CustomProjectPage() {
                 <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
                 Preferred Microcontroller (e.g., Arduino, ESP32)
               </Label>
-              <Input id="microcontroller" name="microcontroller" value={formData.microcontroller} onChange={handleChange} placeholder="e.g., ESP32-WROOM-32" />
+              <Input id="microcontroller" name="microcontroller" value={formData.microcontroller} onChange={handleChange} placeholder="e.g., ESP32-WROOM-32" disabled={isLoading}/>
             </div>
 
             <div className="space-y-2">
@@ -135,6 +158,7 @@ export default function CustomProjectPage() {
                 onChange={handleChange}
                 placeholder="List any specific components you have in mind (e.g., Servo motor SG90, DHT11 sensor, 16x2 LCD)"
                 rows={3}
+                disabled={isLoading}
               />
             </div>
 
@@ -148,18 +172,22 @@ export default function CustomProjectPage() {
                 placeholder="Describe your project, its features, and how it should work."
                 rows={5}
                 required
+                disabled={isLoading}
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="budget">Estimated Budget (Optional)</Label>
-              <Input id="budget" name="budget" value={formData.budget} onChange={handleChange} placeholder="e.g., ₹1500 - ₹2000" />
+              <Input id="budget" name="budget" value={formData.budget} onChange={handleChange} placeholder="e.g., ₹1500 - ₹2000" disabled={isLoading}/>
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md">
-              <Send className="mr-2 h-4 w-4" />
-              Submit Request
+            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md" disabled={isLoading}>
+              {isLoading ? (
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting Request...</>
+              ) : (
+                <><Send className="mr-2 h-4 w-4" /> Submit Request</>
+              )}
             </Button>
           </CardFooter>
         </form>
