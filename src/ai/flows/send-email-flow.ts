@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview A flow for sending emails.
@@ -12,8 +11,36 @@ import * as nodemailer from 'nodemailer';
 import { SendEmailInputSchema, type SendEmailInput } from './send-email-types';
 
 
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000; // 1 second
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export async function sendEmail(input: SendEmailInput): Promise<{ success: boolean; message: string }> {
-  return sendEmailFlow(input);
+  let lastError: Error | null = null;
+  
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const result = await sendEmailFlow(input);
+      if (result.success) {
+        return result;
+      }
+      lastError = new Error(result.message);
+    } catch (error) {
+      lastError = error as Error;
+      console.error(`Attempt ${attempt} failed:`, error);
+      
+      if (attempt < MAX_RETRIES) {
+        await sleep(RETRY_DELAY * attempt);
+        continue;
+      }
+    }
+  }
+  
+  return {
+    success: false,
+    message: `Failed after ${MAX_RETRIES} attempts. Last error: ${lastError?.message || 'Unknown error'}`,
+  };
 }
 
 const sendEmailFlow = ai.defineFlow(

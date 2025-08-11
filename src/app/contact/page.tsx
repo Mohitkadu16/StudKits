@@ -37,6 +37,17 @@ export default function ContactUsPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    
+    // Check network connectivity
+    if (!navigator.onLine) {
+      toast({
+        title: "No Internet Connection",
+        description: "Please check your internet connection and try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast({
         title: "Missing Information",
