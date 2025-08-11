@@ -1,0 +1,15 @@
+{
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "env": {
+    "NEXT_PUBLIC_FIREBASE_API_KEY": "AIzaSyCWytCdsW1UOAzklH9fCFM1CjcYktMvUj0",
+    "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "projectpro-paeuq.firebaseapp.com",
+    "NEXT_PUBLIC_FIREBASE_PROJECT_ID": "projectpro-paeuq",
+    "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET": "projectpro-paeuq.appspot.com",
+    "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "513195342285",
+    "NEXT_PUBLIC_FIREBASE_APP_ID": "1:513195342285:web:1878f9a4dbd5641291ec84"
+  }
+}

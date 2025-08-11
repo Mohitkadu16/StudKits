@@ -86,8 +86,6 @@ export default function ProjectDetailPage() {
                 frameBorder="0"
                 allow="autoplay; fullscreen; xr-spatial-tracking"
                 allowFullScreen
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true"
               />
             ) : (
               <Image

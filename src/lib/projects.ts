@@ -55,7 +55,7 @@ export const projects: Project[] = [
     price: 2500,
     category: 'IoT-Based Projects',
     categoryIcon: Network,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/helth monitor.png',
     features: ['Vibration Sensor', 'ESP32 Microcontroller', 'OLED Display', 'Data Analysis for Anomalies', 'Wireless Connectivity'],
     benefits: ['Predictive Maintenance', 'Reduced Downtime', 'Extended Machine Lifespan', 'Improved Safety'],
     dataAiHint: 'iot industrial'
@@ -68,7 +68,7 @@ export const projects: Project[] = [
     price: 2300,
     category: 'IoT-Based Projects',
     categoryIcon: Network,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/water quality monitor.png',
     features: ['pH Sensor', 'TDS Sensor', 'Arduino Microcontroller', 'LCD/OLED Display (optional)', 'Data Logging'],
     benefits: ['Ensures Water Safety', 'Environmental Protection', 'Real-time Data', 'Suitable for Various Applications'],
     dataAiHint: 'iot water-quality'
@@ -82,7 +82,7 @@ export const projects: Project[] = [
     price: 1500,
     category: 'Robotics & Automation',
     categoryIcon: Bot,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/water cleaning boat.png',
     features: ['DC Motors', 'Floaters/Buoyancy System', 'Arduino Controller', 'IR Sensors for Detection', 'Garbage Collection Mechanism'],
     benefits: ['Automated Water Cleaning', 'Environmental Improvement', 'Reduces Manual Effort', 'Scalable Design'],
     dataAiHint: 'robotics boat'
@@ -95,7 +95,7 @@ export const projects: Project[] = [
     price: 1700,
     category: 'Robotics & Automation',
     categoryIcon: Bot,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/obstacle avoid robot.png',
     features: ['Ultrasonic Sensor', 'Arduino Microcontroller', 'Robot Chassis & Wheels', 'Motor Driver', 'Autonomous Navigation Algorithm'],
     benefits: ['Introduction to Robotics', 'Understanding Sensor Integration', 'Autonomous Movement', 'Fun and Educational'],
     dataAiHint: 'robotics autonomous'
@@ -108,7 +108,7 @@ export const projects: Project[] = [
     price: 3000,
     category: 'Robotics & Automation',
     categoryIcon: Bot,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/robotic arm.png',
     features: ['Servo Motors (Multiple)', 'Arduino Controller', 'Robotic Arm Structure', 'Gripper Mechanism', 'Control Interface (e.g., potentiometers or code)'],
     benefits: ['Learn about Kinematics', 'Precise Motor Control', 'Automation Principles', 'Hands-on Mechanical Assembly'],
     dataAiHint: 'robotics arm'
@@ -121,7 +121,7 @@ export const projects: Project[] = [
     price: 2700,
     category: 'Robotics & Automation',
     categoryIcon: Bot,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/solar panel robot.png',
     features: ['Wiper Motor & Cleaning Brush/Squeegee', 'Solar Panel for Power (optional)', 'ESP32 Microcontroller', 'Movement Mechanism (wheels/tracks)', 'Automated Cleaning Cycle'],
     benefits: ['Maintains Solar Panel Efficiency', 'Reduces Manual Cleaning', 'Water-Saving (if dry cleaning)', 'Automated Operation'],
     dataAiHint: 'robotics solar'
@@ -135,7 +135,7 @@ export const projects: Project[] = [
     price: 2300,
     category: 'Embedded Systems',
     categoryIcon: Cpu,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/attendance system.png',
     features: ['Fingerprint Sensor Module', 'Arduino Microcontroller', 'LCD Display', 'Real-Time Clock (RTC) (optional)', 'Data Storage (SD card/EEPROM)'],
     benefits: ['Accurate Attendance Tracking', 'Prevents Proxy Attendance', 'Easy to Use', 'Automated Record Keeping'],
     dataAiHint: 'embedded fingerprint'
@@ -148,7 +148,7 @@ export const projects: Project[] = [
     price: 1400,
     category: 'Embedded Systems',
     categoryIcon: Cpu,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/traffic light system.png',
     features: ['IR Sensors for Vehicle Detection', 'Arduino Microcontroller', 'LEDs for Traffic Lights', 'Dynamic Signal Timing Algorithm', 'Pedestrian Button (optional)'],
     benefits: ['Reduced Traffic Congestion', 'Improved Traffic Flow', 'Energy Efficient', 'Adaptable to Real-time Conditions'],
     dataAiHint: 'embedded traffic'
@@ -161,7 +161,7 @@ export const projects: Project[] = [
     price: 2100,
     category: 'Embedded Systems',
     categoryIcon: Cpu,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/health wearable.png',
     features: ['Pulse Sensor (e.g., MAX30100 or similar)', 'ESP32 Microcontroller (with Bluetooth/Wi-Fi)', 'OLED Display', 'Compact Wearable Design', 'Battery Power'],
     benefits: ['Personal Health Tracking', 'Early Detection of Irregularities', 'Portable and Convenient', 'Potential for IoT Integration'],
     dataAiHint: 'embedded health'
@@ -174,7 +174,7 @@ export const projects: Project[] = [
     price: 3500,
     category: 'Embedded Systems',
     categoryIcon: Cpu,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/wheelchai.png',
     features: ['Voice Recognition Module (e.g., V3)', 'DC Motors & Motor Driver', 'Arduino Microcontroller', 'Wheelchair Chassis Integration', 'Safety Features (e.g., obstacle sensors - optional)'],
     benefits: ['Increased Independence for Users', 'Hands-Free Operation', 'Accessibility Solution', 'Customizable Commands'],
     dataAiHint: 'embedded assistive'
@@ -188,7 +188,7 @@ export const projects: Project[] = [
     price: 1000,
     category: 'PCB Design & Prototyping',
     categoryIcon: CircuitBoard,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/pcb designing.png',
     features: ['Schematic Design', 'Component Footprint Creation', 'Single-Layer Routing', 'Gerber File Generation', 'Bill of Materials (BOM) (optional)'],
     benefits: ['Professional & Compact Circuits', 'Reduced Wiring Errors', 'Reliable Performance', 'Ready for Manufacturing'],
     dataAiHint: 'pcb design'
@@ -201,7 +201,7 @@ export const projects: Project[] = [
     price: 800,
     category: 'PCB Design & Prototyping',
     categoryIcon: CircuitBoard,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/breakout board.png',
     features: ['Optimized for Specific Sensor', 'Easy Pin Access', 'On-board Components (if needed)', 'Compact Design', 'Gerber Files Provided'],
     benefits: ['Simplified Sensor Integration', 'Plug-and-Play Usage', 'Reduced Prototyping Time', 'Space Saving'],
     dataAiHint: 'pcb sensor'
@@ -214,7 +214,7 @@ export const projects: Project[] = [
     price: 1200,
     category: 'PCB Design & Prototyping',
     categoryIcon: CircuitBoard,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/power management.png',
     features: ['Battery Charging Circuit Design', 'Solar Charge Controller Design', 'Voltage Regulation', 'Protection Circuitry (overcharge, over-discharge)', 'Gerber Files Provided'],
     benefits: ['Reliable Power for Projects', 'Efficient Energy Use', 'Safe Battery Operation', 'Compact Power Solution'],
     dataAiHint: 'pcb power'
@@ -228,7 +228,7 @@ export const projects: Project[] = [
     price: 500,
     category: 'Services',
     categoryIcon: Presentation,
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/custom presentation.png',
     features: ['Tailored Content on Any Topic', 'Professional & Modern Design', 'Clear Explanations of Technical Details', 'Inclusion of Diagrams and Visuals', 'Source File Delivery (PPTX)'],
     benefits: ['Saves Time and Effort', 'Clearly Communicates Your Ideas', 'Improves Grades or Pitch Success', 'Professional Quality'],
     dataAiHint: 'presentation service',

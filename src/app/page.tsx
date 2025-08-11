@@ -3,7 +3,7 @@
 
 import { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { projects, getCategories, getCategoryIcon, Project } from '@/lib/projects';
+import { projects, getCategories, getCategoryIcon } from '@/lib/projects';
 import { ProjectCard } from '@/components/project/project-card';
 import { ProjectFilters } from '@/components/project/project-filters';
 import { Input } from '@/components/ui/input';
