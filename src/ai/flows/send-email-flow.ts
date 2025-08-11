@@ -16,12 +16,44 @@ const RETRY_DELAY = 1000; // 1 second
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+// Cache the transporter
+let cachedTransporter: nodemailer.Transporter | null = null;
+
+function getTransporter() {
+  if (cachedTransporter) return cachedTransporter;
+
+  cachedTransporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT),
+    secure: process.env.EMAIL_SECURE === 'true',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+    pool: true, // Use pooled connections
+    maxConnections: 5, // Maximum number of connections to make at once
+    maxMessages: Infinity, // No limit on messages per connection
+  });
+
+  return cachedTransporter;
+}
+
 export async function sendEmail(input: SendEmailInput): Promise<{ success: boolean; message: string }> {
   let lastError: Error | null = null;
-  
+
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      const result = await sendEmailFlow(input);
+      if (!navigator?.onLine) {
+        throw new Error('No internet connection available');
+      }
+
+      const result = await Promise.race([
+        sendEmailFlow(input),
+        new Promise<never>((_, reject) => 
+          setTimeout(() => reject(new Error('Request timeout')), 10000)
+        ),
+      ]) as { success: boolean; message: string };
+
       if (result.success) {
         return result;
       }

@@ -35,6 +35,30 @@ export default function ContactUsPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const validateForm = () => {
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all fields.",
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
@@ -47,6 +71,8 @@ export default function ContactUsPage() {
       });
       return;
     }
+
+    if (!validateForm()) return;
 
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast({
