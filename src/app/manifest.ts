@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next'
- 
+import { analytics } from '@/lib/analytics';
+import { logEvent } from 'firebase/analytics';
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'StudKits',
@@ -41,3 +43,10 @@ export default function manifest(): MetadataRoute.Manifest {
 
 // Copy command for Windows Command Prompt
 // copy "c:\Users\mohit\Downloads\favicon_io\*" "c:\Users\mohit\My folder\Coding\studio\public\"
+
+const analyticsInstance = await analytics();
+if (analyticsInstance) {
+  logEvent(analyticsInstance, 'custom_event', {
+    // your event parameters
+  });
+}
