@@ -3,6 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Users, Target, Lightbulb, Zap } from 'lucide-react';
+import Image from 'next/image';
 
 export default function AboutUsPage() {
   return (
@@ -105,8 +106,14 @@ export default function AboutUsPage() {
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <Card className="text-center shadow-md p-4">
             <CardHeader>
-              <div className="mx-auto h-32 w-32 rounded-full bg-muted flex items-center justify-center border-4 border-primary/20">
-                <Users className="h-16 w-16 text-muted-foreground" />
+              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
+                <Image
+                  src="/images/mohit photo.jpg"
+                  alt="Mohit Kadu"
+                  width={128}
+                  height={128}
+                  className="object-cover w-full h-full"
+                />
               </div>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -119,8 +126,14 @@ export default function AboutUsPage() {
           </Card>
           <Card className="text-center shadow-md p-4">
             <CardHeader>
-                <div className="mx-auto h-32 w-32 rounded-full bg-muted flex items-center justify-center border-4 border-primary/20">
-                    <Users className="h-16 w-16 text-muted-foreground" />
+                <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
+                  <Image
+                    src="/images/ved photo.jpg"
+                    alt="Ved Bhardwaj"
+                    width={128}
+                    height={128}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
             </CardHeader>
             <CardContent className="space-y-2">

@@ -9,7 +9,12 @@ import {
   type User
 } from "firebase/auth";
 import { getStorage } from "firebase/storage";
-import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
+import { 
+  getFirestore, 
+  enableIndexedDbPersistence, 
+  disableNetwork, 
+  enableNetwork 
+} from "firebase/firestore";
 import { firebaseConfig } from "./firebase-config";
 
 // Initialize Firebase
@@ -18,20 +23,41 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 const db = getFirestore(app);
 
-// Enable offline persistence
+// Enable offline persistence with custom configuration
 if (typeof window !== 'undefined') {
   try {
     enableIndexedDbPersistence(db).catch((err: { code: string }) => {
       if (err.code === 'failed-precondition') {
         // Multiple tabs open, persistence can only be enabled in one tab at a time.
-        console.log('Persistence failed: Multiple tabs open');
+        console.warn('Firebase persistence failed: Multiple tabs open');
       } else if (err.code === 'unimplemented') {
         // The current browser doesn't support persistence
-        console.log('Persistence not supported by browser');
+        console.warn('Firebase persistence not supported by browser');
       }
     });
+
+    // Set up offline capabilities
+    enableNetwork(db).catch((error: Error) => {
+      console.error('Error enabling network:', error);
+    });
+
+    // Listen for online/offline status
+    window.addEventListener('online', () => {
+      console.log('App is online, enabling Firebase network');
+      enableNetwork(db).catch((error: Error) => {
+        console.error('Error enabling network:', error);
+      });
+    });
+
+    window.addEventListener('offline', () => {
+      console.log('App is offline, disabling Firebase network');
+      disableNetwork(db).catch((error: Error) => {
+        console.error('Error disabling network:', error);
+      });
+    });
+
   } catch (err) {
-    console.error('Error enabling persistence:', err);
+    console.error('Error setting up Firebase offline persistence:', err);
   }
 }
 

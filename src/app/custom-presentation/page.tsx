@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Send, Presentation, FileText, Palette, Users, Loader2 } from 'lucide-react';
-import { submitProjectRequest } from '@/app/admin/actions';
+import { sendFormEmail } from '@/lib/emailjs';
 
 interface CustomPresentationFormState {
   name: string;
@@ -53,27 +53,33 @@ export default function CustomPresentationPage() {
     setIsLoading(true);
     
     try {
-      // The server action now handles both saving to Firestore and sending the email
-      const result = await submitProjectRequest({ type: 'presentation', ...formData });
+      await sendFormEmail({
+        name: formData.name,
+        email: formData.email,
+        subject: `Custom Presentation Request: ${formData.topic}`,
+        message: formData.instructions,
+        requestType: 'presentation',
+        topic: formData.topic,
+        audience: formData.audience,
+        purpose: formData.purpose,
+        style: formData.style
+      });
 
-      if (result.success) {
-        toast({
-          title: "Request Sent!",
-          description: "Your presentation request has been sent. We will contact you shortly.",
-        });
-        // Reset form after submission
-        setFormData({
-          name: '',
-          email: '',
-          topic: '',
-          audience: '',
-          purpose: '',
-          style: '',
-          instructions: '',
-        });
-      } else {
-        throw new Error(result.message);
-      }
+      toast({
+        title: "Request Sent!",
+        description: "Your presentation request has been sent. We will contact you shortly.",
+      });
+      
+      // Reset form after submission
+      setFormData({
+        name: '',
+        email: '',
+        topic: '',
+        audience: '',
+        purpose: '',
+        style: '',
+        instructions: '',
+      });
     } catch (error) {
       console.error("Form submission error:", error);
       const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";

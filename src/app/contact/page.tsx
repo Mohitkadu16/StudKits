@@ -98,13 +98,21 @@ export default function ContactUsPage() {
     `;
 
     try {
+      const toastId = toast({
+        title: "Sending Message...",
+        description: "Please wait while we send your message...",
+        duration: 10000,
+      });
+
       const result = await sendEmail({ subject: emailSubject, body: emailBody });
 
       if (result.success) {
         toast({
-          title: "Message Sent!",
+          title: "Message Sent! ✅",
           description: "Thank you for contacting us. We'll get back to you shortly.",
+          duration: 5000,
         });
+        
         // Reset form after submission
         setFormData({
           name: '',
@@ -117,10 +125,14 @@ export default function ContactUsPage() {
       }
     } catch (error) {
       console.error("Form submission error:", error);
+      
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      
       toast({
         title: "Submission Failed",
-        description: "There was a problem sending your message. Please try again later or contact us directly via email.",
+        description: `Error: ${errorMessage}. Please try again or email us directly at studkits25@gmail.com`,
         variant: "destructive",
+        duration: 7000,
       });
     } finally {
       setIsLoading(false);

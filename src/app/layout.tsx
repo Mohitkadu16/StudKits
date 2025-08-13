@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from '@/context/auth-context';
 import { AnalyticsProvider } from '@/components/analytics-provider';
+import { ConnectivityProvider } from '@/components/connectivity-provider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -49,14 +50,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
-        <AnalyticsProvider />
         <AuthProvider>
-          <Navbar />
-          <main className="flex-grow container mx-auto px-4 py-8">
-            {children}
-          </main>
-          <Footer />
-          <Toaster />
+          <ConnectivityProvider>
+            <AnalyticsProvider />
+            <Navbar />
+            <main className="flex-grow container mx-auto px-4 py-8">
+              {children}
+            </main>
+            <Footer />
+            <Toaster />
+          </ConnectivityProvider>
         </AuthProvider>
       </body>
     </html>

@@ -63,9 +63,39 @@ export async function submitProjectRequest(requestData: Omit<ProjectRequest, 'id
             createdAt: new Date().toISOString(),
         });
         
-        // Also send an email notification
-        const emailSubject = `New Request: ${requestData.projectTitle || requestData.topic}`;
-        const emailBody = `<p>A new custom request has been submitted and is waiting for approval in the admin panel.</p><hr><pre>${JSON.stringify(requestData, null, 2)}</pre>`;
+        // Create a nicely formatted HTML email
+        const emailSubject = `New ${requestData.type === 'project' ? 'Project' : 'Presentation'} Request: ${requestData.projectTitle || requestData.topic}`;
+        const emailBody = `
+            <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #2563eb;">New ${requestData.type === 'project' ? 'Project' : 'Presentation'} Request</h2>
+                <p style="font-size: 16px;">A new request has been submitted with the following details:</p>
+                
+                <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="margin-top: 0;">Customer Details</h3>
+                    <p><strong>Name:</strong> ${requestData.name}</p>
+                    <p><strong>Email:</strong> ${requestData.email}</p>
+                    
+                    ${requestData.type === 'project' ? `
+                        <h3>Project Details</h3>
+                        <p><strong>Project Title:</strong> ${requestData.projectTitle}</p>
+                        <p><strong>Microcontroller:</strong> ${requestData.microcontroller || 'Not specified'}</p>
+                        <p><strong>Budget:</strong> ${requestData.budget || 'Not specified'}</p>
+                        <p><strong>Components:</strong> ${requestData.components || 'Not specified'}</p>
+                        <h4>Description:</h4>
+                        <p>${requestData.description}</p>
+                    ` : `
+                        <h3>Presentation Details</h3>
+                        <p><strong>Topic:</strong> ${requestData.topic}</p>
+                        <p><strong>Target Audience:</strong> ${requestData.audience || 'Not specified'}</p>
+                        <p><strong>Purpose:</strong> ${requestData.purpose || 'Not specified'}</p>
+                        <p><strong>Style:</strong> ${requestData.style || 'Not specified'}</p>
+                        <p><strong>Additional Instructions:</strong> ${requestData.instructions || 'None provided'}</p>
+                    `}
+                </div>
+                
+                <p style="color: #4b5563; font-style: italic;">Please check the admin panel for more details and to approve this request.</p>
+            </div>
+        `;
         const emailResult = await sendEmail({ subject: emailSubject, body: emailBody });
 
         if (!emailResult.success) {

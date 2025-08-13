@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Send, Lightbulb, Settings, Package, Loader2 } from 'lucide-react';
-import { submitProjectRequest } from '@/app/admin/actions';
+import { sendFormEmail } from '@/lib/emailjs';
 
 interface CustomProjectFormState {
   name: string;
@@ -39,48 +39,90 @@ export default function CustomProjectPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const validateForm = () => {
     if (!formData.name || !formData.email || !formData.projectTitle || !formData.description) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields (Name, Email, Project Title, Description).",
         variant: "destructive",
       });
+      return false;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    // Check network connectivity
+    if (!navigator.onLine) {
+      toast({
+        title: "No Internet Connection",
+        description: "Please check your internet connection and try again.",
+        variant: "destructive",
+      });
       return;
     }
 
+    if (!validateForm()) return;
+
     setIsLoading(true);
+    // Show initial loading toast
+    toast({
+      title: "Submitting Request...",
+      description: "Please wait while we process your project request...",
+      duration: 10000,
+    });
     
     try {
-      // The server action now handles both saving to Firestore and sending the email
-      const result = await submitProjectRequest({ type: 'project', ...formData });
+      await sendFormEmail({
+        name: formData.name,
+        email: formData.email,
+        subject: `Custom Project Request: ${formData.projectTitle}`,
+        message: formData.description,
+        requestType: 'project',
+        projectTitle: formData.projectTitle,
+        microcontroller: formData.microcontroller,
+        components: formData.components,
+        budget: formData.budget
+      });
 
-      if (result.success) {
-        toast({
-          title: "Request Submitted!",
-          description: "Your custom project request has been sent. We'll review it and get back to you.",
-        });
-        // Reset form after submission
-        setFormData({
-          name: '',
-          email: '',
-          projectTitle: '',
-          microcontroller: '',
-          components: '',
-          description: '',
-          budget: '',
-        });
-      } else {
-        throw new Error(result.message);
-      }
+      toast({
+        title: "Request Submitted! ✅",
+        description: "Your custom project request has been sent. We'll review it and get back to you soon.",
+        duration: 5000,
+      });
+      
+      // Reset form after submission
+      setFormData({
+        name: '',
+        email: '',
+        projectTitle: '',
+        microcontroller: '',
+        components: '',
+        description: '',
+        budget: '',
+      });
     } catch (error) {
       console.error("Form submission error:", error);
-      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
       toast({
         title: "Submission Failed",
-        description: `There was a problem sending your request: ${errorMessage}`,
+        description: `Error: ${errorMessage}. Please try again or contact us at studkits25@gmail.com`,
         variant: "destructive",
+        duration: 7000,
       });
     } finally {
       setIsLoading(false);
