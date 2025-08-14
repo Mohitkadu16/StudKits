@@ -17,6 +17,7 @@ export interface Project {
   sketchfabEmbedUrl?: string; // Optional Sketchfab embed URL
   isService?: boolean; // To differentiate services from projects
   servicePageUrl?: string; // Custom URL for services
+  microcontroller?: string; // Recommended microcontroller for the project
 }
 
 export const projects: Project[] = [
@@ -29,10 +30,11 @@ export const projects: Project[] = [
     price: 1700,
     category: 'IoT-Based Projects',
     categoryIcon: Network,
-    image: '/images/smart home automation.png',
+    image: '/images/smart home automation.png', // Fallback image
     features: ['ESP32 Microcontroller', 'Relay Modules', 'Environment Sensors', 'Voice Control Integration', 'Mobile App Interface'],
     benefits: ['Convenient Home Control', 'Energy Savings', 'Enhanced Security', 'Customizable Automation'],
-    dataAiHint: 'iot smart-home'
+    dataAiHint: 'iot smart-home',
+    microcontroller: 'ESP32'
   },
   {
     id: 'iot-2',
@@ -42,10 +44,11 @@ export const projects: Project[] = [
     price: 2000,
     category: 'IoT-Based Projects',
     categoryIcon: Network,
-    image: '/images/agriculture iot.png',
+    image: '/images/agriculture iot.png', // Fallback image
     features: ['Soil Moisture Sensor', 'NodeMCU (ESP8266)', 'Water Pump Control', 'Automated Irrigation Logic', 'Data Logging (optional)'],
     benefits: ['Water Conservation', 'Improved Crop Yield', 'Reduced Manual Labor', 'Remote Monitoring Potential'],
-    dataAiHint: 'iot agriculture'
+    dataAiHint: 'iot agriculture',
+    microcontroller: 'NodeMCU (ESP8266)'
   },
   {
     id: 'iot-3',

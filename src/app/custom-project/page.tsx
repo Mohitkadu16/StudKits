@@ -1,7 +1,7 @@
-
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,7 +9,10 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Send, Lightbulb, Settings, Package, Loader2 } from 'lucide-react';
+import { useAuth } from '@/context/auth-context';
 import { sendFormEmail } from '@/lib/emailjs';
+import { projectMicrocontrollers } from '@/lib/project-microcontrollers';
+import { projects, type Project } from '@/lib/projects';
 
 interface CustomProjectFormState {
   name: string;
@@ -19,11 +22,16 @@ interface CustomProjectFormState {
   components: string;
   description: string;
   budget: string;
+  suggestedPrice?: string; // Added for project's suggested price
 }
 
 export default function CustomProjectPage() {
   const { toast } = useToast();
+  const router = useRouter();
+  const { user, isLoading: authLoading } = useAuth();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState<CustomProjectFormState>({
     name: '',
     email: '',
@@ -32,62 +40,71 @@ export default function CustomProjectPage() {
     components: '',
     description: '',
     budget: '',
+    suggestedPrice: '',
   });
+
+  useEffect(() => {
+    if (!authLoading) {
+      if (!user) {
+        const currentPath = window.location.pathname + window.location.search;
+        sessionStorage.setItem('redirectAfterLogin', currentPath);
+        
+        toast({
+          title: "Authentication Required",
+          description: "Please log in or sign up to submit a custom project request.",
+          variant: "destructive",
+        });
+        
+        router.push('/login');
+      } else {
+        // Combine all form data updates in a single setFormData call
+        const title = searchParams.get('title');
+        const description = searchParams.get('description');
+        const features = searchParams.get('features');
+
+        // Find the selected project
+        const selectedProject = title ? projects.find(p => p.title === title) : null;
+        
+        // Get recommended microcontroller and price
+        const recommendedMicrocontroller = selectedProject?.microcontroller || '';
+        const projectPrice = selectedProject?.price ? `₹${selectedProject.price}` : '';
+
+        setFormData(prev => ({
+          ...prev,
+          name: user.displayName || prev.name,
+          email: user.email || prev.email,
+          projectTitle: title || prev.projectTitle,
+          description: description || prev.description,
+          components: features ? features.split('\\n').join(', ') : prev.components,
+          microcontroller: recommendedMicrocontroller || prev.microcontroller,
+          suggestedPrice: projectPrice,
+          budget: projectPrice || prev.budget // Auto-fill budget with the project price
+        }));
+      }
+    }
+  }, [user, authLoading, router, toast, searchParams]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const validateForm = () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     if (!formData.name || !formData.email || !formData.projectTitle || !formData.description) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields (Name, Email, Project Title, Description).",
         variant: "destructive",
       });
-      return false;
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    // Check network connectivity
-    if (!navigator.onLine) {
-      toast({
-        title: "No Internet Connection",
-        description: "Please check your internet connection and try again.",
-        variant: "destructive",
-      });
       return;
     }
 
-    if (!validateForm()) return;
-
     setIsLoading(true);
-    // Show initial loading toast
-    toast({
-      title: "Submitting Request...",
-      description: "Please wait while we process your project request...",
-      duration: 10000,
-    });
     
     try {
-      await sendFormEmail({
+      // Send email using EmailJS service
+      const result = await sendFormEmail({
         name: formData.name,
         email: formData.email,
         subject: `Custom Project Request: ${formData.projectTitle}`,
@@ -99,30 +116,31 @@ export default function CustomProjectPage() {
         budget: formData.budget
       });
 
-      toast({
-        title: "Request Submitted! ✅",
-        description: "Your custom project request has been sent. We'll review it and get back to you soon.",
-        duration: 5000,
-      });
-      
-      // Reset form after submission
-      setFormData({
-        name: '',
-        email: '',
-        projectTitle: '',
-        microcontroller: '',
-        components: '',
-        description: '',
-        budget: '',
-      });
+      if (result.success) {
+        toast({
+          title: "Request Submitted!",
+          description: "Your custom project request has been sent. We'll review it and get back to you.",
+        });
+        // Reset form after submission
+        setFormData({
+          name: '',
+          email: '',
+          projectTitle: '',
+          microcontroller: '',
+          components: '',
+          description: '',
+          budget: '',
+        });
+      } else {
+        throw new Error(result.message);
+      }
     } catch (error) {
       console.error("Form submission error:", error);
-      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
         title: "Submission Failed",
-        description: `Error: ${errorMessage}. Please try again or contact us at studkits25@gmail.com`,
+        description: `There was a problem sending your request: ${errorMessage}`,
         variant: "destructive",
-        duration: 7000,
       });
     } finally {
       setIsLoading(false);
@@ -205,8 +223,21 @@ export default function CustomProjectPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="budget">Estimated Budget (Optional)</Label>
-              <Input id="budget" name="budget" value={formData.budget} onChange={handleChange} placeholder="e.g., ₹1500 - ₹2000" disabled={isLoading}/>
+              <Label htmlFor="budget" className="flex items-center justify-between">
+                <span>Estimated Budget</span>
+                {formData.suggestedPrice && (
+                  <span className="text-sm text-muted-foreground">
+                    Suggested Price: {formData.suggestedPrice}
+                  </span>
+                )}
+              </Label>
+              <Input 
+                id="budget" 
+                name="budget" 
+                value={formData.budget} 
+                onChange={handleChange} 
+                placeholder={formData.suggestedPrice || "e.g., ₹1500 - ₹2000"} 
+                disabled={isLoading}/>
             </div>
           </CardContent>
           <CardFooter>
@@ -223,3 +254,5 @@ export default function CustomProjectPage() {
     </div>
   );
 }
+
+

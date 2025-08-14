@@ -1,7 +1,7 @@
-
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Send, Presentation, FileText, Palette, Users, Loader2 } from 'lucide-react';
+import { useAuth } from '@/context/auth-context';
 import { sendFormEmail } from '@/lib/emailjs';
 
 interface CustomPresentationFormState {
@@ -23,7 +24,33 @@ interface CustomPresentationFormState {
 
 export default function CustomPresentationPage() {
   const { toast } = useToast();
+  const router = useRouter();
+  const { user, isLoading: authLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading) {
+      if (!user) {
+        const currentPath = window.location.pathname;
+        sessionStorage.setItem('redirectAfterLogin', currentPath);
+        
+        toast({
+          title: "Authentication Required",
+          description: "Please log in or sign up to submit a presentation request.",
+          variant: "destructive",
+        });
+        
+        router.push('/login');
+      } else {
+        // Auto-fill user data when logged in
+        setFormData(prev => ({
+          ...prev,
+          name: user.displayName || prev.name,
+          email: user.email || prev.email,
+        }));
+      }
+    }
+  }, [user, authLoading, router, toast]);
   const [formData, setFormData] = useState<CustomPresentationFormState>({
     name: '',
     email: '',
@@ -53,7 +80,7 @@ export default function CustomPresentationPage() {
     setIsLoading(true);
     
     try {
-      await sendFormEmail({
+      const result = await sendFormEmail({
         name: formData.name,
         email: formData.email,
         subject: `Custom Presentation Request: ${formData.topic}`,
@@ -65,21 +92,24 @@ export default function CustomPresentationPage() {
         style: formData.style
       });
 
-      toast({
-        title: "Request Sent!",
-        description: "Your presentation request has been sent. We will contact you shortly.",
-      });
-      
-      // Reset form after submission
-      setFormData({
-        name: '',
-        email: '',
-        topic: '',
-        audience: '',
-        purpose: '',
-        style: '',
-        instructions: '',
-      });
+      if (result.success) {
+        toast({
+          title: "Request Sent!",
+          description: "Your presentation request has been sent. We will contact you shortly.",
+        });
+        // Reset form after submission
+        setFormData({
+          name: '',
+          email: '',
+          topic: '',
+          audience: '',
+          purpose: '',
+          style: '',
+          instructions: '',
+        });
+      } else {
+        throw new Error(result.message);
+      }
     } catch (error) {
       console.error("Form submission error:", error);
       const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";

@@ -5,7 +5,7 @@ import type { Project } from '@/lib/projects';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;
@@ -27,8 +27,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
               frameBorder="0"
               allow="autoplay; fullscreen; xr-spatial-tracking"
               allowFullScreen
-              mozallowfullscreen="true"
-              webkitallowfullscreen="true"
             />
           </div>
         ) : (
@@ -58,15 +56,29 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <CardDescription className="text-sm text-muted-foreground mb-3 line-clamp-3">{project.description}</CardDescription>
 
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between items-center">
-        <p className="text-lg font-bold text-primary">
-          {project.price > 0 ? `₹${project.price.toLocaleString()}`: 'Contact Us'}
-        </p>
-        <Button asChild variant="ghost" size="sm" className="text-primary hover:bg-primary/10">
-          <Link href={linkHref}>
-            {project.isService ? 'Inquire Now' : 'View Details'} <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
+      <CardFooter className="p-4 pt-0 flex flex-col gap-2">
+        <div className="w-full flex justify-between items-center">
+          <p className="text-lg font-bold text-primary">
+            {project.price > 0 ? `₹${project.price.toLocaleString()}`: 'Contact Us'}
+          </p>
+          <Button asChild variant="ghost" size="sm" className="text-primary hover:bg-primary/10">
+            <Link href={linkHref}>
+              View Details <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+        <div className="flex gap-2 w-full">
+          <Button asChild variant="secondary" size="sm" className="flex-1">
+            <Link href={`https://wa.me/918976451602?text=Hi, I'm interested in ${project.title}`} target="_blank">
+              <Phone className="w-4 h-4 mr-2" /> 8976451602
+            </Link>
+          </Button>
+          <Button asChild variant="secondary" size="sm" className="flex-1">
+            <Link href={`https://wa.me/917506104767?text=Hi, I'm interested in ${project.title}`} target="_blank">
+              <Phone className="w-4 h-4 mr-2" /> 7506104767
+            </Link>
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );

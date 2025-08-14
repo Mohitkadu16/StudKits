@@ -1,7 +1,7 @@
-
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,7 +11,8 @@ import { useToast } from '@/hooks/use-toast';
 import { Mail, User, MessageSquare, Send, Instagram, Loader2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
-import { sendEmail } from '@/ai/flows/send-email-flow';
+import { useAuth } from '@/context/auth-context';
+import { sendFormEmail } from '@/lib/emailjs';
 
 interface ContactFormState {
   name: string;
@@ -22,7 +23,34 @@ interface ContactFormState {
 
 export default function ContactUsPage() {
   const { toast } = useToast();
+  const router = useRouter();
+  const { user, isLoading: authLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading) {
+      if (!user) {
+        // Store the current URL to redirect back after login
+        const currentPath = window.location.pathname + window.location.search;
+        sessionStorage.setItem('redirectAfterLogin', currentPath);
+        
+        toast({
+          title: "Authentication Required",
+          description: "Please log in or sign up to send us a message.",
+          variant: "destructive",
+        });
+        
+        router.push('/login');
+      } else {
+        // Auto-fill user data when logged in
+        setFormData(prev => ({
+          ...prev,
+          name: user.displayName || prev.name,
+          email: user.email || prev.email,
+        }));
+      }
+    }
+  }, [user, authLoading, router, toast]);
   const [formData, setFormData] = useState<ContactFormState>({
     name: '',
     email: '',
@@ -35,45 +63,8 @@ export default function ContactUsPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const validateForm = () => {
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all fields.",
-        variant: "destructive",
-      });
-      return false;
-    }
-    
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
-      return false;
-    }
-
-    return true;
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
-    // Check network connectivity
-    if (!navigator.onLine) {
-      toast({
-        title: "No Internet Connection",
-        description: "Please check your internet connection and try again.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!validateForm()) return;
-
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast({
         title: "Missing Information",
@@ -98,21 +89,19 @@ export default function ContactUsPage() {
     `;
 
     try {
-      const toastId = toast({
-        title: "Sending Message...",
-        description: "Please wait while we send your message...",
-        duration: 10000,
+      const result = await sendFormEmail({
+        name: formData.name,
+        email: formData.email,
+        subject: emailSubject,
+        message: formData.message,
+        requestType: 'project'
       });
-
-      const result = await sendEmail({ subject: emailSubject, body: emailBody });
 
       if (result.success) {
         toast({
-          title: "Message Sent! ✅",
+          title: "Message Sent!",
           description: "Thank you for contacting us. We'll get back to you shortly.",
-          duration: 5000,
         });
-        
         // Reset form after submission
         setFormData({
           name: '',
@@ -125,19 +114,24 @@ export default function ContactUsPage() {
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      
       toast({
         title: "Submission Failed",
-        description: `Error: ${errorMessage}. Please try again or email us directly at studkits25@gmail.com`,
+        description: "There was a problem sending your message. Please try again later or contact us directly via email.",
         variant: "destructive",
-        duration: 7000,
       });
     } finally {
       setIsLoading(false);
     }
   };
+
+  // After successful login
+  const redirectUrl = sessionStorage.getItem('redirectAfterLogin');
+  if (redirectUrl) {
+    sessionStorage.removeItem('redirectAfterLogin');
+    router.push(redirectUrl);
+  } else {
+    router.push('/profile');
+  }
 
   return (
     <div className="space-y-8">

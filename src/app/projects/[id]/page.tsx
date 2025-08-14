@@ -8,7 +8,7 @@ import { getProjectById, Project } from '@/lib/projects';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Download, Mail, ArrowLeft, CheckCircle, Tag } from 'lucide-react';
+import { Phone, PenSquare, ArrowLeft, CheckCircle, Tag } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 
@@ -54,14 +54,6 @@ export default function ProjectDetailPage() {
       </div>
     );
   }
-
-  const handleDownloadKit = () => {
-    toast({
-      title: "Download Started",
-      description: `${project.title} kit download has been initiated.`,
-      variant: "default",
-    });
-  };
 
   const CategoryIcon = project.categoryIcon;
 
@@ -141,18 +133,27 @@ export default function ProjectDetailPage() {
             </CardContent>
 
             <div className="mt-8 pt-6 border-t">
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                <p className="text-3xl font-bold text-accent-foreground bg-accent/20 px-4 py-2 rounded-md">
-                  ₹{project.price.toLocaleString()}
-                </p>
-                <div className="flex gap-3">
-                  <Button size="lg" onClick={handleDownloadKit} className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-md hover:shadow-lg transition-shadow">
-                    <Download className="mr-2 h-5 w-5" /> Download Project Kit
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between items-center">
+                  <p className="text-3xl font-bold text-accent-foreground bg-accent/20 px-4 py-2 rounded-md">
+                    ₹{project.price.toLocaleString()}
+                  </p>
+                  <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-md">
+                    <Link href={`/custom-project?title=${encodeURIComponent(project.title)}&description=${encodeURIComponent(project.longDescription)}&features=${encodeURIComponent(project.features.join('\n'))}`}>
+                      <PenSquare className="mr-2 h-5 w-5" /> Request Custom Project
+                    </Link>
                   </Button>
-                  <Button size="lg" variant="outline" asChild className="shadow-md hover:shadow-lg transition-shadow">
-                    <a href={`mailto:studkits25@gmail.com?subject=Inquiry about ${project.title}`}>
-                      <Mail className="mr-2 h-5 w-5" /> Contact Provider
-                    </a>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <Button asChild size="lg" variant="secondary" className="shadow-md">
+                    <Link href={`https://wa.me/918976451602?text=Hi, I'm interested in ${encodeURIComponent(project.title)}`} target="_blank">
+                      <Phone className="mr-2 h-5 w-5" /> Contact: 8976451602
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg" variant="secondary" className="shadow-md">
+                    <Link href={`https://wa.me/917506104767?text=Hi, I'm interested in ${encodeURIComponent(project.title)}`} target="_blank">
+                      <Phone className="mr-2 h-5 w-5" /> Contact: 7506104767
+                    </Link>
                   </Button>
                 </div>
               </div>
