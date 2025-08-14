@@ -27,11 +27,18 @@ export default function ContactUsPage() {
   const { user, isLoading: authLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
+  const [formData, setFormData] = useState<ContactFormState>({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
   useEffect(() => {
     if (!authLoading) {
       if (!user) {
         // Store the current URL to redirect back after login
-        const currentPath = window.location.pathname + window.location.search;
+        const currentPath = window.location.pathname;
         sessionStorage.setItem('redirectAfterLogin', currentPath);
         
         toast({
@@ -51,12 +58,6 @@ export default function ContactUsPage() {
       }
     }
   }, [user, authLoading, router, toast]);
-  const [formData, setFormData] = useState<ContactFormState>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -123,15 +124,6 @@ export default function ContactUsPage() {
       setIsLoading(false);
     }
   };
-
-  // After successful login
-  const redirectUrl = sessionStorage.getItem('redirectAfterLogin');
-  if (redirectUrl) {
-    sessionStorage.removeItem('redirectAfterLogin');
-    router.push(redirectUrl);
-  } else {
-    router.push('/profile');
-  }
 
   return (
     <div className="space-y-8">
