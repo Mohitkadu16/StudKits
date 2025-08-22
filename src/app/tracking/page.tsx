@@ -1,9 +1,8 @@
-
 'use client';
 
 import { ProjectTracker } from '@/components/tracking/project-tracker';
 import { type ProjectTrackingInfo } from '@/lib/tracking';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PackageSearch, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import Link from 'next/link';
@@ -49,55 +48,23 @@ export default function TrackingPage() {
         }
     }, [user, authLoading]);
 
+  // Tracking feature temporarily disabled — show in-progress message
   return (
     <div className="space-y-8">
       <section className="text-center py-8 bg-card rounded-lg shadow">
         <h1 className="text-4xl font-bold text-primary mb-2">Project Tracking</h1>
-        <p className="text-lg text-muted-foreground">
-          Follow your project's journey from our workshop to your doorstep.
-        </p>
+        <p className="text-lg text-muted-foreground">Tracking feature is in progress — coming soon.</p>
       </section>
 
       <div className="max-w-4xl mx-auto">
-        {isLoading || authLoading ? (
-            <div className="flex justify-center items-center py-10">
-                <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            </div>
-        ) : user ? (
-            project ? (
-                 <ProjectTracker project={project} />
-            ) : (
-                <Card className="text-center shadow-lg p-8">
-                     <CardHeader>
-                        <CardTitle className="flex items-center justify-center text-2xl">
-                            <PackageSearch className="mr-3 h-8 w-8 text-primary" />
-                           No Active Projects
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">You don't have any projects being tracked at the moment.</p>
-                        <Button asChild className="mt-4">
-                            <Link href="/">Explore Our Kits</Link>
-                        </Button>
-                    </CardContent>
-                </Card>
-            )
-        ) : (
-          <Card className="text-center shadow-lg p-8">
-             <CardHeader>
-                <CardTitle className="flex items-center justify-center text-2xl">
-                    <PackageSearch className="mr-3 h-8 w-8 text-primary" />
-                    Track Your Order
-                </CardTitle>
-            </CardHeader>
-            <CardContent>
-                <p className="text-muted-foreground mb-4">Please log in to see the status of your projects.</p>
-                <Button asChild>
-                    <Link href="/login">Login</Link>
-                </Button>
-            </CardContent>
-          </Card>
-        )}
+        <Card className="text-center shadow-lg p-8">
+          <CardHeader>
+            <CardTitle className="text-2xl">Tracking — Work in Progress</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">We're working on the tracking feature. Please check back later.</p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

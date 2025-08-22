@@ -1,14 +1,22 @@
 import type { Config } from "tailwindcss";
 
-export default {
-    darkMode: ["class"],
-    content: [
+const config: Config = {
+  darkMode: ["class"],
+  content: [
+    "./src/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-  	extend: {
+    container: {
+      center: true,
+      padding: { DEFAULT: "1rem", sm: "1.25rem", lg: "2rem", xl: "2.5rem" },
+      screens: { "2xl": "1280px" }
+    },
+    extend: {
+      typography: {},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -90,5 +98,11 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/line-clamp"),
+  ],
+};
+
+export default config;

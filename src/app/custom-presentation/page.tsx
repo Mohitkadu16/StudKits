@@ -15,6 +15,7 @@ import { sendFormEmail } from '@/lib/emailjs';
 interface CustomPresentationFormState {
   name: string;
   email: string;
+  college?: string;
   topic: string;
   audience: string;
   purpose: string;
@@ -42,11 +43,12 @@ export default function CustomPresentationPage() {
         
         router.push('/login');
       } else {
-        // Auto-fill user data when logged in
+        // Auto-fill user data when logged in (including college if available)
         setFormData(prev => ({
           ...prev,
           name: user.displayName || prev.name,
           email: user.email || prev.email,
+          college: (user as any).college || (user as any).collegeName || prev.college,
         }));
       }
     }
@@ -54,6 +56,7 @@ export default function CustomPresentationPage() {
   const [formData, setFormData] = useState<CustomPresentationFormState>({
     name: '',
     email: '',
+    college: '',
     topic: '',
     audience: '',
     purpose: '',
@@ -83,13 +86,14 @@ export default function CustomPresentationPage() {
       const result = await sendFormEmail({
         name: formData.name,
         email: formData.email,
+        college: formData.college,
         subject: `Custom Presentation Request: ${formData.topic}`,
         message: formData.instructions,
         requestType: 'presentation',
         topic: formData.topic,
         audience: formData.audience,
         purpose: formData.purpose,
-        style: formData.style
+        style: formData.style,
       });
 
       if (result.success) {
@@ -101,6 +105,7 @@ export default function CustomPresentationPage() {
         setFormData({
           name: '',
           email: '',
+          college: '',
           topic: '',
           audience: '',
           purpose: '',
@@ -153,6 +158,11 @@ export default function CustomPresentationPage() {
                 <Label htmlFor="email">Your Email <span className="text-destructive">*</span></Label>
                 <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required disabled={isLoading} />
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="college">College (auto-filled)</Label>
+              <Input id="college" name="college" value={formData.college} onChange={handleChange} placeholder="Your college or institution" disabled={isLoading} />
             </div>
 
             <div className="space-y-2">

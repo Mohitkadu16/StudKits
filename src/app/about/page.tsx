@@ -1,9 +1,9 @@
-
 'use client';
+
+import Image from 'next/image';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Users, Target, Lightbulb, Zap } from 'lucide-react';
-import Image from 'next/image';
 
 export default function AboutUsPage() {
   return (
@@ -108,7 +108,7 @@ export default function AboutUsPage() {
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
                 <Image
-                  src="/images/mohit photo.jpg"
+                  src={encodeURI('/images/mohit photo.jpg')}
                   alt="Mohit Kadu"
                   width={128}
                   height={128}
@@ -128,7 +128,7 @@ export default function AboutUsPage() {
             <CardHeader>
                 <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
                   <Image
-                    src="/images/ved photo.jpg"
+                    src={encodeURI('/images/ved photo.jpg')}
                     alt="Ved Bhardwaj"
                     width={128}
                     height={128}

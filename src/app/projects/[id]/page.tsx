@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
@@ -8,7 +7,7 @@ import { getProjectById, Project } from '@/lib/projects';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Phone, PenSquare, ArrowLeft, CheckCircle, Tag } from 'lucide-react';
+import { PenSquare, ArrowLeft, CheckCircle, Tag } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 
@@ -18,6 +17,12 @@ export default function ProjectDetailPage() {
   const { toast } = useToast();
   const [project, setProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Add class to body for project detail pages
+  useEffect(() => {
+    document.body.classList.add('project-detail-page');
+    return () => document.body.classList.remove('project-detail-page');
+  }, []);
 
   useEffect(() => {
     if (params.id) {
@@ -58,7 +63,7 @@ export default function ProjectDetailPage() {
   const CategoryIcon = project.categoryIcon;
 
   return (
-    <div className="space-y-8">
+    <div className="card-content w-full max-w-full px-4 sm:px-6 md:max-w-3xl lg:max-w-4xl mx-auto">
       <div>
         <Button variant="outline" asChild className="mb-6 shadow-sm hover:shadow-md transition-shadow">
           <Link href="/">
@@ -69,7 +74,7 @@ export default function ProjectDetailPage() {
 
       <Card className="overflow-hidden shadow-lg">
         <div className="grid md:grid-cols-2 gap-0">
-          <div className="relative aspect-[4/3] md:aspect-auto">
+          <div className="relative aspect-[4/3] md:aspect-auto md:h-full min-h-[300px]">
             {project.sketchfabEmbedUrl ? (
               <iframe
                 title={project.title}
@@ -86,11 +91,12 @@ export default function ProjectDetailPage() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                priority
                 data-ai-hint={project.dataAiHint || "project detail"}
               />
             )}
           </div>
-          <div className="p-6 md:p-8 flex flex-col">
+          <div className="p-4 sm:p-6 md:p-8 flex flex-col">
             <CardHeader className="p-0 mb-4">
               <div className="flex justify-between items-start mb-2">
                 <CardTitle className="text-3xl font-bold text-primary">{project.title}</CardTitle>
@@ -105,28 +111,32 @@ export default function ProjectDetailPage() {
             </CardHeader>
 
             <CardContent className="p-0 flex-grow space-y-6">
-              <CardDescription className="text-base text-foreground/80 leading-relaxed">
+              <CardDescription className="description">
                 {project.longDescription}
               </CardDescription>
 
-              <div>
-                <h3 className="text-xl font-semibold mb-2 text-primary flex items-center">
-                  <CheckCircle className="mr-2 h-5 w-5 text-green-500" /> Features
+              <div className="feature-list">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary flex items-center">
+                  <CheckCircle className="mr-2 h-5 w-5 text-green-500 flex-shrink-0" /> Features
                 </h3>
-                <ul className="list-disc list-inside space-y-1 text-foreground/80 pl-2">
+                <ul className="list-disc list-inside space-y-2 text-foreground/80 pl-2">
                   {project.features.map((feature, index) => (
-                    <li key={index}>{feature}</li>
+                    <li key={index} className="break-words whitespace-normal leading-relaxed">
+                      {feature}
+                    </li>
                   ))}
                 </ul>
               </div>
 
-              <div>
-                <h3 className="text-xl font-semibold mb-2 text-primary flex items-center">
-                  <Tag className="mr-2 h-5 w-5 text-blue-500" /> Benefits
+              <div className="benefit-list">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary flex items-center">
+                  <Tag className="mr-2 h-5 w-5 text-blue-500 flex-shrink-0" /> Benefits
                 </h3>
-                <ul className="list-disc list-inside space-y-1 text-foreground/80 pl-2">
+                <ul className="list-disc list-inside space-y-2 text-foreground/80 pl-2">
                   {project.benefits.map((benefit, index) => (
-                    <li key={index}>{benefit}</li>
+                    <li key={index} className="break-words whitespace-normal leading-relaxed">
+                      {benefit}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -135,9 +145,6 @@ export default function ProjectDetailPage() {
             <div className="mt-8 pt-6 border-t">
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
-                  <p className="text-3xl font-bold text-accent-foreground bg-accent/20 px-4 py-2 rounded-md">
-                    ₹{project.price.toLocaleString()}
-                  </p>
                   <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-md">
                     <Link href={`/custom-project?title=${encodeURIComponent(project.title)}&description=${encodeURIComponent(project.longDescription)}&features=${encodeURIComponent(project.features.join('\n'))}`}>
                       <PenSquare className="mr-2 h-5 w-5" /> Request Custom Project
@@ -147,12 +154,12 @@ export default function ProjectDetailPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Button asChild size="lg" variant="secondary" className="shadow-md">
                     <Link href={`https://wa.me/918976451602?text=Hi, I'm interested in ${encodeURIComponent(project.title)}`} target="_blank">
-                      <Phone className="mr-2 h-5 w-5" /> Contact: 8976451602
+                      <Image src="/images/Whatsapp logo.png" alt="WhatsApp" width={20} height={20} className="mr-2 flex-shrink-0" />Ved Bhardwaj
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="secondary" className="shadow-md">
                     <Link href={`https://wa.me/917506104767?text=Hi, I'm interested in ${encodeURIComponent(project.title)}`} target="_blank">
-                      <Phone className="mr-2 h-5 w-5" /> Contact: 7506104767
+                      <Image src="/images/Whatsapp logo.png" alt="WhatsApp" width={20} height={20} className="mr-2 flex-shrink-0" />Mohit Kadu
                     </Link>
                   </Button>
                 </div>

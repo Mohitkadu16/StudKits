@@ -23,6 +23,7 @@ interface CustomProjectFormState {
   description: string;
   budget: string;
   suggestedPrice?: string; // Added for project's suggested price
+  college?: string;
 }
 
 export default function CustomProjectPage() {
@@ -41,6 +42,7 @@ export default function CustomProjectPage() {
     description: '',
     budget: '',
     suggestedPrice: '',
+    college: ''
   });
 
   useEffect(() => {
@@ -67,7 +69,6 @@ export default function CustomProjectPage() {
         
         // Get recommended microcontroller and price
         const recommendedMicrocontroller = selectedProject?.microcontroller || '';
-        const projectPrice = selectedProject?.price ? `₹${selectedProject.price}` : '';
 
         setFormData(prev => ({
           ...prev,
@@ -77,8 +78,7 @@ export default function CustomProjectPage() {
           description: description || prev.description,
           components: features ? features.split('\\n').join(', ') : prev.components,
           microcontroller: recommendedMicrocontroller || prev.microcontroller,
-          suggestedPrice: projectPrice,
-          budget: projectPrice || prev.budget // Auto-fill budget with the project price
+          college: (user as any).college || (user as any).collegeName || prev.college,
         }));
       }
     }
@@ -113,7 +113,8 @@ export default function CustomProjectPage() {
         projectTitle: formData.projectTitle,
         microcontroller: formData.microcontroller,
         components: formData.components,
-        budget: formData.budget
+        budget: formData.budget,
+        college: formData.college
       });
 
       if (result.success) {
@@ -130,6 +131,8 @@ export default function CustomProjectPage() {
           components: '',
           description: '',
           budget: '',
+          suggestedPrice: '',
+          college: ''
         });
       } else {
         throw new Error(result.message);
@@ -177,6 +180,10 @@ export default function CustomProjectPage() {
                 <Label htmlFor="email">Your Email <span className="text-destructive">*</span></Label>
                 <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required disabled={isLoading}/>
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="college">College (auto-filled)</Label>
+              <Input id="college" name="college" value={formData.college} onChange={handleChange} placeholder="Your college or institution" disabled={isLoading} />
             </div>
 
             <div className="space-y-2">
@@ -239,6 +246,7 @@ export default function CustomProjectPage() {
                 placeholder={formData.suggestedPrice || "e.g., ₹1500 - ₹2000"} 
                 disabled={isLoading}/>
             </div>
+
           </CardContent>
           <CardFooter>
             <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md" disabled={isLoading}>

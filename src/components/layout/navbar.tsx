@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User, PackageSearch, UserCog } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/auth-context';
@@ -102,7 +103,7 @@ export function Navbar() {
 
   return (
     <header className="bg-primary text-primary-foreground shadow-md sticky top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between p-4 h-16">
+      <MaxWidthWrapper className="flex items-center justify-between p-4 h-16">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold" onClick={handleLinkClick}>
           <Target className="h-7 w-7" />
           <span>StudKits</span>
@@ -147,11 +148,12 @@ export function Navbar() {
             </Button>
           </div>
         </div>
-      </div>
+      </MaxWidthWrapper>
       {isMenuOpen && (
         <div className="md:hidden bg-primary pb-4">
-          <ul className="container mx-auto flex flex-col space-y-2">
-            {navItems.map((item) => {
+          <MaxWidthWrapper>
+            <ul className="flex flex-col space-y-2">
+              {navItems.map((item) => {
               const Icon = item.icon;
               return (
                 <li key={item.href}>
@@ -184,6 +186,7 @@ export function Navbar() {
               </>
             )}
           </ul>
+          </MaxWidthWrapper>
         </div>
       )}
     </header>

@@ -16,6 +16,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useToast } from '@/hooks/use-toast';
 import { auth, signInWithEmailAndPassword } from '@/lib/firebase';
 import { Loader2 } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { projectMicrocontrollers } from '@/lib/project-microcontrollers';
 
 const loginSchema = z.object({
@@ -29,6 +30,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -80,11 +82,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center py-12">
-      <Card className="mx-auto max-w-sm shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your email below to login to your account</CardDescription>
+    <div className="flex items-center justify-center min-h-screen p-4 sm:p-6">
+      <Card className="w-full max-w-sm mx-auto shadow-lg my-4">
+        <CardHeader className="space-y-1 p-4 sm:p-6">
+          <CardTitle className="text-xl sm:text-2xl font-bold text-center">Login</CardTitle>
+          <CardDescription className="text-center text-sm sm:text-base">
+            Enter your email below to login to your account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -114,7 +118,22 @@ export default function LoginPage() {
                       </Link>
                     </div>
                     <FormControl>
-                      <Input type="password" {...field} disabled={isLoading} />
+                      <div className="relative w-full">
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          {...field}
+                          disabled={isLoading}
+                          className="pr-10"
+                        />
+                        <button
+                          type="button"
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
+                          onClick={() => setShowPassword((s) => !s)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
+                        >
+                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </button>
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

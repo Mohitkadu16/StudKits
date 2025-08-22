@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Apply CSS update for project detail mobile",
+			"type": "shell",
+			"command": "echo Updating globals.css...; exit 0",
+			"group": "none",
+			"isBackground": false
+		}
+	]
+}

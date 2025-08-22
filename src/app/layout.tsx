@@ -1,12 +1,10 @@
-import type {Metadata} from 'next';
+import "./globals.css";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from '@/context/auth-context';
-import { AnalyticsProvider } from '@/components/analytics-provider';
-import { ConnectivityProvider } from '@/components/connectivity-provider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -18,28 +16,16 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
-  title: 'StudKits - Your Project Marketplace',
-  description: 'Discover and acquire innovative project kits.',
-  icons: {
-    icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png' },
-    ],
-  },
-  manifest: '/manifest.json',
-  themeColor: '#000000',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'StudKits',
-  },
+  title: "StudKits",
+  description: "Project kits and services",
 };
 
 export default function RootLayout({
@@ -48,18 +34,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-dvh bg-background text-foreground antialiased flex flex-col`}>
         <AuthProvider>
-          <ConnectivityProvider>
-            <AnalyticsProvider />
-            <Navbar />
-            <main className="flex-grow container mx-auto px-4 py-8">
-              {children}
-            </main>
-            <Footer />
-            <Toaster />
-          </ConnectivityProvider>
+          <Navbar />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+          <Toaster />
         </AuthProvider>
       </body>
     </html>
