@@ -1,3 +1,5 @@
+import { NextResponse } from 'next/server';
+
 const manifest = {
   name: "StudKits",
   short_name: "StudKits",
@@ -12,4 +14,8 @@ const manifest = {
   ]
 };
 
-export default manifest;
+export function GET() {
+  return NextResponse.json(manifest, {
+    headers: { 'Content-Type': 'application/manifest+json' }
+  });
+}

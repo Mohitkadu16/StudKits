@@ -5,7 +5,6 @@ import { useState, useEffect, type ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
 import { useToast } from '@/hooks/use-toast';
-import { updateUserProfile, uploadProfilePhoto } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -80,7 +79,7 @@ export default function ProfilePage() {
 
       await updateUserProfileClient(user, {
         displayName: displayName,
-        photoURL: updatedPhotoURL,
+        photoURL: updatedPhotoURL || undefined,
       });
 
       // In a real app, you'd save the 'school' field to your user profile collection in Firestore here.
