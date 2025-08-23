@@ -1,6 +1,6 @@
 # StudKits - Your Electronics Project Companion
 
--Visit: [studkits.vercel.app](https://studkits.vercel.app/)
+- Visit: [studkits.vercel.app](https://studkits.vercel.app/)
 
 Welcome to StudKits - A dedicated platform that bridges the gap between electronics students and professional project development. Whether you're a student looking for project guidance or an educator seeking custom presentations, StudKits is your one-stop solution.
 
@@ -53,8 +53,8 @@ StudKits is a comprehensive web platform designed to support students and educat
 ## 👥 Contact Us
 
 **Studkits**
--Gmail: [studkits25@gmail.com]
--Instagram: [@studkits.in](https://www.instagram.com/studkits.in/)
+- Gmail: [studkits25@gmail.com]
+- Instagram: [@studkits.in](https://www.instagram.com/studkits.in/)
 
 **Mohit Kadu**
 - GitHub: [@Mohitkadu16](https://github.com/Mohitkadu16)
