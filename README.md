@@ -52,7 +52,7 @@ StudKits is a comprehensive web platform designed to support students and educat
 ## 👥 Contact Us
 
 **Studkits**
-- Gmail: [studkits25@gmail.com]
+- Gmail: studkits25@gmail.com
 - Instagram: [@studkits.in](https://www.instagram.com/studkits.in/)
 
 **Mohit Kadu**
