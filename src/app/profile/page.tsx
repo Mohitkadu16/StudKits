@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, type ChangeEvent } from 'react';
@@ -13,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Loader2, User, Edit, Save, Upload, School, CreditCard } from 'lucide-react';
 import { updateProfile } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '@/lib/firebase';
+import { storage, db, createDocument, readDocument } from '@/lib/firebase';
 
 
 // Wrapper for updating user profile
@@ -38,6 +37,10 @@ export default function ProfilePage() {
 
   const [displayName, setDisplayName] = useState('');
   const [school, setSchool] = useState(''); // New state for school/college
+  const [originalSchool, setOriginalSchool] = useState(''); // State to track the original school value
+  const [bio, setBio] = useState(''); // New bio field
+  const [originalBio, setOriginalBio] = useState('');
+  const [originalName, setOriginalName] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [newPhoto, setNewPhoto] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -48,10 +51,36 @@ export default function ProfilePage() {
       if (user) {
         setDisplayName(user.displayName || '');
         setPhotoURL(user.photoURL || '');
-        // Note: 'school' is not part of the default Firebase user object.
-        // In a real app, you would fetch this from a separate user profile collection in Firestore.
-        // For now, we'll just manage it in the component's state.
-        setSchool(''); // Initialize as empty
+        // Load profile using helper readDocument
+        (async () => {
+          try {
+            const data = await readDocument(`users/${user.uid}`);
+            if (data) {
+              const nameFromDoc = (data as any).name || (data as any).displayName || '';
+              setDisplayName(nameFromDoc || user.displayName || '');
+              setOriginalName(nameFromDoc || user.displayName || '');
+
+              setBio((data as any).bio || '');
+              setOriginalBio((data as any).bio || '');
+
+              setSchool((data as any).school || '');
+              setOriginalSchool((data as any).school || '');
+            } else {
+              setSchool('');
+              setOriginalSchool('');
+              setBio('');
+              setOriginalBio('');
+              setOriginalName(user.displayName || '');
+            }
+          } catch (err) {
+            console.error('Error loading user profile document:', err);
+            setSchool('');
+            setOriginalSchool('');
+            setBio('');
+            setOriginalBio('');
+            setOriginalName(user.displayName || '');
+          }
+        })();
       } else {
         router.push('/login');
       }
@@ -82,8 +111,16 @@ export default function ProfilePage() {
         photoURL: updatedPhotoURL || undefined,
       });
 
-      // In a real app, you'd save the 'school' field to your user profile collection in Firestore here.
-      // For example: await saveUserProfileData(user.uid, { school: school });
+      // Save the 'school', name and bio using helper createDocument
+      try {
+        await createDocument(`users/${user.uid}`, { name: displayName, bio, school });
+        setOriginalSchool(school);
+        setOriginalBio(bio);
+        setOriginalName(displayName);
+      } catch (err) {
+        console.error('Error saving school to Firestore:', err);
+        throw err;
+      }
 
       setPhotoURL(updatedPhotoURL || '');
 
@@ -111,7 +148,9 @@ export default function ProfilePage() {
     if(user) {
         setDisplayName(user.displayName || '');
         setPhotoURL(user.photoURL || '');
-        setSchool(''); // Reset school field
+        setSchool(originalSchool || ''); // Reset school field to last saved value
+        setBio(originalBio || '');
+        setDisplayName(originalName || user.displayName || '');
     }
     setNewPhoto(null);
   }
@@ -134,9 +173,33 @@ export default function ProfilePage() {
               User Profile
             </div>
             {!isEditing && (
-              <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
-                <Edit className="h-5 w-5" />
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
+                  <Edit className="h-5 w-5" />
+                </Button>
+                {process.env.NODE_ENV === 'development' && user && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => {
+                      try {
+                        console.log('current uid:', user.uid);
+                        if (user.uid && typeof navigator !== 'undefined' && navigator.clipboard) {
+                          navigator.clipboard.writeText(user.uid);
+                          toast({ title: 'UID copied to clipboard', description: user.uid });
+                        } else {
+                          toast({ title: 'UID', description: String(user.uid) });
+                        }
+                      } catch (err) {
+                        console.error('Error copying UID:', err);
+                        toast({ title: 'Error', description: 'Could not copy UID', variant: 'destructive' });
+                      }
+                    }}
+                  >
+                    <User className="h-5 w-5" />
+                  </Button>
+                )}
+              </div>
             )}
           </CardTitle>
           <CardDescription>View and edit your profile details.</CardDescription>
@@ -189,15 +252,26 @@ export default function ProfilePage() {
                   disabled={isSaving}
                 />
               </div>
-              <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={handleCancelEdit} disabled={isSaving}>Cancel</Button>
-                <Button onClick={handleSaveProfile} disabled={isSaving}>
-                  {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-                  Save Changes
-                </Button>
+              <div className="space-y-2">
+                <Label htmlFor="bio">Bio / About You</Label>
+                <textarea
+                  id="bio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  placeholder="Tell us a little about yourself"
+                  className="w-full rounded-md border p-2 min-h-[80px]"
+                  disabled={isSaving}
+                />
               </div>
-            </div>
-          ) : null}
+               <div className="flex justify-end gap-2">
+                 <Button variant="outline" onClick={handleCancelEdit} disabled={isSaving}>Cancel</Button>
+                 <Button onClick={handleSaveProfile} disabled={isSaving}>
+                   {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
+                   Save Changes
+                 </Button>
+               </div>
+             </div>
+           ) : null}
         </CardContent>
       </Card>
       

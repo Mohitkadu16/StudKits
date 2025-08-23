@@ -43,3 +43,6 @@ next-env.d.ts
 # firebase
 firebase-debug.log
 firestore-debug.log
+
+# service account key for admin scripts
+scripts/serviceAccountKey.json

@@ -21,7 +21,6 @@ interface CustomProjectFormState {
   microcontroller: string;
   components: string;
   description: string;
-  budget: string;
   suggestedPrice?: string; // Added for project's suggested price
   college?: string;
 }
@@ -40,7 +39,6 @@ export default function CustomProjectPage() {
     microcontroller: '',
     components: '',
     description: '',
-    budget: '',
     suggestedPrice: '',
     college: ''
   });
@@ -113,7 +111,6 @@ export default function CustomProjectPage() {
         projectTitle: formData.projectTitle,
         microcontroller: formData.microcontroller,
         components: formData.components,
-        budget: formData.budget,
         college: formData.college
       });
 
@@ -130,7 +127,6 @@ export default function CustomProjectPage() {
           microcontroller: '',
           components: '',
           description: '',
-          budget: '',
           suggestedPrice: '',
           college: ''
         });
@@ -227,24 +223,6 @@ export default function CustomProjectPage() {
                 required
                 disabled={isLoading}
               />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="budget" className="flex items-center justify-between">
-                <span>Estimated Budget</span>
-                {formData.suggestedPrice && (
-                  <span className="text-sm text-muted-foreground">
-                    Suggested Price: {formData.suggestedPrice}
-                  </span>
-                )}
-              </Label>
-              <Input 
-                id="budget" 
-                name="budget" 
-                value={formData.budget} 
-                onChange={handleChange} 
-                placeholder={formData.suggestedPrice || "e.g., ₹1500 - ₹2000"} 
-                disabled={isLoading}/>
             </div>
 
           </CardContent>
