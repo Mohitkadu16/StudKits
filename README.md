@@ -1,8 +1,7 @@
 # StudKits - Your Electronics Project Companion
 
-- Visit: [studkits.vercel.app](https://studkits.vercel.app/)
-
 Welcome to StudKits - A dedicated platform that bridges the gap between electronics students and professional project development. Whether you're a student looking for project guidance or an educator seeking custom presentations, StudKits is your one-stop solution.
+- Visit: [studkits.vercel.app](https://studkits.vercel.app/)
 
 <!-- ![StudKits Preview]()) -->
 
