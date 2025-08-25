@@ -120,6 +120,10 @@ export default function HomePage() {
           )}
         </MaxWidthWrapper>
       </section>
+    {/* Caution/Disclaimer Section */}
+    <div className="max-w-3xl mx-auto mt-12 text-center text-sm text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-md p-3">
+      <strong>⚠️ Caution:</strong> Project kits may not look exactly like the images shown. Actual products will be similar and functionally equivalent.
     </div>
+  </div>
   );
 }

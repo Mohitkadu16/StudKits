@@ -4,6 +4,16 @@ import type { Project } from '@/lib/projects';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel
+} from '@/components/ui/alert-dialog';
 import { ArrowRight } from 'lucide-react';
 
 interface ProjectCardProps {
@@ -59,10 +69,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
               {/* Right: IoT tag (desktop) + category badge */}
               <div className="flex flex-col items-end gap-2">
-                <span className="hidden md:inline-flex items-center text-xs font-medium px-2 py-0.5 bg-primary/10 text-primary rounded">
-                  IoT
-                </span>
-
                 {CategoryIcon ? (
                   <Badge variant="outline" className="self-start flex items-center gap-1 text-xs">
                     <CategoryIcon className="h-3 w-3 flex-shrink-0" />
@@ -78,9 +84,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
 
           {/* DESCRIPTION */}
-          <CardDescription className="text-sm text-muted-foreground mb-4 leading-relaxed whitespace-normal break-words">
+          <CardDescription className="text-sm text-muted-foreground mb-2 leading-relaxed whitespace-normal break-words">
             {project.description}
           </CardDescription>
+          <div className="text-xs text-muted-foreground mb-4 italic">
+            *Actual kit may look different from image.*
+          </div>
         </CardContent>
 
         <CardFooter className="p-4 pt-0 flex flex-col gap-2">
@@ -92,39 +101,55 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </Button>
           </div>
 
-          {/* Contact buttons stack on mobile */}
-          <div className="flex flex-col sm:flex-row gap-2 w-full">
-            <Button asChild variant="secondary" size="sm" className="w-full">
-              <Link
-                href={`https://wa.me/918976451602?text=Hi, I'm interested in ${project.title}`}
-                target="_blank"
-              >
-                <Image
-                  src="/images/Whatsapp logo.png"
-                  alt="WhatsApp"
-                  width={20}
-                  height={20}
-                  className="mr-2 flex-shrink-0"
-                />
-                Ved Bhardwaj
-              </Link>
-            </Button>
-            <Button asChild variant="secondary" size="sm" className="w-full">
-              <Link
-                href={`https://wa.me/917506104767?text=Hi, I'm interested in ${project.title}`}
-                target="_blank"
-              >
-                <Image
-                  src="/images/Whatsapp logo.png"
-                  alt="WhatsApp"
-                  width={20}
-                  height={20}
-                  className="mr-2 flex-shrink-0"
-                />
-                Mohit Kadu
-              </Link>
-            </Button>
-          </div>
+          {/* Single Contact button with modal popup for contact options */}
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="secondary" size="sm" className="w-full">For Enquiries</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Contact Options</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Choose a contact below to reach out via WhatsApp:
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <div className="flex flex-col gap-3 mt-4">
+                <Button asChild variant="outline" size="sm" className="w-full bg-green-600 hover:bg-green-700 text-white">
+                  <Link
+                    href={`https://wa.me/918976451602?text=Hi, I'm interested in ${project.title}`}
+                    target="_blank"
+                  >
+                    <Image
+                      src="/images/Whatsapp logo.png"
+                      alt="WhatsApp"
+                      width={20}
+                      height={20}
+                      className="mr-2 flex-shrink-0"
+                    />
+                    Ved Bhardwaj
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="sm" className="w-full bg-green-600 hover:bg-green-700 text-white">
+                  <Link
+                    href={`https://wa.me/917506104767?text=Hi, I'm interested in ${project.title}`}
+                    target="_blank"
+                  >
+                    <Image
+                      src="/images/Whatsapp logo.png"
+                      alt="WhatsApp"
+                      width={20}
+                      height={20}
+                      className="mr-2 flex-shrink-0"
+                    />
+                    Mohit Kadu
+                  </Link>
+                </Button>
+              </div>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Close</AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </CardFooter>
       </Card>
     </div>
