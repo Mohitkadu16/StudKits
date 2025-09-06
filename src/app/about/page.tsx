@@ -120,7 +120,7 @@ export default function AboutUsPage() {
               <CardTitle className="text-2xl">Ved Bhardwaj</CardTitle>
               <CardDescription className="text-base text-primary">Founder</CardDescription>
                <p className="text-sm text-muted-foreground pt-2">
-                Hello i am Ved Bhardwaj founder of Studkits. Currently persuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
+                Hello I am Ved Bhardwaj founder of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
               </p>
             </CardContent>
            </Card>
@@ -141,7 +141,7 @@ export default function AboutUsPage() {
               <CardTitle className="text-2xl">Maverick D'Silva</CardTitle>
               <CardDescription className="text-base text-primary">App Developer | Co-Founder</CardDescription>
               <p className="text-sm text-muted-foreground pt-2">
-                Hello i am Maverick D'Silva App Developer & Co-founder of Studkits. Currently persuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
+                Hello I am Maverick D'Silva App Developer & Co-founder of Studkits. Currently pursuing degree in Information Technology from Don Bosco Institute of Technology
               </p>
             </CardContent>
             </Card>
@@ -161,7 +161,7 @@ export default function AboutUsPage() {
               <CardTitle className="text-2xl">Mohit Kadu</CardTitle>
               <CardDescription className="text-base text-primary">Web Developer | Co-Founder</CardDescription>
               <p className="text-sm text-muted-foreground pt-2">
-                Hello i am Mohit Kadu Developer & Co-founder of Studkits. Currently persuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
+                Hello I am Mohit Kadu Developer & Co-founder of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
               </p>
             </CardContent>
           </Card>
