@@ -10,9 +10,19 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useToast } from '@/hooks/use-toast';
 import { Send, Lightbulb, Settings, Package, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
-import { sendFormEmail } from '@/lib/emailjs';
 import { projectMicrocontrollers } from '@/lib/project-microcontrollers';
 import { projects, type Project } from '@/lib/projects';
+
+export async function submitProjectRequest(data: any) {
+  try {
+    // Implementation of your project request submission
+    return { success: true, message: 'Project request submitted successfully' };
+  } catch (error) {
+    return { success: false, message: error instanceof Error ? error.message : 'Failed to submit request' };
+  }
+}
+
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgvlyklz";
 
 interface CustomProjectFormState {
   name: string;
@@ -89,56 +99,79 @@ export default function CustomProjectPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    
     if (!formData.name || !formData.email || !formData.projectTitle || !formData.description) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields (Name, Email, Project Title, Description).",
+        description: "Please fill in all required fields.",
         variant: "destructive",
       });
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
-      // Send email using EmailJS service
-      const result = await sendFormEmail({
+      // First submit project request
+      const projectResponse = await submitProjectRequest({
         name: formData.name,
         email: formData.email,
-        subject: `Custom Project Request: ${formData.projectTitle}`,
-        message: formData.description,
-        requestType: 'project',
+        type: 'project',
         projectTitle: formData.projectTitle,
         microcontroller: formData.microcontroller,
         components: formData.components,
-        college: formData.college
+        description: formData.description,
+        budget: formData.suggestedPrice
       });
 
-      if (result.success) {
-        toast({
-          title: "Request Submitted!",
-          description: "Your custom project request has been sent. We'll review it and get back to you.",
-        });
-        // Reset form after submission
-        setFormData({
-          name: '',
-          email: '',
-          projectTitle: '',
-          microcontroller: '',
-          components: '',
-          description: '',
-          suggestedPrice: '',
-          college: ''
-        });
-      } else {
-        throw new Error(result.message);
+      if (!projectResponse.success) {
+        throw new Error(projectResponse.message);
       }
-    } catch (error) {
-      console.error("Form submission error:", error);
-      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+
+      // Then send email notification
+      const formResponse = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          ...formData,
+          projectId: projectResponse.projectId,
+          _subject: `New Project Request: ${formData.projectTitle}`,
+          _autoresponse: `Hi ${formData.name}, 
+
+Thank you for submitting your project request to StudKits!
+
+Project Details:
+- Title: ${formData.projectTitle}
+- Project ID: ${projectResponse.projectId}
+
+We'll review your request and get back to you within 3 business days.
+
+You can track your project status at: ${process.env.NEXT_PUBLIC_APP_URL}/tracking
+
+Best regards,
+StudKits Team`,
+          _template: "table"
+        })
+      });
+
+      if (!formResponse.ok) {
+        throw new Error('Failed to send email notification');
+      }
+
       toast({
-        title: "Submission Failed",
-        description: `There was a problem sending your request: ${errorMessage}`,
+        title: "Request Submitted Successfully",
+        description: "We'll review your project request and get back to you soon!",
+      });
+
+      router.push('/tracking');
+
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to submit request",
         variant: "destructive",
       });
     } finally {

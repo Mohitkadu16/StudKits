@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -6,234 +5,202 @@ import { useAuth } from '@/context/auth-context';
 import { useRouter } from 'next/navigation';
 import { type ProjectTrackingInfo, type StageKey } from '@/lib/tracking';
 import { type ProjectRequest } from '@/lib/requests';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
+import { Package, Loader2 } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import { UserCog, Loader2, Database, AlertCircle, Inbox, Check, X } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { getAllProjects, updateProjectStage, updateProjectNotes } from './actions';
 import { useToast } from '@/hooks/use-toast';
-import { updateProjectInFirestore, seedInitialProject, approveProjectRequest, declineProjectRequest } from './actions';
-import { db } from '@/lib/firebase';
-import { doc, onSnapshot, getDoc, collection, query } from 'firebase/firestore';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-const MOCK_PROJECT_ID = 'SK-1024';
+type Project = ProjectTrackingInfo & ProjectRequest;
 
-const AdminDashboard = () => {
-  const [project, setProject] = useState<ProjectTrackingInfo | null>(null);
-  const [projectRequests, setProjectRequests] = useState<ProjectRequest[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSeeding, setIsSeeding] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export default function AdminPage() {
   const { toast } = useToast();
+  const [project, setProject] = useState<Project | null>(null);
+  const [allProjects, setAllProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
 
+  const fetchProjects = async () => {
+    try {
+      const result = await getAllProjects();
+      if (result.success && result.data) {
+        setAllProjects(result.data as Project[]);
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to fetch projects",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch projects",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch projects on component mount
   useEffect(() => {
-    const projectRef = doc(db, 'projects', MOCK_PROJECT_ID);
-    getDoc(projectRef).then(docSnap => {
-        if (!docSnap.exists()) {
-            setError("Main project document not found. Seed data if needed for testing.");
-        }
-    });
+    fetchProjects();
+  }, []);
 
-    const unsubProject = onSnapshot(projectRef, (doc) => {
-        setProject(doc.exists() ? (doc.data() as ProjectTrackingInfo) : null);
-    }, (err) => {
-        console.error("Project snapshot error:", err);
-        setError("Failed to listen to project updates.");
-    });
-
-    const requestsQuery = query(collection(db, 'projectRequests'));
-    const unsubRequests = onSnapshot(requestsQuery, (snapshot) => {
-        const requests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as ProjectRequest));
-        setProjectRequests(requests);
-    }, (err) => {
-        console.error("Requests snapshot error:", err);
-        toast({ title: "Error", description: "Could not fetch project requests.", variant: "destructive" });
-    });
-
-    return () => {
-        unsubProject();
-        unsubRequests();
-    };
-  }, [toast]);
-
-  const handleStageChange = (projectId: string, newStage: StageKey) => {
-    if (!project) return;
-    setProject({ ...project, currentStage: newStage });
-  };
-
-  const handleNotesChange = (projectId: string, stageKey: StageKey, notes: string) => {
-    if (!project) return;
-    const updatedStages = { ...project.stages };
-    updatedStages[stageKey] = { ...updatedStages[stageKey], notes: notes };
-    setProject({ ...project, stages: updatedStages });
-  };
-
-  const handleSaveChanges = async (projectId: string) => {
-    if (!project) return;
-    setIsLoading(true);
-    const result = await updateProjectInFirestore(projectId, { currentStage: project.currentStage, stages: project.stages });
-    if (result.success) {
-      toast({ title: "Project Updated", description: result.message });
-    } else {
-      toast({ title: "Update Failed", description: result.message, variant: 'destructive' });
-    }
-    setIsLoading(false);
-  };
-
-  const handleSeedData = async () => {
-    setIsSeeding(true);
-    const result = await seedInitialProject();
-    if (result.success) {
-      toast({ title: "Success", description: result.message });
-      setError(null);
-    } else {
-      toast({ title: "Error", description: result.message, variant: "destructive" });
-    }
-    setIsSeeding(false);
-  };
-  
-  const handleApprove = async (request: ProjectRequest) => {
-      const result = await approveProjectRequest(request);
+  const handleStageChange = async (projectId: string, newStage: StageKey) => {
+    setIsUpdating(true);
+    try {
+      const result = await updateProjectStage(projectId, newStage);
       if (result.success) {
-          toast({ title: "Request Approved", description: `Project ${result.projectId} has been created.` });
+        toast({
+          title: "Success",
+          description: "Project stage updated successfully",
+        });
+        await fetchProjects(); // Refresh data
       } else {
-          toast({ title: "Approval Failed", description: result.message, variant: "destructive" });
+        toast({
+          title: "Error",
+          description: result.error || "Failed to update project stage",
+          variant: "destructive",
+        });
       }
+    } catch (error) {
+      console.error('Error updating stage:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update project stage",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   };
-  
-  const handleDecline = async (requestId: string) => {
-      const result = await declineProjectRequest(requestId);
+
+  const handleNotesChange = async (projectId: string, stageKey: string, notes: string) => {
+    setIsUpdating(true);
+    try {
+      const result = await updateProjectNotes(projectId, stageKey, notes);
       if (result.success) {
-          toast({ title: "Request Declined", description: "The request has been removed." });
+        toast({
+          title: "Success",
+          description: "Project notes updated successfully",
+        });
+        await fetchProjects(); // Refresh data
       } else {
-          toast({ title: "Decline Failed", description: result.message, variant: "destructive" });
+        toast({
+          title: "Error",
+          description: result.error || "Failed to update project notes",
+          variant: "destructive",
+        });
       }
+    } catch (error) {
+      console.error('Error updating notes:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update project notes",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   return (
-    <div className="space-y-8">
-      <section className="text-center py-8 bg-card rounded-lg shadow">
-        <h1 className="text-4xl font-bold text-primary mb-2 flex items-center justify-center">
-          <UserCog className="mr-3 h-10 w-10" /> Admin Dashboard
-        </h1>
-        <p className="text-lg text-muted-foreground">Manage and update user project tracking information from Firestore.</p>
-      </section>
-
-      {error && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
-          <Button onClick={handleSeedData} disabled={isSeeding} className="mt-4">
-            <Database className="mr-2 h-4 w-4" />
-            {isSeeding ? 'Seeding...' : 'Seed Test Project'}
-          </Button>
-        </Alert>
-      )}
-
-      <Card className="shadow-lg">
+    <div className="container mx-auto p-4 space-y-4">
+      <Card className="shadow-md">
         <CardHeader>
-            <CardTitle className="flex items-center text-2xl"><Inbox className="mr-3 h-7 w-7 text-primary"/> Project Requests</CardTitle>
-            <CardDescription>Review and approve new custom project and presentation requests.</CardDescription>
+          <CardTitle className="flex items-center">
+            <Package className="mr-2 h-5 w-5" /> Project Management
+          </CardTitle>
+          <CardDescription>Select a project to manage its progress</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-            {projectRequests.length > 0 ? (
-                projectRequests.map(req => (
-                    <Card key={req.id} className="bg-muted/50">
-                        <CardHeader>
-                             <CardTitle className="text-lg">{req.projectTitle || req.topic}</CardTitle>
-                             <CardDescription>From: {req.name} ({req.email})</CardDescription>
-                        </CardHeader>
-                        <CardContent className="text-sm space-y-2">
-                             {req.projectTitle && <p><strong>Type:</strong> Custom Project</p>}
-                             {req.topic && <p><strong>Type:</strong> Custom Presentation</p>}
-                             {req.description && <p><strong>Description:</strong> {req.description}</p>}
-                             {req.instructions && <p><strong>Instructions:</strong> {req.instructions}</p>}
-                             {req.components && <p><strong>Components:</strong> {req.components}</p>}
-                        </CardContent>
-                        <CardFooter className="flex justify-end gap-2">
-                            <Button variant="outline" size="sm" onClick={() => handleDecline(req.id)}><X className="mr-2 h-4 w-4"/>Decline</Button>
-                            <Button size="sm" onClick={() => handleApprove(req)}><Check className="mr-2 h-4 w-4"/>Approve & Create Project</Button>
-                        </CardFooter>
-                    </Card>
-                ))
+        <CardContent>
+          <div className="space-y-4">
+            {isLoading ? (
+              <div className="flex items-center justify-center py-4">
+                <Loader2 className="h-6 w-6 animate-spin" />
+              </div>
             ) : (
-                <p className="text-center text-muted-foreground py-4">No new project requests.</p>
+              <Select 
+                value={project?.projectId} 
+                onValueChange={(value) => {
+                  const selectedProject = allProjects.find(p => p.projectId === value);
+                  if (selectedProject) {
+                    setProject(selectedProject);
+                  }
+                }}
+                disabled={isUpdating}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a project to manage" />
+                </SelectTrigger>
+                <SelectContent>
+                  {allProjects.map(p => (
+                    <SelectItem key={p.projectId} value={p.projectId}>
+                      {p.projectId} - {p.userId}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
+          </div>
         </CardContent>
       </Card>
+      
+      {isUpdating && (
+        <div className="fixed inset-0 bg-black/20 flex items-center justify-center">
+          <Card className="w-[300px]">
+            <CardContent className="flex items-center justify-center py-6">
+              <Loader2 className="h-6 w-6 animate-spin mr-2" />
+              <span>Updating project...</span>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       {project && (
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle>Manage Existing Project: {project.projectId}</CardTitle>
-            <CardDescription>User ID: {project.userId}</CardDescription>
+            <CardTitle>Manage Project: {project.projectId}</CardTitle>
+            <CardDescription>Customer: {project.userId}</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label htmlFor={`stage-select-${project.projectId}`}>Current Stage</Label>
-              <Select value={project.currentStage} onValueChange={(value: StageKey) => handleStageChange(project.projectId, value)}>
-                <SelectTrigger id={`stage-select-${project.projectId}`}><SelectValue placeholder="Select stage" /></SelectTrigger>
-                <SelectContent>
-                  {Object.keys(project.stages).map(stageKey => (
-                    <SelectItem key={stageKey} value={stageKey}>{stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <CardContent>
+            <div className="space-y-6">
+              <div className="grid w-full gap-1.5">
+                <Label htmlFor="stage-select">Current Stage</Label>
+                <Select value={project.currentStage} onValueChange={(value: StageKey) => handleStageChange(project.projectId, value)}>
+                  <SelectTrigger id="stage-select"><SelectValue placeholder="Select stage" /></SelectTrigger>
+                  <SelectContent>
+                    {Object.keys(project.stages).map(stageKey => (
+                      <SelectItem key={stageKey} value={stageKey}>
+                        {stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {Object.keys(project.stages).map(stageKey => (
+                <div key={stageKey} className="grid w-full gap-1.5">
+                  <Label htmlFor={`notes-${stageKey}`}>Notes for {stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</Label>
+                  <Textarea 
+                    id={`notes-${stageKey}`}
+                    placeholder={`Add notes for ${stageKey.replace(/_/g, ' ')}`}
+                    value={project.stages[stageKey as StageKey]?.notes || ''}
+                    onChange={e => handleNotesChange(project.projectId, stageKey, e.target.value)}
+                    className="min-h-[100px]"
+                  />
+                </div>
+              ))}
             </div>
-            <div className="space-y-2">
-              <h4 className="font-medium text-foreground">Stage Notes</h4>
-              {Object.keys(project.stages).map(stage => {
-                const stageKey = stage as StageKey;
-                return (
-                  <div key={stageKey}>
-                    <Label htmlFor={`notes-${project.projectId}-${stageKey}`}>Notes for {stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</Label>
-                    <Textarea
-                      id={`notes-${project.projectId}-${stageKey}`}
-                      placeholder={`Update notes for ${stageKey.replace(/_/g, ' ')}...`}
-                      value={project.stages[stageKey]?.notes || ''}
-                      onChange={(e) => handleNotesChange(project.projectId, stageKey, e.target.value)}
-                      rows={2}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-            <Button onClick={() => handleSaveChanges(project.projectId)} disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Save Changes for {project.projectId}
-            </Button>
           </CardContent>
         </Card>
       )}
     </div>
   );
-};
-
-export default function AdminPage() {
-  const { user, isLoading } = useAuth();
-  const router = useRouter();
-  const isAdmin = user?.email === 'studkits25@gmail.com';
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[calc(100vh-200px)]">
-        <Loader2 className="h-16 w-16 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    router.push('/login');
-    return null;
-  }
-
-  if (!isAdmin) {
-    router.push('/');
-    return null;
-  }
-
-  return <AdminDashboard />;
 }

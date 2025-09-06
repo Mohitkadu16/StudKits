@@ -12,8 +12,6 @@ import { Mail, User, MessageSquare, Send, Instagram, Loader2 } from 'lucide-reac
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import { useAuth } from '@/context/auth-context';
-import { sendFormEmail } from '@/lib/emailjs';
-
 interface ContactFormState {
   name: string;
   email: string;
@@ -22,11 +20,24 @@ interface ContactFormState {
   college?: string;
 }
 
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgvlyklz"; // Replace with your Formspree form ID
+
 export default function ContactUsPage() {
   const { toast } = useToast();
   const router = useRouter();
   const { user, isLoading: authLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Pre-fill form with user data if logged in
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.displayName || '',
+        email: user.email || ''
+      }));
+    }
+  }, [user]);
 
   const [formData, setFormData] = useState<ContactFormState>({
     name: '',
@@ -69,6 +80,8 @@ export default function ContactUsPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    
+    // Validate required fields
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast({
         title: "Missing Information",
@@ -80,51 +93,53 @@ export default function ContactUsPage() {
     
     setIsLoading(true);
 
-    const emailSubject = `Contact Form: ${formData.subject}`;
-    const emailBody = `
-      <p>You have received a new message from the contact form on your website.</p>
-      <hr>
-      <p><b>Name:</b> ${formData.name}</p>
-      <p><b>Email:</b> ${formData.email}</p>
-      <p><b>College:</b> ${formData.college || 'N/A'}</p>
-      <p><b>Subject:</b> ${formData.subject}</p>
-      <h3>Message:</h3>
-      <p>${formData.message.replace(/\n/g, '<br>')}</p>
-      <hr>
-    `;
-
     try {
-      const result = await sendFormEmail({
-        name: formData.name,
-        email: formData.email,
-        subject: emailSubject,
-        message: formData.message,
-        requestType: 'project',
-        college: formData.college
+      // Send form data to Formspree
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          college: formData.college,
+          _subject: `Contact Form: ${formData.subject}`,
+          _autoresponse: `Hi ${formData.name}, thank you for reaching out to StudKits! We have received your message about "${formData.subject}" and our team will get back to you within 3 business days.`,
+          _template: "table"
+        })
       });
 
-      if (result.success) {
-        toast({
-          title: "Message Sent!",
-          description: "Thank you for contacting us. We'll get back to you shortly.",
-        });
-        // Reset form after submission
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: '',
-          college: ''
-        });
-      } else {
-        throw new Error(result.message);
+      // Handle non-200 responses
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || 'Failed to send message');
       }
-    } catch (error) {
-      console.error("Form submission error:", error);
+
+      // Show success message
       toast({
-        title: "Submission Failed",
-        description: "There was a problem sending your message. Please try again later or contact us directly via email.",
-        variant: "destructive",
+        title: "Message Sent",
+        description: "Thank you for contacting us. We'll get back to you soon!",
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+        college: ''
+      });
+    } catch (error) {
+      // Handle errors
+      console.error('Form submission error:', error);
+      toast({
+        title: "Failed to Send Message",
+        description: error instanceof Error ? error.message : 'Please try again later.',
+        variant: "destructive"
       });
     } finally {
       setIsLoading(false);
@@ -275,3 +290,4 @@ export default function ContactUsPage() {
     </div>
   );
 }
+

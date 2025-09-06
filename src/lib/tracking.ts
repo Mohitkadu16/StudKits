@@ -1,5 +1,5 @@
 
-import { Package, CircuitBoard, Code, TestTube, Truck, type LucideIcon } from "lucide-react";
+import { Package, CircuitBoard, Code, TestTube, Truck, CheckCircle2, type LucideIcon } from "lucide-react";
 
 export type StageStatus = 'pending' | 'in_progress' | 'completed';
 
@@ -10,7 +10,7 @@ export interface Stage {
     imageUrl?: string;
 }
 
-export type StageKey = 'components_collected' | 'circuit_design' | 'programming' | 'testing' | 'shipping';
+export type StageKey = 'requirements' | 'design' | 'development' | 'testing' | 'completed';
 
 export interface ProjectTrackingInfo {
     projectId: string;
@@ -20,11 +20,11 @@ export interface ProjectTrackingInfo {
 }
 
 export const stageIcons: Record<StageKey, LucideIcon> = {
-    components_collected: Package,
-    circuit_design: CircuitBoard,
-    programming: Code,
+    requirements: Package,
+    design: CircuitBoard,
+    development: Code,
     testing: TestTube,
-    shipping: Truck,
+    completed: CheckCircle2,
 };
 
 export const getStageIcon = (stage: StageKey): LucideIcon => {
@@ -35,31 +35,31 @@ export const getStageIcon = (stage: StageKey): LucideIcon => {
 export const mockProject: ProjectTrackingInfo = {
     projectId: 'SK-1024',
     userId: 'user-abc-123',
-    currentStage: 'programming',
+    currentStage: 'development',
     stages: {
-        components_collected: {
+        requirements: {
             status: 'completed',
             timestamp: '2023-10-26T10:00:00Z',
-            notes: 'All components received from suppliers.',
+            notes: 'Initial requirements gathered and documented.',
         },
-        circuit_design: {
+        design: {
             status: 'completed',
             timestamp: '2023-10-27T14:30:00Z',
-            notes: 'Schematic finalized and PCB layout sent for fabrication.',
+            notes: 'Project design finalized and approved.',
             imageUrl: 'https://placehold.co/600x400.png',
         },
-        programming: {
+        development: {
             status: 'in_progress',
             timestamp: '2023-10-28T11:00:00Z',
-            notes: 'Initial firmware flashed. Working on sensor integration logic.',
+            notes: 'Implementation in progress.',
         },
         testing: {
             status: 'pending',
             timestamp: '',
         },
-        shipping: {
+        completed: {
             status: 'pending',
             timestamp: '',
-        },
+        }
     },
 };

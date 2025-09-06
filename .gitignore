@@ -46,3 +46,4 @@ firestore-debug.log
 
 # service account key for admin scripts
 scripts/serviceAccountKey.json
+/src/generated/prisma

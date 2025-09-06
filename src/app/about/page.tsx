@@ -103,7 +103,7 @@ export default function AboutUsPage() {
 
       <section className="py-8">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">Meet the Founders</h2>
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
          <Card className="text-center shadow-md p-4">
             <CardHeader>
                 <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
@@ -128,6 +128,27 @@ export default function AboutUsPage() {
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
                 <Image
+                  src={encodeURI('/images/maverick photo.jpg')}
+                  alt="Maverick D'Silva"
+                  width={128}
+                  height={128}
+                  className="object-cover w-full h-full"
+                  style={{ objectPosition: '80% 15%' }}
+                />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <CardTitle className="text-2xl">Maverick D'Silva</CardTitle>
+              <CardDescription className="text-base text-primary">Co-Founder</CardDescription>
+              <p className="text-sm text-muted-foreground pt-2">
+                Hello i am Maverick D'Silva Co-founder of Studkits. Currently persuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
+              </p>
+            </CardContent>
+            </Card>
+           <Card className="text-center shadow-md p-4">
+            <CardHeader>
+              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
+                <Image
                   src={encodeURI('/images/mohit photo.jpg')}
                   alt="Mohit Kadu"
                   width={128}
@@ -140,7 +161,7 @@ export default function AboutUsPage() {
               <CardTitle className="text-2xl">Mohit Kadu</CardTitle>
               <CardDescription className="text-base text-primary">Web Developer | Co-Founder</CardDescription>
               <p className="text-sm text-muted-foreground pt-2">
-                Hello i am Mohit Kadu founder of Studkits. Currently persuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
+                Hello i am Mohit Kadu Developer & Co-founder of Studkits. Currently persuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
               </p>
             </CardContent>
           </Card>

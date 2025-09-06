@@ -14,17 +14,17 @@ interface ProjectTrackerProps {
 }
 
 export function ProjectTracker({ project }: ProjectTrackerProps) {
-  const stageKeys: StageKey[] = ['components_collected', 'circuit_design', 'programming', 'testing', 'shipping'];
-  const totalStages = stageKeys.length;
+  const stageKeys: StageKey[] = ['requirements', 'design', 'development', 'testing', 'completed'];
+  const totalStages = stageKeys.length - 1; // Exclude completed from progress calculation
   const currentStageIndex = stageKeys.indexOf(project.currentStage);
-  const progressPercentage = ((currentStageIndex + 1) / totalStages) * 100;
+  const progressPercentage = project.currentStage === 'completed' ? 100 : ((currentStageIndex + 1) / totalStages) * 100;
   
   const stageNames: Record<StageKey, string> = {
-    components_collected: 'Components Collected',
-    circuit_design: 'Circuit Design',
-    programming: 'Programming',
+    requirements: 'Requirements Gathered',
+    design: 'Design Phase',
+    development: 'Development',
     testing: 'Testing',
-    shipping: 'Shipping',
+    completed: 'Project Completed ✓'
   };
 
   const getStatusIcon = (status: Stage['status']) => {
@@ -40,12 +40,17 @@ export function ProjectTracker({ project }: ProjectTrackerProps) {
     }
   };
 
+  const isCompleted = project.currentStage === 'completed';
+  
   return (
-    <Card className="shadow-lg overflow-hidden">
-      <CardHeader className="bg-muted/50 p-6">
+    <Card className={`shadow-lg overflow-hidden ${isCompleted ? 'bg-green-50/50' : ''}`}>
+      <CardHeader className={`${isCompleted ? 'bg-green-100/50' : 'bg-muted/50'} p-6`}>
         <CardTitle className="text-2xl flex items-center justify-between">
             <span>Order #{project.projectId}</span>
-            <span className="text-lg font-medium text-primary">{stageNames[project.currentStage]}</span>
+            <span className={`text-lg font-medium ${isCompleted ? 'text-green-600' : 'text-primary'} flex items-center gap-2`}>
+              {stageNames[project.currentStage]}
+              {isCompleted && <CheckCircle2 className="h-5 w-5" />}
+            </span>
         </CardTitle>
         <CardDescription>
             Last Updated: {new Date(project.stages[project.currentStage].timestamp).toLocaleString()}
@@ -55,8 +60,8 @@ export function ProjectTracker({ project }: ProjectTrackerProps) {
         <div className="mb-6">
             <Progress value={progressPercentage} className="h-3" />
             <div className="flex justify-between text-xs text-muted-foreground mt-2">
-                <span>Order Placed</span>
-                <span>Delivered</span>
+                <span>Project Started</span>
+                <span>Project Completed</span>
             </div>
         </div>
 
@@ -64,7 +69,7 @@ export function ProjectTracker({ project }: ProjectTrackerProps) {
 
         <div className="space-y-8">
             {stageKeys.map((key) => {
-                const stage = project.stages[key];
+                const stage = project.stages[key] || { status: 'pending', timestamp: '' };
                 const StageIcon = getStageIcon(key);
                 return (
                     <div key={key} className="flex gap-4">
@@ -72,7 +77,7 @@ export function ProjectTracker({ project }: ProjectTrackerProps) {
                             <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary">
                                 <StageIcon className="h-6 w-6" />
                             </div>
-                           {key !== 'shipping' && (
+                           {key !== 'completed' && (
                              <div className="w-px h-full bg-border mt-2"></div>
                            )}
                         </div>

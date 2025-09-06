@@ -10,7 +10,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useToast } from '@/hooks/use-toast';
 import { Send, Presentation, FileText, Palette, Users, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
-import { sendFormEmail } from '@/lib/emailjs';
+
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgvlyklz"; // Using the same endpoint as contact form
 
 interface CustomPresentationFormState {
   name: string;
@@ -83,44 +84,53 @@ export default function CustomPresentationPage() {
     setIsLoading(true);
     
     try {
-      const result = await sendFormEmail({
-        name: formData.name,
-        email: formData.email,
-        college: formData.college,
-        subject: `Custom Presentation Request: ${formData.topic}`,
-        message: formData.instructions,
-        requestType: 'presentation',
-        topic: formData.topic,
-        audience: formData.audience,
-        purpose: formData.purpose,
-        style: formData.style,
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          college: formData.college,
+          topic: formData.topic,
+          audience: formData.audience,
+          purpose: formData.purpose,
+          style: formData.style,
+          instructions: formData.instructions,
+          _subject: `Custom Presentation Request: ${formData.topic}`,
+          _autoresponse: `Hi ${formData.name}, thank you for submitting your presentation request for "${formData.topic}"! We have received your request and will review it within 3 business days.`,
+          _template: "table"
+        })
       });
 
-      if (result.success) {
-        toast({
-          title: "Request Sent!",
-          description: "Your presentation request has been sent. We will contact you shortly.",
-        });
-        // Reset form after submission
-        setFormData({
-          name: '',
-          email: '',
-          college: '',
-          topic: '',
-          audience: '',
-          purpose: '',
-          style: '',
-          instructions: '',
-        });
-      } else {
-        throw new Error(result.message);
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || 'Failed to send presentation request');
       }
+
+      toast({
+        title: "Request Sent!",
+        description: "Your presentation request has been sent. We will contact you shortly.",
+      });
+
+      // Reset form after submission
+      setFormData({
+        name: '',
+        email: '',
+        college: '',
+        topic: '',
+        audience: '',
+        purpose: '',
+        style: '',
+        instructions: '',
+      });
     } catch (error) {
       console.error("Form submission error:", error);
-      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
         title: "Submission Failed",
-        description: `There was a problem sending your request: ${errorMessage}`,
+        description: error instanceof Error ? error.message : "An unknown error occurred.",
         variant: "destructive",
       });
     } finally {
