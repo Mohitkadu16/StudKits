@@ -137,7 +137,6 @@ export default function CustomProjectPage() {
         },
         body: JSON.stringify({
           ...formData,
-          projectId: projectResponse.projectId,
           _subject: `New Project Request: ${formData.projectTitle}`,
           _autoresponse: `Hi ${formData.name}, 
 
@@ -145,7 +144,6 @@ Thank you for submitting your project request to StudKits!
 
 Project Details:
 - Title: ${formData.projectTitle}
-- Project ID: ${projectResponse.projectId}
 
 We'll review your request and get back to you within 3 business days.
 
