@@ -157,18 +157,6 @@ export const projects: Project[] = [
     benefits: ['Personal Health Tracking', 'Early Detection of Irregularities', 'Portable and Convenient', 'Potential for IoT Integration'],
     dataAiHint: 'embedded health'
   },
-  {
-    id: 'embedded-4',
-    title: 'Voice-Controlled Wheelchair',
-    description: 'Wheelchair controlled by voice commands via Arduino.',
-    longDescription: 'An assistive technology project to create a wheelchair that can be controlled using voice commands. It employs a voice recognition module, motors for movement, and an Arduino to interpret commands and drive the wheelchair.',
-    category: 'Embedded Systems',
-    categoryIcon: Cpu,
-    image: '/images/wheelchai.png',
-    features: ['Voice Recognition Module (e.g., V3)', 'DC Motors & Motor Driver', 'Arduino Microcontroller', 'Wheelchair Chassis Integration', 'Safety Features (e.g., obstacle sensors - optional)'],
-    benefits: ['Increased Independence for Users', 'Hands-Free Operation', 'Accessibility Solution', 'Customizable Commands'],
-    dataAiHint: 'embedded assistive'
-  },
   // New PCB Design & Prototyping Projects
   {
     id: 'pcb-1',

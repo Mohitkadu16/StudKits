@@ -23,7 +23,7 @@ StudKits is a comprehensive web platform designed to support students and educat
 
 ## ✨ What We Offer
 
-### � Project Services
+### 🈂️ Project Services
 - Custom electronics project consultation
 - Component selection guidance
 - Circuit design review
