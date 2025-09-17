@@ -208,44 +208,6 @@ export const projects: Project[] = [
     dataAiHint: 'presentation service',
     isService: true,
     servicePageUrl: '/custom-presentation'
-  },
-  // New Project-Kits
-  {
-    id: 'kit-1',
-    title: 'ESP-FUNDA (ESP-Kit)',
-    description: 'A comprehensive kit for building IoT projects. By AISkool',
-    longDescription: 'This ESP-Kit includes all the essential components to kickstart your IoT journey. Perfect for beginners and hobbyists, it provides a hands-on approach to learning about IoT devices and their applications.',
-    category: 'Kits',
-    categoryIcon: Lightbulb,
-    image: '/images/Esp final-year project kits.png',
-    features: ['Ready-Made PCB Board', 'Sensors and Connectors', 'Microcontroller Unit'],
-    benefits: ['Easy to Get Started', 'Hands-On Learning Experience', 'Versatile Components for Various Projects'],
-    dataAiHint: 'iot kit'
-  },
-  {
-    id: 'kit-2',
-    title: 'ARDU-FUNDA (Arduino-Kit)',
-    description: 'A comprehensive kit for building IoT projects. By AISkool',
-    longDescription: 'This Arduino-Kit includes all the essential components to kickstart your IoT journey. Perfect for beginners and hobbyists, it provides a hands-on approach to learning about IoT devices and their applications.',
-    category: 'Kits',
-    categoryIcon: Lightbulb,
-    image: '/images/arduino final year project kit.png',
-    features: ['Ready-Made PCB Board', 'Sensors and Connectors', 'Microcontroller Unit'],
-    benefits: ['Easy to Get Started', 'Hands-On Learning Experience', 'Versatile Components for Various Projects'],
-    dataAiHint: 'iot kit'
-  },
-  {
-    id: 'kit-3',
-    title: 'Hackathon-Kit',
-    description: 'A comprehensive kit for building IoT projects in Hackathon quickly. By AISkool',
-    longDescription: 'This Hackathon-Kit includes all the essential components to kickstart your hackathon journey. Perfect for beginners and experts alike, it provides a hands-on approach to learning about IoT devices and their applications for your problem statement.',
-    category: 'Kits',
-    categoryIcon: Lightbulb,
-    image: '/images/Hackthon-kit.jpg',
-    features: ['Ready-Made PCB Board', 'Sensors and Connectors', 'Microcontroller Unit'],
-    benefits: ['Easy to Get Started', 'Hands-On Learning Experience', 'Versatile Components for Various Projects'],
-    dataAiHint: 'iot kit'
-
   }
 ];
 
