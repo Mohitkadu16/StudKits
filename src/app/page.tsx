@@ -1,6 +1,7 @@
 'use client';
 import { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { projects, getCategories, getCategoryIcon } from '@/lib/projects';
 import { ProjectCard } from '@/components/project/project-card';
 import { ProjectFilters } from '@/components/project/project-filters';

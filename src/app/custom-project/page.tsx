@@ -271,5 +271,3 @@ StudKits Team`,
     </div>
   );
 }
-
-

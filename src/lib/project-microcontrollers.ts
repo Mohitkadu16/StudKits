@@ -9,5 +9,7 @@ export const projectMicrocontrollers: Record<string, string> = {
   'Industry 4.0 Machine Monitor': 'ESP32',
   'Voice-Controlled Wheelchair': 'Arduino Uno',
   'Smart Traffic Light Control': 'Arduino Uno',
-  'Solar Panel Cleaning Robot': 'ESP32'
+  'Solar Panel Cleaning Robot': 'ESP32',
+  'ESP-Kit': 'ESP32',
+  'Arduino-Kit': 'Arduino Uno'
 };

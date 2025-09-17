@@ -101,6 +101,33 @@ export default function AboutUsPage() {
         </CardContent>
       </Card>
 
+      <section className="py-8 bg-muted/50">
+        <h2 className="text-3xl font-bold text-center text-primary mb-8">Strategic Partners</h2>
+        <div className="max-w-4xl mx-auto">
+          <Card className="text-center shadow-md p-6">
+            <CardHeader>
+              <div className="mx-auto h-40 w-40 overflow-hidden">
+                <Image
+                  src="/images/aiskool-logo.png"
+                  alt="AISkool Logo"
+                  width={160}
+                  height={160}
+                  className="object-contain w-full h-full"
+                />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <CardTitle className="text-2xl">AISkool</CardTitle>
+              <p className="text-base text-muted-foreground">
+                AISkool is a STEM learning platform for kids, offering hands-on courses in Robotics, 
+                Coding, and AI to build creativity, problem-solving, and future-ready skills, now 
+                expanding globally under Academik America.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       <section className="py-8">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">Meet the Founders</h2>
         <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -162,33 +189,6 @@ export default function AboutUsPage() {
               <CardDescription className="text-base text-primary">Web Developer | Co-Founder</CardDescription>
               <p className="text-sm text-muted-foreground pt-2">
                 Hello I am Mohit Kadu Developer & Co-founder of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      <section className="py-8 bg-muted/50">
-        <h2 className="text-3xl font-bold text-center text-primary mb-8">Strategic Partners</h2>
-        <div className="max-w-4xl mx-auto">
-          <Card className="text-center shadow-md p-6">
-            <CardHeader>
-              <div className="mx-auto h-40 w-40 overflow-hidden">
-                <Image
-                  src="/images/aiskool-logo.png"
-                  alt="AISkool Logo"
-                  width={160}
-                  height={160}
-                  className="object-contain w-full h-full"
-                />
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <CardTitle className="text-2xl">AISkool</CardTitle>
-              <p className="text-base text-muted-foreground">
-                AISkool is a STEM learning platform for kids, offering hands-on courses in Robotics, 
-                Coding, and AI to build creativity, problem-solving, and future-ready skills, now 
-                expanding globally under Academik America.
               </p>
             </CardContent>
           </Card>
