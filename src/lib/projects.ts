@@ -212,7 +212,7 @@ export const projects: Project[] = [
   // New Project-Kits
   {
     id: 'kit-1',
-    title: 'ESP-Kit',
+    title: 'ESP-FUNDA (ESP-Kit)',
     description: 'A comprehensive kit for building IoT projects. By AISkool',
     longDescription: 'This ESP-Kit includes all the essential components to kickstart your IoT journey. Perfect for beginners and hobbyists, it provides a hands-on approach to learning about IoT devices and their applications.',
     category: 'Kits',
@@ -224,7 +224,7 @@ export const projects: Project[] = [
   },
   {
     id: 'kit-2',
-    title: 'Arduino-Kit',
+    title: 'ARDU-FUNDA (Arduino-Kit)',
     description: 'A comprehensive kit for building IoT projects. By AISkool',
     longDescription: 'This Arduino-Kit includes all the essential components to kickstart your IoT journey. Perfect for beginners and hobbyists, it provides a hands-on approach to learning about IoT devices and their applications.',
     category: 'Kits',
