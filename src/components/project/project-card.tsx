@@ -4,6 +4,7 @@ import type { Project } from '@/lib/projects';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { SubcategoryBadge } from '@/components/ui/badge-subcategory';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -79,6 +80,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     <span className="break-words">{project.category}</span>
                   </Badge>
                 )}
+                {project.subcategories?.map((subcategory) => (
+                  <SubcategoryBadge
+                    key={subcategory}
+                    subcategory={subcategory}
+                    className="self-start"
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -88,7 +96,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             {project.description}
           </CardDescription>
           <div className="text-xs text-muted-foreground mb-4 italic">
-            *Actual kit may look different from image.*
+            *Actual kit will look different from image.*
           </div>
         </CardContent>
 

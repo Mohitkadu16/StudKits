@@ -2,7 +2,7 @@
 import { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { projects, getCategories, getCategoryIcon } from '@/lib/projects';
+import { projects, getCategories, getCategoryIcon, getSubcategories } from '@/lib/projects';
 import { ProjectCard } from '@/components/project/project-card';
 import { ProjectFilters } from '@/components/project/project-filters';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<'Micro Project' | 'Capstone Project' | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const projectsSectionRef = useRef<HTMLDivElement>(null);
 
@@ -23,18 +24,23 @@ export default function HomePage() {
     }));
   }, []);
 
+  const subcategories = useMemo(() => {
+    return getSubcategories();
+  }, []);
+
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
       const matchesCategory = selectedCategory ? project.category === selectedCategory : true;
+      const matchesSubcategory = selectedSubcategory ? project.subcategories?.includes(selectedSubcategory) : true;
       const matchesSearch = searchTerm
         ? project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
           project.longDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
           project.category.toLowerCase().includes(searchTerm.toLowerCase())
         : true;
-      return matchesCategory && matchesSearch;
+      return matchesCategory && matchesSubcategory && matchesSearch;
     });
-  }, [selectedCategory, searchTerm]);
+  }, [selectedCategory, selectedSubcategory, searchTerm]);
 
   const handleScrollToProjects = () => {
     projectsSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -105,6 +111,9 @@ export default function HomePage() {
               categories={uniqueCategories}
               selectedCategory={selectedCategory}
               onSelectCategory={setSelectedCategory}
+              subcategories={subcategories}
+              selectedSubcategory={selectedSubcategory}
+              onSelectSubcategory={setSelectedSubcategory}
             />
           </div>
 
@@ -123,7 +132,7 @@ export default function HomePage() {
       </section>
     {/* Caution/Disclaimer Section */}
     <div className="max-w-3xl mx-auto mt-12 text-center text-sm text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-md p-3">
-      <strong>⚠️ Caution:</strong> Project kits may not look exactly like the images shown. Actual products will be similar and functionally equivalent.
+      <strong>⚠️ Caution:</strong> Project kits will not look exactly like the images shown. Actual products will be similar and functionally equivalent.
     </div>
   </div>
   );

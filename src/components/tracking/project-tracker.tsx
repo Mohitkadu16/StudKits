@@ -14,17 +14,18 @@ interface ProjectTrackerProps {
 }
 
 export function ProjectTracker({ project }: ProjectTrackerProps) {
-  const stageKeys: StageKey[] = ['requirements', 'design', 'development', 'testing', 'completed'];
+  const stageKeys: StageKey[] = ['components_collected', 'circuit_design', 'programming', 'testing', 'shipping', 'completed'];
   const totalStages = stageKeys.length - 1; // Exclude completed from progress calculation
   const currentStageIndex = stageKeys.indexOf(project.currentStage);
   const progressPercentage = project.currentStage === 'completed' ? 100 : ((currentStageIndex + 1) / totalStages) * 100;
   
   const stageNames: Record<StageKey, string> = {
-    requirements: 'Requirements Gathered',
-    design: 'Design Phase',
-    development: 'Development',
+    components_collected: 'Components Collected',
+    circuit_design: 'Circuit Design',
+    programming: 'Programming',
     testing: 'Testing',
-    completed: 'Project Completed ✓'
+    shipping: 'Shipping',
+    completed: 'Project Completed ✓',
   };
 
   const getStatusIcon = (status: Stage['status']) => {
@@ -60,8 +61,8 @@ export function ProjectTracker({ project }: ProjectTrackerProps) {
         <div className="mb-6">
             <Progress value={progressPercentage} className="h-3" />
             <div className="flex justify-between text-xs text-muted-foreground mt-2">
-                <span>Project Started</span>
-                <span>Project Completed</span>
+                <span>Order Placed</span>
+                <span>Delivered</span>
             </div>
         </div>
 
@@ -77,7 +78,7 @@ export function ProjectTracker({ project }: ProjectTrackerProps) {
                             <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary">
                                 <StageIcon className="h-6 w-6" />
                             </div>
-                           {key !== 'completed' && (
+                           {key !== 'shipping' && (
                              <div className="w-px h-full bg-border mt-2"></div>
                            )}
                         </div>

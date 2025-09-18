@@ -45,6 +45,7 @@ export default function AboutUsPage() {
               We specialize in a wide range of project kits and services including:
             </p>
             <ul className="list-disc list-inside pl-4">
+              <li>Both Types of Projects (Micro & Capstone)</li>
               <li>IoT-Based Projects</li>
               <li>Robotics & Automation</li>
               <li>Embedded Systems (Arduino, ESP32, Raspberry Pi)</li>

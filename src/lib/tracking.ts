@@ -10,7 +10,7 @@ export interface Stage {
     imageUrl?: string;
 }
 
-export type StageKey = 'requirements' | 'design' | 'development' | 'testing' | 'completed';
+export type StageKey = 'components_collected' | 'circuit_design' | 'programming' | 'testing' | 'shipping' | 'completed';
 
 export interface ProjectTrackingInfo {
     projectId: string;
@@ -20,10 +20,11 @@ export interface ProjectTrackingInfo {
 }
 
 export const stageIcons: Record<StageKey, LucideIcon> = {
-    requirements: Package,
-    design: CircuitBoard,
-    development: Code,
+    components_collected: Package,
+    circuit_design: CircuitBoard,
+    programming: Code,
     testing: TestTube,
+    shipping: Truck,
     completed: CheckCircle2,
 };
 
@@ -35,31 +36,35 @@ export const getStageIcon = (stage: StageKey): LucideIcon => {
 export const mockProject: ProjectTrackingInfo = {
     projectId: 'SK-1024',
     userId: 'user-abc-123',
-    currentStage: 'development',
+    currentStage: 'programming',
     stages: {
-        requirements: {
+        components_collected: {
             status: 'completed',
             timestamp: '2023-10-26T10:00:00Z',
-            notes: 'Initial requirements gathered and documented.',
+            notes: 'All components received from suppliers.',
         },
-        design: {
+        circuit_design: {
             status: 'completed',
             timestamp: '2023-10-27T14:30:00Z',
-            notes: 'Project design finalized and approved.',
+            notes: 'Schematic finalized and PCB layout sent for fabrication.',
             imageUrl: 'https://placehold.co/600x400.png',
         },
-        development: {
+        completed: {
+            status: 'completed',
+            timestamp: '',
+        },
+        programming: {
             status: 'in_progress',
             timestamp: '2023-10-28T11:00:00Z',
-            notes: 'Implementation in progress.',
+            notes: 'Initial firmware flashed. Working on sensor integration logic.',
         },
         testing: {
             status: 'pending',
             timestamp: '',
         },
-        completed: {
+        shipping: {
             status: 'pending',
             timestamp: '',
-        }
+        },
     },
 };

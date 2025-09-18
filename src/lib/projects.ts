@@ -1,4 +1,3 @@
-
 import type { LucideIcon } from 'lucide-react';
 import { Laptop, Smartphone, Code2, ShoppingCart, Network, Bot, Cpu, CircuitBoard, Presentation, Lightbulb } from 'lucide-react';
 
@@ -8,6 +7,7 @@ export interface Project {
   description: string; // Short description for card
   longDescription: string; // Detailed description for project page
   category: string;
+  subcategories?: ('Micro Project' | 'Capstone Project')[]; // Optional array of subcategories
   categoryIcon?: LucideIcon;
   image: string; // Fallback image if no 3D model
   features: string[];
@@ -27,6 +27,7 @@ export const projects: Project[] = [
     description: 'Voice and App controlled smart home system.',
     longDescription: 'Control your home appliances using voice commands or a mobile application. This project includes ESP32, relays for switching, various sensors for environmental data, and a breadboard for easy assembly. Ideal for modernizing your living space.',
     category: 'IoT-Based Projects',
+    subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Network,
     image: '/images/smart home automation.png', // Fallback image
     features: ['ESP32 Microcontroller', 'Relay Modules', 'Environment Sensors', 'Voice Control Integration', 'Mobile App Interface'],
@@ -40,6 +41,7 @@ export const projects: Project[] = [
     description: 'Automated irrigation based on soil moisture.',
     longDescription: 'An IoT solution for smart farming. This project uses a soil moisture sensor to monitor ground conditions and a NodeMCU to automatically control a water pump for irrigation, optimizing water usage for crops.',
     category: 'IoT-Based Projects',
+    subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Network,
     image: '/images/agriculture iot.png', // Fallback image
     features: ['Soil Moisture Sensor', 'NodeMCU (ESP8266)', 'Water Pump Control', 'Automated Irrigation Logic', 'Data Logging (optional)'],
@@ -53,6 +55,7 @@ export const projects: Project[] = [
     description: 'Monitor machine health using vibration sensors and ESP32.',
     longDescription: 'An Industry 4.0 project to monitor the health of machinery. It uses a vibration sensor to detect anomalies, an ESP32 for processing and connectivity, and an OLED display for real-time status updates. Helps in predictive maintenance.',
     category: 'IoT-Based Projects',
+    subcategories: ['Capstone Project'],
     categoryIcon: Network,
     image: '/images/helth monitor.png',
     features: ['Vibration Sensor', 'ESP32 Microcontroller', 'OLED Display', 'Data Analysis for Anomalies', 'Wireless Connectivity'],
@@ -65,6 +68,7 @@ export const projects: Project[] = [
     description: 'Monitor water quality using pH and TDS sensors with Arduino.',
     longDescription: 'This system monitors water quality by measuring pH and Total Dissolved Solids (TDS) levels using dedicated sensors connected to an Arduino. Essential for environmental monitoring and ensuring water safety.',
     category: 'IoT-Based Projects',
+    subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Network,
     image: '/images/water quality monitor.png',
     features: ['pH Sensor', 'TDS Sensor', 'Arduino Microcontroller', 'LCD/OLED Display (optional)', 'Data Logging'],
@@ -78,6 +82,7 @@ export const projects: Project[] = [
     description: 'Autonomous boat to collect garbage from water surfaces.',
     longDescription: 'A robotic boat designed to clean water bodies by collecting floating garbage. It uses DC motors for propulsion, floaters for buoyancy, an Arduino for control, and IR sensors for navigation or obstacle detection.',
     category: 'Robotics & Automation',
+    subcategories: ['Capstone Project'],
     categoryIcon: Bot,
     image: '/images/water cleaning boat.png',
     features: ['DC Motors', 'Floaters/Buoyancy System', 'Arduino Controller', 'IR Sensors for Detection', 'Garbage Collection Mechanism'],
@@ -90,6 +95,7 @@ export const projects: Project[] = [
     description: 'A robot that navigates autonomously by avoiding obstacles.',
     longDescription: 'This classic robotics project involves building a robot that can autonomously navigate its environment by detecting and avoiding obstacles using an ultrasonic sensor. Controlled by an Arduino, it sits on a chassis with wheels.',
     category: 'Robotics & Automation',
+    subcategories: ['Micro Project', 'Capstone Project'],
     categoryIcon: Bot,
     image: '/images/obstacle avoid robot.png',
     features: ['Ultrasonic Sensor', 'Arduino Microcontroller', 'Robot Chassis & Wheels', 'Motor Driver', 'Autonomous Navigation Algorithm'],
@@ -102,6 +108,7 @@ export const projects: Project[] = [
     description: 'A robotic arm capable of picking up and moving objects.',
     longDescription: 'Build a functional robotic arm that can pick up small objects and place them elsewhere. This project utilizes servo motors for precise joint movements, an Arduino for control, and a gripper mechanism.',
     category: 'Robotics & Automation',
+    subcategories: ['Capstone Project'],
     categoryIcon: Bot,
     image: '/images/robotic arm.png',
     features: ['Servo Motors (Multiple)', 'Arduino Controller', 'Robotic Arm Structure', 'Gripper Mechanism', 'Control Interface (e.g., potentiometers or code)'],
@@ -114,6 +121,7 @@ export const projects: Project[] = [
     description: 'Automated robot for cleaning solar panels.',
     longDescription: 'An automated solution for maintaining solar panel efficiency. This robot uses a wiper motor for the cleaning mechanism, is powered by a solar panel itself (or battery), and controlled by an ESP32 for smart operations.',
     category: 'Robotics & Automation',
+    subcategories: ['Capstone Project'],
     categoryIcon: Bot,
     image: '/images/solar panel robot.png',
     features: ['Wiper Motor & Cleaning Brush/Squeegee', 'Solar Panel for Power (optional)', 'ESP32 Microcontroller', 'Movement Mechanism (wheels/tracks)', 'Automated Cleaning Cycle'],
@@ -127,6 +135,7 @@ export const projects: Project[] = [
     description: 'Fingerprint-based attendance system with Arduino and LCD.',
     longDescription: 'A secure and reliable attendance system using a fingerprint sensor for biometric verification. The system is controlled by an Arduino and displays information on an LCD screen. Can store attendance records.',
     category: 'Embedded Systems',
+    subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Cpu,
     image: '/images/attendance system.png',
     features: ['Fingerprint Sensor Module', 'Arduino Microcontroller', 'LCD Display', 'Real-Time Clock (RTC) (optional)', 'Data Storage (SD card/EEPROM)'],
@@ -139,6 +148,7 @@ export const projects: Project[] = [
     description: 'Intelligent traffic light system using IR sensors and Arduino.',
     longDescription: 'An embedded system project to create a smart traffic light controller. It uses IR sensors to detect vehicle density on different lanes and an Arduino to dynamically adjust signal timings using LEDs, optimizing traffic flow.',
     category: 'Embedded Systems',
+    subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Cpu,
     image: '/images/traffic light system.png',
     features: ['IR Sensors for Vehicle Detection', 'Arduino Microcontroller', 'LEDs for Traffic Lights', 'Dynamic Signal Timing Algorithm', 'Pedestrian Button (optional)'],
@@ -151,6 +161,7 @@ export const projects: Project[] = [
     description: 'Wearable device for monitoring pulse rate with ESP32 and OLED.',
     longDescription: 'A compact wearable device to monitor vital health signs, specifically pulse rate, using a pulse sensor. The ESP32 processes the data and displays it on an OLED screen. Can be enhanced with wireless data transmission.',
     category: 'Embedded Systems',
+    subcategories: ['Capstone Project'],
     categoryIcon: Cpu,
     image: '/images/health wearable.png',
     features: ['Pulse Sensor (e.g., MAX30100 or similar)', 'ESP32 Microcontroller (with Bluetooth/Wi-Fi)', 'OLED Display', 'Compact Wearable Design', 'Battery Power'],
@@ -164,6 +175,7 @@ export const projects: Project[] = [
     description: 'Schematic capture and Gerber file generation for single-layer PCBs.',
     longDescription: 'Professional single-layer PCB design service. Includes schematic capture based on your circuit diagram and generation of Gerber files ready for manufacturing (e.g., via JLCPCB). Ideal for simple to moderately complex circuits.',
     category: 'PCB Design & Prototyping',
+    subcategories: ['Capstone Project'],
     categoryIcon: CircuitBoard,
     image: '/images/pcb designing.png',
     features: ['Schematic Design', 'Component Footprint Creation', 'Single-Layer Routing', 'Gerber File Generation', 'Bill of Materials (BOM) (optional)'],
@@ -176,6 +188,7 @@ export const projects: Project[] = [
     description: 'Design of ready-to-use breakout boards for common sensors.',
     longDescription: 'Design and prototyping of custom breakout boards for popular sensors (e.g., DHT11, HC-SR04, MPU6050). Simplifies integration into projects by providing easy pin access and necessary support circuitry. Price is for design; manufacturing cost is separate.',
     category: 'PCB Design & Prototyping',
+    subcategories: ['Capstone Project'],
     categoryIcon: CircuitBoard,
     image: '/images/breakout board.png',
     features: ['Optimized for Specific Sensor', 'Easy Pin Access', 'On-board Components (if needed)', 'Compact Design', 'Gerber Files Provided'],
@@ -188,6 +201,7 @@ export const projects: Project[] = [
     description: 'Design of PCBs for battery or solar charging circuits.',
     longDescription: 'Custom PCB design for power management solutions, including battery charging circuits (e.g., TP4056 based) or solar power harvesting systems. Ensures efficient and safe power delivery for your embedded projects.',
     category: 'PCB Design & Prototyping',
+    subcategories: ['Capstone Project'],
     categoryIcon: CircuitBoard,
     image: '/images/power management.png',
     features: ['Battery Charging Circuit Design', 'Solar Charge Controller Design', 'Voltage Regulation', 'Protection Circuitry (overcharge, over-discharge)', 'Gerber Files Provided'],
@@ -201,6 +215,7 @@ export const projects: Project[] = [
     description: 'Get a professional presentation for any project or topic.',
     longDescription: 'We create custom, informative presentations for any need. Whether for a college submission, a business pitch, or academic purposes, our presentations are tailored to highlight key information with a professional design. Contact us for a quote.',
     category: 'Services',
+    subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Presentation,
     image: '/images/custom presentation.png',
     features: ['Tailored Content on Any Topic', 'Professional & Modern Design', 'Clear Explanations of Technical Details', 'Inclusion of Diagrams and Visuals', 'Source File Delivery (PPTX)'],
@@ -223,12 +238,15 @@ export const getCategories = (): string[] => {
 export const getCategoryIcon = (categoryName: string): LucideIcon | undefined => {
   // Find the first project in that category that has an icon defined
   const projectWithCategory = projects.find(p => p.category === categoryName && p.categoryIcon);
-  if (projectWithCategory) {
-    return projectWithCategory.categoryIcon;
-  }
-  // Fallback: if no project has a specific icon, try to return a general icon for the category if needed
-  // For now, this relies on at least one project in the category defining the icon.
-  // Or, you could have a mapping here:
-  // if (categoryName === 'Mobile App') return Smartphone;
-  return undefined;
+  return projectWithCategory?.categoryIcon;
+}
+
+export const getSubcategories = (): ('Micro Project' | 'Capstone Project')[] => {
+  const subcategories = projects
+    .flatMap(project => project.subcategories || []);
+  return Array.from(new Set(subcategories)).sort();
+};
+
+export const getProjectsBySubcategory = (subcategory: 'Micro Project' | 'Capstone Project'): Project[] => {
+  return projects.filter(project => project.subcategories?.includes(subcategory));
 };
