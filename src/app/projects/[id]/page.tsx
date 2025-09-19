@@ -6,6 +6,13 @@ import Link from 'next/link';
 import { getProjectById, Project } from '@/lib/projects';
 import { Button } from '@/components/ui/button';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   AlertDialog,
   AlertDialogTrigger,
   AlertDialogContent,
@@ -27,6 +34,7 @@ export default function ProjectDetailPage() {
   const { toast } = useToast();
   const [project, setProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<'Micro Project' | 'Capstone Project' | null>(null);
   
   // Add class to body for project detail pages
   useEffect(() => {
@@ -40,6 +48,10 @@ export default function ProjectDetailPage() {
       const foundProject = getProjectById(projectId);
       if (foundProject) {
         setProject(foundProject);
+        // Set the initial subcategory to the first one in the project's subcategories
+        if (foundProject.subcategories && foundProject.subcategories.length > 0) {
+          setSelectedSubcategory(foundProject.subcategories[0]);
+        }
       } else {
         // Handle project not found, e.g., redirect or show a message
         router.push('/'); // Redirect to home if project not found
@@ -125,29 +137,86 @@ export default function ProjectDetailPage() {
                 {project.longDescription}
               </CardDescription>
 
+              {project.subcategories && project.subcategories.length > 0 && (
+                <div className="subcategory-selector">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary">Project Type</h3>
+                  <Select
+                    value={selectedSubcategory || undefined}
+                    onValueChange={(value) => setSelectedSubcategory(value as 'Micro Project' | 'Capstone Project')}
+                  >
+                    <SelectTrigger className="w-[200px]">
+                      <SelectValue placeholder="Select project type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {project.subcategories.map((subcategory) => (
+                        <SelectItem key={subcategory} value={subcategory}>
+                          {subcategory}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
               <div className="feature-list">
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary flex items-center">
-                  <CheckCircle className="mr-2 h-5 w-5 text-green-500 flex-shrink-0" /> Features
+                  <CheckCircle className="mr-2 h-5 w-5 text-green-500 flex-shrink-0" /> 
+                  Features {selectedSubcategory ? `(${selectedSubcategory})` : ''}
                 </h3>
                 <ul className="list-disc list-inside space-y-2 text-foreground/80 pl-2">
-                  {project.features.map((feature, index) => (
-                    <li key={index} className="break-words whitespace-normal leading-relaxed">
-                      {feature}
-                    </li>
-                  ))}
+                  {selectedSubcategory === 'Micro Project' ? (
+                    // Display simplified features for Micro Project
+                    project.features.slice(0, 3).map((feature, index) => (
+                      <li key={index} className="break-words whitespace-normal leading-relaxed">
+                        {feature}
+                      </li>
+                    ))
+                  ) : selectedSubcategory === 'Capstone Project' ? (
+                    // Display all features for Capstone Project
+                    project.features.map((feature, index) => (
+                      <li key={index} className="break-words whitespace-normal leading-relaxed">
+                        {feature}
+                      </li>
+                    ))
+                  ) : (
+                    // Default view when no subcategory is selected
+                    project.features.map((feature, index) => (
+                      <li key={index} className="break-words whitespace-normal leading-relaxed">
+                        {feature}
+                      </li>
+                    ))
+                  )}
                 </ul>
               </div>
 
               <div className="benefit-list">
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary flex items-center">
-                  <Tag className="mr-2 h-5 w-5 text-blue-500 flex-shrink-1" /> Benefits
+                  <Tag className="mr-2 h-5 w-5 text-blue-500 flex-shrink-1" /> 
+                  Benefits {selectedSubcategory ? `(${selectedSubcategory})` : ''}
                 </h3>
                 <ul className="list-disc list-inside space-y-2 text-foreground/80 pl-2">
-                  {project.benefits.map((benefit, index) => (
-                    <li key={index} className="break-words whitespace-normal leading-relaxed">
-                      {benefit}
-                    </li>
-                  ))}
+                  {selectedSubcategory === 'Micro Project' ? (
+                    // Display simplified benefits for Micro Project
+                    project.benefits.slice(0, 3).map((benefit, index) => (
+                      <li key={index} className="break-words whitespace-normal leading-relaxed">
+                        {benefit}
+                      </li>
+                    ))
+                  ) : selectedSubcategory === 'Capstone Project' ? (
+                    // Display all benefits for Capstone Project
+                    project.benefits.map((benefit, index) => (
+                      <li key={index} className="break-words whitespace-normal leading-relaxed">
+                        {benefit}
+                      </li>
+                    ))
+                  ) : (
+                    // Default view when no subcategory is selected
+                    project.benefits.map((benefit, index) => (
+                      <li key={index} className="break-words whitespace-normal leading-relaxed">
+                        {benefit}
+                      </li>
+                    ))
+                  )}
                 </ul>
               </div>
             </CardContent>

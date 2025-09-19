@@ -38,7 +38,6 @@ export function Navbar() {
     { href: '/custom-presentation', label: 'Custom Presentation', icon: Presentation },
     { href: '/tracking', label: 'Track Order', icon: PackageSearch },
     { href: '/contact', label: 'Contact Us', icon: Mail },
-    { href: '/summarizer', label: 'AI Summarizer', icon: Wand2 },
   ];
 
   const handleLinkClick = () => {

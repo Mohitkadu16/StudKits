@@ -75,6 +75,92 @@ export const projects: Project[] = [
     benefits: ['Ensures Water Safety', 'Environmental Protection', 'Real-time Data', 'Suitable for Various Applications'],
     dataAiHint: 'iot water-quality'
   },
+  {
+    id: 'iot-5',
+    "title": "Smart Energy Monitoring",
+    "description": "Monitor and control energy usage with an IoT-enabled system. -By AISKool",
+    "longDescription": "This system measures the electrical load of an appliance using a current sensor. It can automatically cut off power via a relay if an overload is detected, and displays real-time status and alerts on an OLED screen. This project is ideal for managing energy consumption and preventing electrical issues.",
+    "category": "IoT-Based Projects",
+    "subcategories": ["Capstone Project"],
+    "categoryIcon": Network,
+    "image": "/images/smart energy monitoring.png",
+    "features": ["ACS712 Current Sensor","Relay","OLED Display","Buzzer"],
+    "benefits": ["Real-time Energy Monitoring","Overload Protection","Energy Conservation","Automated Alerts"],
+    "dataAiHint": "iot energy-monitoring"
+  },
+  {
+    id: 'iot-6',
+    "title": "Weather Logging & IoT Dashboard",
+    "description": "Collect and log weather data and display it on an IoT dashboard. -By AISKool",
+    "longDescription": "This project uses a combination of sensors to collect local weather data, including temperature, humidity, and barometric pressure. The data is displayed on a local OLED screen and uploaded to an IoT dashboard via Wi-Fi for remote access and analysis.",
+    "category": "IoT-Based Projects",
+    "subcategories": ["Capstone Project"],
+    "categoryIcon": Network,
+    "image": "/images/wether logging.png",
+    "features": ["DHT22 Sensor","BMP280 Sensor","OLED Display","Buzzer"],
+    "benefits": ["Accurate Weather Data","Remote Monitoring","Data Logging & Analysis","Customizable Dashboard"],
+    "dataAiHint": "iot weather-station"
+  },
+  {
+    id: 'iot-7',
+    "title": "Automatic Plant Watering System",
+    "description": "Automate plant care by monitoring soil moisture and watering when needed. -By AISKool",
+    "longDescription": "This system uses a soil moisture sensor to continuously check the dryness of the soil. When the moisture level drops below a set threshold, it activates a water pump via a relay to irrigate the plant. An LCD displays real-time status and sensor readings, making it a perfect solution for plant care and water conservation.",
+    "category": "IoT-Based Projects",
+    "subcategories": ["Capstone Project", "Micro Project"],
+    "categoryIcon": Network,
+    "image": "/images/plant watering.png",
+    "features": ["Soil Moisture Sensor","DHT11 Sensor","Relay","Buzzer","LCD Display"],
+    "benefits": ["Water Conservation","Reduced Manual Labor","Plant Health Monitoring","Adjustable Automation"],
+    "dataAiHint": "iot plant-watering"
+  },
+  {
+    id: 'iot-8',
+    "title": "Smart Door Security System",
+    "description": "A smart security system for doors using a keypad and motion detection. -By AISKool",
+    "longDescription": "This system combines a PIR sensor for motion detection with a 4x4 keypad for secure access. It can be programmed to trigger a buzzer alarm or control an electronic lock via a relay, and an LCD displays real-time access logs and system status. A perfect project for home security and access control.",
+    "category": "IoT-Based Projects",
+    "subcategories": ["Capstone Project", "Micro Project"],
+    "categoryIcon": Network,
+    "image": "/images/door security.png",
+    "features": [
+      "PIR Sensor",
+      "4x4 Keypad",
+      "Relay",
+      "Buzzer",
+      "LCD Display"
+    ],
+    "benefits": [
+      "Enhanced Security",
+      "Customizable Access Codes",
+      "Motion Detection",
+      "Access Logging"
+    ],
+    "dataAiHint": "iot door-security"
+  },
+  {
+    id: 'iot-9',
+    "title": "Gas Leakage Detection with Auto Cut-off",
+    "description": "Detects hazardous gas leaks and automatically alerts and cuts off the source. -By AISKool",
+    "longDescription": "This essential safety project uses an MQ-2 gas sensor to continuously monitor for gas leaks. Upon detection, it triggers an audible buzzer alarm and can automatically shut off the gas valve or turn on a ventilation fan via a relay. A clear warning message is displayed on an LCD.",
+    "category": "IoT-Based Projects",
+    "subcategories": ["Capstone Project", "Micro Project"],
+    "categoryIcon": Network,
+    "image": "/images/gas leakage.png",
+    "features": [
+      "MQ-2 Gas Sensor",
+      "Relay",
+      "Buzzer",
+      "LCD Display"
+    ],
+    "benefits": [
+      "Enhanced Safety",
+      "Early Leak Detection",
+      "Automatic Response",
+      "Audible & Visual Alerts"
+    ],
+    "dataAiHint": "iot gas-detection"
+  },
   // New Robotics & Automation Projects
   {
     id: 'robotics-1',
