@@ -12,7 +12,6 @@ export const projectMicrocontrollers: Record<string, string> = {
   'Biometric Attendance System': 'Arduino Uno',
   'Health Monitoring Wearable': 'ESP32',
   'Industry 4.0 Machine Monitor': 'ESP32',
-  'Voice-Controlled Wheelchair': 'Arduino Uno',
   'Smart Traffic Light Control': 'Arduino Uno',
   'Solar Panel Cleaning Robot': 'ESP32',
 };

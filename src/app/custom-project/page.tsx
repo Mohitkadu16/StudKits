@@ -30,8 +30,7 @@ interface CustomProjectFormState {
   projectTitle: string;
   microcontroller: string;
   components: string;
-  description: string;
-  suggestedPrice?: string; // Added for project's suggested price
+  description: string; // Added for project's suggested price
   college?: string;
 }
 
@@ -49,7 +48,6 @@ export default function CustomProjectPage() {
     microcontroller: '',
     components: '',
     description: '',
-    suggestedPrice: '',
     college: ''
   });
 
@@ -121,7 +119,6 @@ export default function CustomProjectPage() {
         microcontroller: formData.microcontroller,
         components: formData.components,
         description: formData.description,
-        budget: formData.suggestedPrice
       });
 
       if (!projectResponse.success) {
