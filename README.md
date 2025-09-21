@@ -61,4 +61,16 @@ StudKits is a comprehensive web platform designed to support students and educat
 
 ---
 
+---
+
+## 📜 License  
+
+This project is licensed under the **GNU General Public License v3.0 (GPLv3)**.  
+
+You are free to use, modify, and distribute this project under the terms of the GPL license, but any derivative work must also be open-sourced under the same license.  
+
+See the [LICENSE](./LICENSE) file for full details.  
+
+---
+
 Made with ❤️ by Mohit Kadu aka Loyalmanuka
