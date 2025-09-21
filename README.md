@@ -61,8 +61,6 @@ StudKits is a comprehensive web platform designed to support students and educat
 
 ---
 
----
-
 ## 📜 License  
 
 This project is licensed under the **GNU General Public License v3.0 (GPLv3)**.  
