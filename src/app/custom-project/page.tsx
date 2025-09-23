@@ -10,8 +10,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useToast } from '@/hooks/use-toast';
 import { Send, Lightbulb, Settings, Package, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
-import { projectMicrocontrollers } from '@/lib/project-microcontrollers';
 import { projects, type Project } from '@/lib/projects';
+import { projectMicrocontrollers } from '@/lib/project-microcontrollers';
 
 export async function submitProjectRequest(data: any) {
   try {
@@ -73,8 +73,8 @@ export default function CustomProjectPage() {
         // Find the selected project
         const selectedProject = title ? projects.find(p => p.title === title) : null;
         
-        // Get recommended microcontroller and price
-        const recommendedMicrocontroller = selectedProject?.microcontroller || '';
+        // Get recommended microcontroller from our mapping
+        const recommendedMicrocontroller = title ? projectMicrocontrollers[title] || '' : '';
 
         setFormData(prev => ({
           ...prev,
@@ -216,11 +216,25 @@ StudKits Team`,
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="microcontroller" className="flex items-center">
-                <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
-                Preferred Microcontroller (e.g., Arduino, ESP32)
+              <Label htmlFor="microcontroller" className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
+                  Recommended Microcontroller
+                </div>
+                {formData.microcontroller && (
+                  <span className="text-xs text-muted-foreground">(Auto-filled based on project)</span>
+                )}
               </Label>
-              <Input id="microcontroller" name="microcontroller" value={formData.microcontroller} onChange={handleChange} placeholder="e.g., ESP32-WROOM-32" disabled={isLoading}/>
+              <Input 
+                id="microcontroller" 
+                name="microcontroller" 
+                value={formData.microcontroller} 
+                onChange={handleChange} 
+                placeholder="Microcontroller will be auto-filled based on project" 
+                className={formData.microcontroller ? "bg-muted" : ""}
+                readOnly
+                disabled={isLoading}
+              />
             </div>
 
             <div className="space-y-2">
