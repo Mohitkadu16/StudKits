@@ -46,12 +46,69 @@ StudKits is a comprehensive web platform designed to support students and educat
 
 ![StudKits Architecture](docs/studkits_artitecture.png)
 
+---
+
+## ⚙️ Installation / Setup Guide
+Clone the repo and run it locally:  
+
+```bash
+git clone https://github.com/Mohitkadu16/studkits.git
+cd studkits
+npm install
+npm run dev
+```
+
 ## 👥 Who is it for?
 
 - **Students**: Working on electronics projects or presentations
 - **Educators**: Seeking custom teaching materials
 - **Institutions**: Looking for project consultation services
 - **Electronics Enthusiasts**: Needing expert guidance
+
+## 🚀 Usage Guide
+
+- Navigate the homepage to explore project services
+- Request guidance for electronics projects
+- Access professional presentation templates
+- Track project progress in real time
+
+## 🛠 Tech Stack
+
+- Frontend: React, Next.js, Tailwind CSS
+- Backend & Database: Prisma, Firebase
+- Deployment: Vercel
+
+## 🤝 Contributing
+
+- Contributions are welcome!
+- Fork the repo
+- Create a new branch (feature-name)
+- Commit changes
+- Submit a Pull Request
+
+## 📜 License
+
+```
+This project is licensed under the GNU General Public License v3.0.
+
+StudKits - Electronics Project Companion
+Copyright (C) 2025 Mohit Kadu
+
+This program is free software: you can redistribute it and/or modify  
+it under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License  
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+```
+
+See the full license in the [LICENSE](./LICENSE)
 
 ## 👥 Contact Us
 
@@ -63,16 +120,5 @@ StudKits is a comprehensive web platform designed to support students and educat
 - GitHub: [@Mohitkadu16](https://github.com/Mohitkadu16)
 - Instagram: [@loyalmanuka](https://www.instagram.com/loyalmanuka/)
 
----
-
-## 📜 License  
-
-This project is licensed under the **GNU General Public License v3.0 (GPLv3)**.  
-
-You are free to use, modify, and distribute this project under the terms of the GPL license, but any derivative work must also be open-sourced under the same license.  
-
-See the [LICENSE](./LICENSE) file for full details.  
-
----
 
 Made with ❤️ by Mohit Kadu aka Loyalmanuka
