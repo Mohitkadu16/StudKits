@@ -67,7 +67,7 @@ export function Navbar() {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="w-56 rounded-2xl overflow-hidden" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user?.displayName || 'User'}</p>
@@ -127,26 +127,21 @@ export function Navbar() {
               </Button>
             );
           })}
-        </nav>
-        <div className="flex items-center gap-2">
-           {user ? <UserMenu /> : (
-            <div className="hidden md:flex items-center gap-2">
-              <Button variant="outline" className="text-primary bg-primary-foreground hover:bg-primary-foreground/90" asChild><Link href="/login">Login</Link></Button>
-              <Button asChild><Link href="/signup">Sign Up</Link></Button>
-            </div>
-          )}
-          <div className="md:hidden">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="hover:bg-primary-foreground/10 hover:text-primary-foreground"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              <span className="sr-only">Toggle menu</span>
-            </Button>
+          <div className="ml-4">
+            {user ? (
+              <UserMenu />
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" asChild>
+                  <Link href="/login">Login</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
+              </div>
+            )}
           </div>
-        </div>
+        </nav>
       </MaxWidthWrapper>
       {isMenuOpen && (
         <div className="md:hidden bg-primary pb-4">
@@ -174,14 +169,70 @@ export function Navbar() {
               );
             })}
              <Separator className="my-2 bg-primary-foreground/20"/>
-            {user ? null : (
+            {user ? (
               <>
-                 <li>
-                    <Button variant="ghost" className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}><Link href="/login">Login</Link></Button>
-                 </li>
-                 <li>
-                    <Button className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}><Link href="/signup">Sign Up</Link></Button>
-                 </li>
+                <li>
+                  <div className="px-3 py-2">
+                    <div className="flex items-center">
+                      <Avatar className="h-9 w-9 mr-3">
+                        <AvatarImage src={user?.photoURL ?? undefined} alt={user?.displayName ?? "User"} />
+                        <AvatarFallback>
+                          <UserCircle />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="text-sm font-medium">{user?.displayName || 'User'}</p>
+                        <p className="text-xs text-muted-foreground">{user?.email}</p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {isAdmin && (
+                  <li>
+                    <Button variant="ghost" className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                      <Link href="/admin" className="flex items-center">
+                        <UserCog className="h-5 w-5 mr-4" />
+                        <span>Admin Panel</span>
+                      </Link>
+                    </Button>
+                  </li>
+                )}
+                <li>
+                  <Button variant="ghost" className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                    <Link href="/profile" className="flex items-center">
+                      <User className="h-5 w-5 mr-4" />
+                      <span>Profile</span>
+                    </Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button variant="ghost" className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                    <Link href="/tracking" className="flex items-center">
+                      <PackageSearch className="h-5 w-5 mr-4" />
+                      <span>Track My Projects</span>
+                    </Link>
+                  </Button>
+                </li>
+                <Separator className="my-2 bg-primary-foreground/20"/>
+                <li>
+                  <Button variant="ghost" className="w-full justify-start text-lg py-6" onClick={handleSignOut}>
+                    <LogOut className="h-5 w-5 mr-4" />
+                    <span>Log out</span>
+                  </Button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Button variant="ghost" className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                    <Link href="/login">Login</Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                    <Link href="/signup">Sign Up</Link>
+                  </Button>
+                </li>
               </>
             )}
           </ul>

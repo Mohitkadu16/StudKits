@@ -8,14 +8,14 @@ import { Users, Target, Lightbulb, Zap } from 'lucide-react';
 export default function AboutUsPage() {
   return (
     <div className="space-y-8">
-      <section className="text-center py-8 bg-card rounded-lg shadow">
-        <h1 className="text-4xl font-bold text-primary mb-2">About StudKits</h1>
+      <section className="text-center py-12 relative backdrop-blur-sm">
+        <h1 className="text-4xl font-bold text-primary mb-4">About StudKits</h1>
         <p className="text-lg text-muted-foreground">
           Your partner in innovative project kits and learning.
         </p>
       </section>
 
-      <Card className="shadow-lg">
+      <Card className="hover:scale-[1.01] transition-all duration-300">
         <CardHeader>
           <CardTitle className="flex items-center text-2xl">
             <Users className="mr-3 h-7 w-7 text-primary" />
@@ -33,7 +33,7 @@ export default function AboutUsPage() {
       </Card>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <Card className="shadow-md">
+        <Card className="hover:scale-[1.02] transition-all duration-300">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Target className="mr-2 h-6 w-6 text-accent" />
@@ -59,7 +59,7 @@ export default function AboutUsPage() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-md">
+        <Card className="hover:scale-[1.02] transition-all duration-300">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Lightbulb className="mr-2 h-6 w-6 text-accent" />
@@ -102,12 +102,12 @@ export default function AboutUsPage() {
         </CardContent>
       </Card>
 
-      <section className="py-8 bg-muted/50">
+      <section className="py-8 relative">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">Strategic Partners</h2>
-        <div className="max-w-4xl mx-auto">
-          <Card className="text-center shadow-md p-6">
+        <div className="max-w-4xl mx-auto px-4">
+          <Card className="text-center p-6 hover:scale-[1.02] transition-all duration-300">
             <CardHeader>
-              <div className="mx-auto h-40 w-40 overflow-hidden">
+              <div className="mx-auto h-40 w-40 overflow-hidden rounded-lg p-2">
                 <Image
                   src="/images/aiskool-logo.png"
                   alt="AISkool Logo"
@@ -129,12 +129,12 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      <section className="py-8">
+      <section className="py-8 relative">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">Meet the Founders</h2>
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-         <Card className="text-center shadow-md p-4">
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto px-4">
+         <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
             <CardHeader>
-                <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
+                <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                   <Image
                     src={encodeURI('/images/ved photo.jpg')}
                     alt="Ved Bhardwaj"
@@ -152,9 +152,9 @@ export default function AboutUsPage() {
               </p>
             </CardContent>
            </Card>
-           <Card className="text-center shadow-md p-4">
+           <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
             <CardHeader>
-              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
+              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                 <Image
                   src={encodeURI('/images/maverick photo.jpg')}
                   alt="Maverick D'Silva"
@@ -173,9 +173,9 @@ export default function AboutUsPage() {
               </p>
             </CardContent>
             </Card>
-           <Card className="text-center shadow-md p-4">
+           <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
             <CardHeader>
-              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/20">
+              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                 <Image
                   src={encodeURI('/images/mohit photo.jpg')}
                   alt="Mohit Kadu"

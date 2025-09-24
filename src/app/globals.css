@@ -20,74 +20,39 @@ body {
 
 @layer base {
   :root {
-    --background: 220 13% 96%; /* Neutral Light Gray #F3F4F6 */
-    --foreground: 215 14% 34%; /* Neutral Dark Gray #4B5563 */
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 215 14% 34%; /* Neutral Dark Gray #4B5563 */
-    --popover: 0 0% 100%; /* White */
-    --popover-foreground: 215 14% 34%; /* Neutral Dark Gray #4B5563 */
-    --primary: 221 83% 53%; /* Primary Blue #2563EB */
-    --primary-foreground: 210 40% 98%; /* Light color for text on primary */
-    --secondary: 174 84% 32%; /* Secondary Teal #0D9488 */
-    --secondary-foreground: 0 0% 98%; /* Light color for text on secondary */
-    --muted: 220 12% 90%; /* Muted gray, slightly darker than background */
-    --muted-foreground: 215 10% 50%; /* Text for muted elements */
-    --accent: 44 100% 70%; /* Mustard Yellow #FFD166 (Kept from original) */
-    --accent-foreground: 40 100% 15%; /* Dark text for accent elements (Kept from original) */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 10% 88%; /* Border color derived from light gray */
-    --input: 220 10% 88%; /* Input border, same as border */
-    --ring: 221 83% 53%; /* Primary Blue #2563EB for focus rings */
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --sidebar-background: 220 10% 98%; /* Slightly lighter than app background */
-    --sidebar-foreground: 215 14% 34%; /* App foreground */
-    --sidebar-primary: 221 83% 53%; /* App primary */
-    --sidebar-primary-foreground: 210 40% 98%; /* App primary foreground */
-    --sidebar-accent: 221 83% 95%; /* Very light primary for hover */
-    --sidebar-accent-foreground: 221 83% 53%; /* App primary for text on sidebar accent */
-    --sidebar-border: 220 10% 92%; /* Sidebar border */
-    --sidebar-ring: 221 83% 53%; /* App primary for ring */
-  }
-  .dark {
-    /* Keeping default dark mode, can be customized later if needed */
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
+    /* Navy blue dark theme with glassmorphism */
+    --background: 225 45% 7%;       /* Deep navy blue background for better glass effect */
+    --foreground: 213 31% 91%;      /* Light text for contrast */
+    --card: 223 47% 14% 0.6;        /* Translucent navy for cards */
+    --card-foreground: 213 31% 91%; /* Light text for cards */
+    --popover: 223 47% 14% 0.6;     /* Translucent navy for popovers */
+    --popover-foreground: 213 31% 91%; /* Light text for popovers */
+    --primary: 221 83% 53%;         /* Bright blue for primary elements */
+    --primary-foreground: 210 40% 98%; /* Light text on primary */
+    --secondary: 199 89% 48%;       /* Lighter blue for secondary elements */
+    --secondary-foreground: 210 40% 98%; /* Light text on secondary */
+    --muted: 223 47% 20%;           /* Muted navy blue */
+    --muted-foreground: 215 20% 65%; /* Muted text */
+    --accent: 199 89% 48%;          /* Same as secondary for consistency */
+    --accent-foreground: 210 40% 98%; /* Light text on accent */
+    --destructive: 0 84% 60%;       /* Bright red for destructive actions */
+    --destructive-foreground: 210 40% 98%; /* Light text on destructive */
+    --border: 223 47% 20%;          /* Darker navy for borders */
+    --input: 223 47% 20%;           /* Same as border */
+    --ring: 221 83% 53%;            /* Primary blue for focus rings */
+    --chart-1: 220 70% 50%;         /* Keeping original chart colors */
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 222 47% 11%; /* Same as main background */
+    --sidebar-foreground: 213 31% 91%; /* Same as main foreground */
+    --sidebar-primary: 221 83% 53%;    /* Same as primary */
+    --sidebar-primary-foreground: 210 40% 98%; /* Same as primary foreground */
+    --sidebar-accent: 223 47% 16%;     /* Slightly lighter than background */
+    --sidebar-accent-foreground: 213 31% 91%; /* Same as main foreground */
+    --sidebar-border: 223 47% 20%;     /* Same as main border */
+    --sidebar-ring: 221 83% 53%;       /* Same as main ring */
   }
 }
 
@@ -97,6 +62,357 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Enhanced Glassmorphism effect for all UI elements */
+  .glass-effect,
+  .popover,
+  .dropdown-content,
+  [role="dialog"],
+  [role="listbox"],
+  .button,
+  button,
+  .badge,
+  .alert-dialog,
+  .dropdown-menu,
+  .select,
+  .input,
+  .textarea,
+  .dropdown-menu-content,
+  [role="menu"],
+  [role="menuitem"],
+  .menu-item,
+  .dropdown-item {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(15, 23, 42, 0.95) !important; /* Dark navy blue background */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+    border-radius: 1rem !important;
+  }
+  
+  /* Special styling for cards with navy blue background */
+  .card {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(23, 37, 84, 0.7) !important;  /* Navy blue with opacity */
+    border: 1px solid rgba(17, 24, 39, 0.2) !important;  /* Dark gray border */
+    box-shadow: 0 8px 32px 0 rgba(17, 24, 39, 0.25) !important;
+    border-radius: 1.5rem !important;
+    border-radius: 1.5rem !important; /* Added rounded corners */
+  }
+
+  .glass-effect,
+  .popover,
+  .dropdown-content,
+  [role="dialog"],
+  [role="listbox"],
+  .button,
+  button,
+  .badge,
+  .alert-dialog,
+  .dropdown-menu,
+  .select,
+  .input,
+  .textarea,
+  .dropdown-menu-content,
+  [role="menu"] {
+    background-color: rgba(30, 41, 59, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+  }
+
+  /* Card styling with deeper navy blue */
+  .card {
+    background-color: rgba(15, 23, 42, 0.75) !important;  /* Deeper navy blue with opacity */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45) !important;
+  }
+
+  /* Interactive hover effects */
+  button:hover,
+  .button:hover,
+  .select:hover,
+  .input:focus,
+  .textarea:focus {
+    transform: translateY(-2px);
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25) !important;
+    transition: all 0.3s ease;
+  }
+
+  /* Maintain text contrast on hover */
+  button[class*="primary"]:hover,
+  .button[class*="primary"]:hover {
+    color: rgb(241, 245, 249) !important;
+  }
+
+  button[class*="ghost"]:hover,
+  .button[class*="ghost"]:hover {
+    color: rgb(17, 24, 39) !important;
+  }
+
+  .dark button[class*="ghost"]:hover,
+  .dark .button[class*="ghost"]:hover {
+    color: rgb(241, 245, 249) !important;
+  }
+
+  /* Special hover effect for cards */
+  .card:hover {
+    transform: translateY(-2px);
+    background-color: rgba(23, 37, 84, 0.8) !important;  /* Slightly more opaque on hover */
+    border: 1px solid rgba(17, 24, 39, 0.35) !important;  /* Darker border on hover */
+    box-shadow: 0 12px 40px 0 rgba(17, 24, 39, 0.35) !important;
+    transition: all 0.3s ease;
+  }
+
+  button:hover,
+  .button:hover,
+  .select:hover,
+  .input:focus,
+  .textarea:focus {
+    background-color: rgba(30, 41, 59, 0.3) !important;
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45) !important;
+  }
+
+  /* Card hover effect */
+  .card:hover {
+    background-color: rgba(15, 23, 42, 0.85) !important;  /* More opaque navy blue on hover */
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.55) !important;
+  }
+
+  /* Active state effects */
+  button:active,
+  .button:active {
+    transform: translateY(0px);
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 5px 20px 0 rgba(31, 38, 135, 0.2) !important;
+  }
+
+  button:active,
+  .button:active {
+    background-color: rgba(30, 41, 59, 0.4) !important;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Gradient overlay for depth */
+  .card::before,
+  button::before,
+  .button::before,
+  .badge::before,
+  .alert-dialog::before,
+  .select::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .dark .card::before,
+  .dark button::before,
+  .dark .button::before,
+  .dark .badge::before,
+  .dark .alert-dialog::before,
+  .dark .select::before {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+  }
+
+  /* Special effect for badges */
+  .badge {
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    background-color: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .dark .badge {
+    background-color: rgba(30, 41, 59, 0.15) !important;
+  }
+
+  /* Ensure proper positioning for pseudo-elements */
+  .card,
+  button,
+  .button,
+  .badge,
+  .alert-dialog,
+  .select {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Add smooth transitions */
+  .card,
+  button,
+  .button,
+  .badge,
+  .alert-dialog,
+  .select,
+  .input,
+  .textarea {
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Add hover effect for cards */
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+    transition: all 0.3s ease;
+  }
+
+  .dark .card:hover {
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  /* Add subtle gradient overlay for depth */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .dark .card::before {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+  }
+
+  /* Add subtle border for better definition */
+  .card,
+  .popover,
+  .dropdown-content,
+  .dropdown-menu-content,
+  [role="menu"] {
+    border: 1px solid rgba(17, 24, 39, 0.25);  /* Darker border for light mode */
+    border-radius: 1.25rem !important;
+    overflow: hidden;
+  }
+  
+  /* Rounded corners for dropdown menu items */
+  .dropdown-menu-item:first-child,
+  [role="menuitem"]:first-child,
+  .menu-item:first-child {
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
+  }
+  
+  .dropdown-menu-item:last-child,
+  [role="menuitem"]:last-child,
+  .menu-item:last-child {
+    border-bottom-left-radius: 1.25rem;
+    border-bottom-right-radius: 1.25rem;
+  }
+
+  /* Button text color styles */
+  button,
+  .button {
+    color: rgb(17, 24, 39) !important; /* Dark text for light mode */
+    font-weight: 500;
+  }
+
+  .dark button,
+  .dark .button {
+    color: rgb(241, 245, 249) !important; /* Light text for dark mode */
+  }
+
+  /* Primary button style override */
+  button[class*="primary"],
+  .button[class*="primary"] {
+    color: rgb(241, 245, 249) !important; /* Light text for primary buttons in both modes */
+  }
+
+  /* Ghost button style override */
+  button[class*="ghost"],
+  .button[class*="ghost"] {
+    color: rgb(17, 24, 39) !important;
+  }
+
+  button[class*="ghost"],
+  .button[class*="ghost"] {
+    color: rgb(241, 245, 249) !important;
+  }
+
+  /* Destructive button style override */
+  button[class*="destructive"],
+  .button[class*="destructive"] {
+    color: rgb(241, 245, 249) !important;
+  }
+
+  /* Filter buttons and category badges */
+  button[class*="filter"],
+  .filter-button,
+  button[class*="category"],
+  .category-button,
+  a[role="button"],
+  .badge-button {
+    color: rgb(17, 24, 39) !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(17, 24, 39, 0.1) !important;
+    font-weight: 500;
+  }
+
+  button[class*="filter"],
+  .filter-button,
+  button[class*="category"],
+  .category-button,
+  a[role="button"],
+  .badge-button {
+    color: rgb(241, 245, 249) !important;
+    background-color: rgba(30, 41, 59, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Hover states for filter buttons */
+  button[class*="filter"]:hover,
+  .filter-button:hover,
+  button[class*="category"]:hover,
+  .category-button:hover,
+  a[role="button"]:hover,
+  .badge-button:hover {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    transform: translateY(-1px);
+    border: 1px solid rgba(17, 24, 39, 0.2) !important;
+  }
+
+  .dark button[class*="filter"]:hover,
+  .dark .filter-button:hover,
+  .dark button[class*="category"]:hover,
+  .dark .category-button:hover,
+  .dark a[role="button"]:hover,
+  .dark .badge-button:hover {
+    background-color: rgba(30, 41, 59, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Active/Selected state for filter buttons */
+  button[class*="filter"][data-state="active"],
+  .filter-button[data-state="active"],
+  button[class*="category"][data-state="active"],
+  .category-button[data-state="active"],
+  a[role="button"][data-state="active"],
+  .badge-button[data-state="active"] {
+    background-color: var(--primary) !important;
+    color: rgb(241, 245, 249) !important;
+    border-color: transparent !important;
   }
 }
 
@@ -206,3 +522,64 @@ body {
     }
   }
 }
+
+/* Specific styles for dropdown menus and lists */
+  .dropdown-menu-content,
+  [role="menu"],
+  .dropdown-content {
+    background-color: rgba(15, 23, 42, 0.95) !important;  /* Dark navy blue background */
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 
+      0 4px 8px -1px rgba(0, 0, 0, 0.3),
+      0 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+    padding: 4px !important;
+  }
+
+  .dropdown-menu-content [role="menuitem"],
+  .dropdown-content [role="menuitem"],
+  .menu-item {
+    background-color: rgba(30, 41, 59, 0.98) !important;  /* Slightly lighter navy for items */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    margin: 4px;
+    border-radius: 0.75rem !important;
+    color: rgb(15, 23, 42) !important;  /* Dark text for better visibility */
+    font-weight: 500;
+  }
+
+  .dropdown-menu-content [role="menuitem"]:hover,
+  .dropdown-content [role="menuitem"]:hover,
+  .menu-item:hover {
+    background-color: rgba(51, 65, 85, 0.98) !important;  /* Slightly lighter on hover */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  /* Color overrides for text */
+  .dropdown-menu-content [role="menuitem"],
+  .dropdown-content [role="menuitem"],
+  .menu-item {
+    color: rgb(241, 245, 249) !important;  /* Light text color */
+    font-weight: 500;
+  }
+
+  /* Active/selected menu item */
+  .dropdown-menu-content [role="menuitem"][data-state="active"],
+  .dropdown-content [role="menuitem"][data-state="active"],
+  .menu-item[data-state="active"] {
+    background-color: rgba(59, 130, 246, 0.9) !important;
+    color: white !important;
+  }
+
+  .dark .dropdown-menu-content [role="menuitem"][data-state="active"],
+  .dark .dropdown-content [role="menuitem"][data-state="active"],
+  .dark .menu-item[data-state="active"] {
+    background-color: rgba(59, 130, 246, 0.9) !important;
+    color: white !important;
+  }

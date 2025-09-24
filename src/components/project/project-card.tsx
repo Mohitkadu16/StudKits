@@ -27,7 +27,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <div className="w-full px-2 sm:px-4">
-      <Card className="w-full sm:max-w-md mx-auto shadow-lg flex flex-col h-full overflow-hidden transition-shadow duration-300 ease-in-out">
+      <Card className="w-full sm:max-w-md mx-auto flex flex-col h-full overflow-hidden transition-all duration-300 ease-in-out relative">
         <CardHeader className="p-0">
           {project.sketchfabEmbedUrl ? (
             <div className="aspect-[3/2] relative w-full min-h-[180px]">
