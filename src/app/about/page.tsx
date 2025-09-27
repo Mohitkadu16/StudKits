@@ -131,7 +131,7 @@ export default function AboutUsPage() {
 
       <section className="py-8 relative">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">Meet the Founders</h2>
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto px-4">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto px-4">
          <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
             <CardHeader>
                 <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
@@ -146,9 +146,9 @@ export default function AboutUsPage() {
             </CardHeader>
             <CardContent className="space-y-2">
               <CardTitle className="text-2xl">Ved Bhardwaj</CardTitle>
-              <CardDescription className="text-base text-primary">UI/UX Designer</CardDescription>
+              <CardDescription className="text-base text-primary">Founder</CardDescription>
                <p className="text-sm text-muted-foreground pt-2">
-                Hello I am Ved Bhardwaj UI/UX Designer of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
+                Hello I am Ved Bhardwaj Founder of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
               </p>
             </CardContent>
            </Card>
@@ -167,9 +167,9 @@ export default function AboutUsPage() {
             </CardHeader>
             <CardContent className="space-y-2">
               <CardTitle className="text-2xl">Maverick D'Silva</CardTitle>
-              <CardDescription className="text-base text-primary">App Developer</CardDescription>
+              <CardDescription className="text-base text-primary">Co Founder | App Developer</CardDescription>
               <p className="text-sm text-muted-foreground pt-2">
-                Hello I am Maverick D'Silva App Developer of Studkits. Currently pursuing degree in Information Technology from Don Bosco Institute of Technology
+                Hello I am Maverick D'Silva Co Founder | App Developer of Studkits. Currently pursuing degree in Information Technology from Don Bosco Institute of Technology
               </p>
             </CardContent>
             </Card>
@@ -187,9 +187,29 @@ export default function AboutUsPage() {
             </CardHeader>
             <CardContent className="space-y-2">
               <CardTitle className="text-2xl">Mohit Kadu</CardTitle>
-              <CardDescription className="text-base text-primary">Web Developer</CardDescription>
+              <CardDescription className="text-base text-primary">Co Founder | Web Developer</CardDescription>
               <p className="text-sm text-muted-foreground pt-2">
-                Hello I am Mohit Kadu Developer of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
+                Hello I am Mohit Kadu Co Founder | Web Developer of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
+              </p>
+            </CardContent>
+           </Card>
+            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+            <CardHeader>
+              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
+                <Image
+                  src={encodeURI('/images/amit.jpg')}
+                  alt="Amit Prajapati"
+                  width={128}
+                  height={128}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <CardTitle className="text-2xl">Amit Prajapati</CardTitle>
+              <CardDescription className="text-base text-primary">Hardware Designer</CardDescription>
+              <p className="text-sm text-muted-foreground pt-2">
+                Hello I am Amit Prajapati Hardware Designer of Studkits. Currently pursuing Btech at Ratan Tata Maharashtra State Skill University
               </p>
             </CardContent>
           </Card>
