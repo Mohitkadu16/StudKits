@@ -107,6 +107,18 @@ export function Navbar() {
           <Target className="h-7 w-7" />
           <span>StudKits</span>
         </Link>
+        {/* Mobile menu button */}
+        <Button
+          variant="ghost"
+          className="md:hidden rounded-full w-9 h-9 p-0"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </Button>
         <nav className="hidden md:flex items-center space-x-1">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -144,9 +156,9 @@ export function Navbar() {
         </nav>
       </MaxWidthWrapper>
       {isMenuOpen && (
-        <div className="md:hidden bg-primary pb-4">
+        <div className="md:hidden bg-primary pb-4 border-t border-primary-foreground/10">
           <MaxWidthWrapper>
-            <ul className="flex flex-col space-y-2">
+            <ul className="flex flex-col space-y-2 pt-2">
               {navItems.map((item) => {
               const Icon = item.icon;
               return (
@@ -198,7 +210,7 @@ export function Navbar() {
                   </li>
                 )}
                 <li>
-                  <Button variant="ghost" className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                  <Button variant="ghost" className="w-full justify-start text-lg py-6 rounded-full" asChild onClick={handleLinkClick}>
                     <Link href="/profile" className="flex items-center">
                       <User className="h-5 w-5 mr-4" />
                       <span>Profile</span>
@@ -206,7 +218,7 @@ export function Navbar() {
                   </Button>
                 </li>
                 <li>
-                  <Button variant="ghost" className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                  <Button variant="ghost" className="w-full justify-start text-lg py-6 rounded-full" asChild onClick={handleLinkClick}>
                     <Link href="/tracking" className="flex items-center">
                       <PackageSearch className="h-5 w-5 mr-4" />
                       <span>Track My Projects</span>
