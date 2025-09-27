@@ -116,7 +116,7 @@ export function Navbar() {
                 variant="ghost"
                 asChild
                 className={cn(
-                  "hover:bg-primary-foreground/10 hover:text-primary-foreground px-3 py-2",
+                  "hover:bg-primary-foreground/10 hover:text-primary-foreground px-3 py-2 rounded-full",
                   pathname === item.href ? 'bg-primary-foreground/20 font-semibold' : ''
                 )}
               >
@@ -132,10 +132,10 @@ export function Navbar() {
               <UserMenu />
             ) : (
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" asChild>
+                <Button variant="ghost" asChild className="rounded-full">
                   <Link href="/login">Login</Link>
                 </Button>
-                <Button asChild>
+                <Button asChild className="rounded-full">
                   <Link href="/signup">Sign Up</Link>
                 </Button>
               </div>
@@ -155,7 +155,7 @@ export function Navbar() {
                     variant="ghost"
                     asChild
                     className={cn(
-                      "w-full justify-start hover:bg-primary-foreground/10 hover:text-primary-foreground text-lg py-6",
+                      "w-full justify-start hover:bg-primary-foreground/10 hover:text-primary-foreground text-lg py-6 rounded-full",
                       pathname === item.href ? 'bg-primary-foreground/20 font-semibold' : ''
                     )}
                     onClick={handleLinkClick}
@@ -189,7 +189,7 @@ export function Navbar() {
                 </li>
                 {isAdmin && (
                   <li>
-                    <Button variant="ghost" className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                    <Button variant="ghost" className="w-full justify-start text-lg py-6 rounded-full" asChild onClick={handleLinkClick}>
                       <Link href="/admin" className="flex items-center">
                         <UserCog className="h-5 w-5 mr-4" />
                         <span>Admin Panel</span>
@@ -215,7 +215,7 @@ export function Navbar() {
                 </li>
                 <Separator className="my-2 bg-primary-foreground/20"/>
                 <li>
-                  <Button variant="ghost" className="w-full justify-start text-lg py-6" onClick={handleSignOut}>
+                  <Button variant="ghost" className="w-full justify-start text-lg py-6 rounded-full" onClick={handleSignOut}>
                     <LogOut className="h-5 w-5 mr-4" />
                     <span>Log out</span>
                   </Button>
@@ -224,12 +224,12 @@ export function Navbar() {
             ) : (
               <>
                 <li>
-                  <Button variant="ghost" className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                  <Button variant="ghost" className="w-full justify-start text-lg py-6 rounded-full" asChild onClick={handleLinkClick}>
                     <Link href="/login">Login</Link>
                   </Button>
                 </li>
                 <li>
-                  <Button className="w-full justify-start text-lg py-6" asChild onClick={handleLinkClick}>
+                  <Button className="w-full justify-start text-lg py-6 rounded-full" asChild onClick={handleLinkClick}>
                     <Link href="/signup">Sign Up</Link>
                   </Button>
                 </li>

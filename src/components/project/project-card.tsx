@@ -26,8 +26,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const linkHref = project.isService ? (project.servicePageUrl || '/contact') : `/projects/${project.id}`;
 
   return (
-    <div className="w-full px-2 sm:px-4">
-      <Card className="w-full sm:max-w-md mx-auto flex flex-col h-full overflow-hidden transition-all duration-300 ease-in-out relative">
+    <div className="w-full px-2 sm:px-4 rounded-full">
+      <Card className="w-full sm:max-w-md mx-auto flex flex-col h-full overflow-hidden transition-all duration-300 ease-in-out relative rounded-3xl">
         <CardHeader className="p-0">
           {project.sketchfabEmbedUrl ? (
             <div className="aspect-[3/2] relative w-full min-h-[180px]">
@@ -54,7 +54,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           )}
         </CardHeader>
 
-        <CardContent className="p-3 sm:p-4 flex-grow">
+        <CardContent className="p-3 sm:p-4 flex-grow rounded-full">
           <div className="flex flex-col gap-2 mb-3">
             <div className="flex items-start justify-between gap-4 w-full">
               {/* Left: title + mobile subtitle */}
@@ -71,12 +71,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
               {/* Right: IoT tag (desktop) + category badge */}
               <div className="flex flex-col items-end gap-2">
                 {CategoryIcon ? (
-                  <Badge variant="outline" className="self-start flex items-center gap-1 text-xs">
+                  <Badge variant="outline" className="self-start flex items-center gap-1 text-xs rounded-full">
                     <CategoryIcon className="h-3 w-3 flex-shrink-0" />
                     <span className="break-words">{project.category}</span>
                   </Badge>
                 ) : (
-                  <Badge variant="outline" className="self-start text-xs">
+                  <Badge variant="outline" className="self-start text-xs rounded-full">
                     <span className="break-words">{project.category}</span>
                   </Badge>
                 )}
@@ -102,7 +102,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         <CardFooter className="p-4 pt-0 flex flex-col gap-2">
           <div className="w-full flex justify-between items-center">
-            <Button asChild variant="ghost" size="sm" className="text-primary hover:bg-primary/10">
+            <Button asChild variant="ghost" size="sm" className="text-primary hover:bg-primary/10 rounded-full">
               <Link href={linkHref}>
                 View Details <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -112,17 +112,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {/* Single Contact button with modal popup for contact options */}
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="secondary" size="sm" className="w-full">For Enquiries</Button>
+              <Button variant="secondary" size="sm" className="w-full rounded-full">For Enquiries</Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Contact Options</AlertDialogTitle>
-                <AlertDialogDescription>
+            <AlertDialogContent className="rounded-3xl">
+              <AlertDialogHeader className="rounded-2xl bg-card/50 p-4 mb-4">
+                <AlertDialogTitle className="text-lg">Contact Options</AlertDialogTitle>
+                <AlertDialogDescription className="mt-2">
                   Choose a contact below to reach out via WhatsApp:
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <div className="flex flex-col gap-3 mt-4">
-                <Button asChild variant="outline" size="sm" className="w-full bg-green-600 hover:bg-green-700 text-white">
+              <div className="flex flex-col gap-3 mt-4 px-1">
+                <Button asChild variant="outline" size="lg" className="w-full bg-green-600 hover:bg-green-700 text-white rounded-2xl hover:scale-[1.02] transition-transform">
                   <Link
                     href={`https://wa.me/918976451602?text=Hi, I'm interested in ${project.title}`}
                     target="_blank"
@@ -130,14 +130,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     <Image
                       src="/images/Whatsapp logo.png"
                       alt="WhatsApp"
-                      width={20}
-                      height={20}
+                      width={24}
+                      height={24}
                       className="mr-2 flex-shrink-0"
                     />
                     Ved Bhardwaj
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="sm" className="w-full bg-green-600 hover:bg-green-700 text-white">
+                <Button asChild variant="outline" size="lg" className="w-full bg-green-600 hover:bg-green-700 text-white rounded-2xl hover:scale-[1.02] transition-transform">
                   <Link
                     href={`https://wa.me/917506104767?text=Hi, I'm interested in ${project.title}`}
                     target="_blank"
@@ -145,16 +145,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     <Image
                       src="/images/Whatsapp logo.png"
                       alt="WhatsApp"
-                      width={20}
-                      height={20}
+                      width={24}
+                      height={24}
                       className="mr-2 flex-shrink-0"
                     />
                     Mohit Kadu
                   </Link>
                 </Button>
               </div>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Close</AlertDialogCancel>
+              <AlertDialogFooter className="mt-6">
+                <AlertDialogCancel className="rounded-2xl hover:scale-[1.02] transition-transform">Close</AlertDialogCancel>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
