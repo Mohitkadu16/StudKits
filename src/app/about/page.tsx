@@ -156,27 +156,6 @@ export default function AboutUsPage() {
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                 <Image
-                  src={encodeURI('/images/maverick photo.jpg')}
-                  alt="Maverick D'Silva"
-                  width={128}
-                  height={128}
-                  className="object-cover w-full h-full"
-                  style={{ objectPosition: '80% 15%' }}
-                />
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <CardTitle className="text-2xl">Maverick D'Silva</CardTitle>
-              <CardDescription className="text-base text-primary">Co Founder | App Developer</CardDescription>
-              <p className="text-sm text-muted-foreground pt-2">
-                Hello I am Maverick D'Silva Co Founder | App Developer of Studkits. Currently pursuing degree in Information Technology from Don Bosco Institute of Technology
-              </p>
-            </CardContent>
-            </Card>
-           <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
-            <CardHeader>
-              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
-                <Image
                   src={encodeURI('/images/mohit photo.jpg')}
                   alt="Mohit Kadu"
                   width={128}
@@ -193,6 +172,27 @@ export default function AboutUsPage() {
               </p>
             </CardContent>
            </Card>
+           <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+            <CardHeader>
+              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
+                <Image
+                  src={encodeURI('/images/maverick photo.jpg')}
+                  alt="Maverick D'Silva"
+                  width={128}
+                  height={128}
+                  className="object-cover w-full h-full"
+                  style={{ objectPosition: '80% 15%' }}
+                />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <CardTitle className="text-2xl">Maverick D'Silva</CardTitle>
+              <CardDescription className="text-base text-primary">App Developer</CardDescription>
+              <p className="text-sm text-muted-foreground pt-2">
+                Hello I am Maverick D'Silva Co Founder | App Developer of Studkits. Currently pursuing degree in Information Technology from Don Bosco Institute of Technology
+              </p>
+            </CardContent>
+            </Card>
             <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
