@@ -207,9 +207,9 @@ export default function AboutUsPage() {
             </CardHeader>
             <CardContent className="space-y-2">
               <CardTitle className="text-2xl">Amit Prajapati</CardTitle>
-              <CardDescription className="text-base text-primary">Hardware Designer</CardDescription>
+              <CardDescription className="text-base text-primary">Managing Director</CardDescription>
               <p className="text-sm text-muted-foreground pt-2">
-                Hello I am Amit Prajapati Hardware Designer of Studkits. Currently pursuing Btech at Ratan Tata Maharashtra State Skill University
+                Hello I am Amit Prajapati Managing Director of Studkits. Currently pursuing Btech at Ratan Tata Maharashtra State Skill University
               </p>
             </CardContent>
           </Card>
