@@ -1,4 +1,3 @@
-// src/lib/firebase.ts
 import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
 import { 
   getAuth, 
@@ -42,12 +41,91 @@ function resolveDocRef(path: string) {
 }
 
 const createDocument = async (path: string, data: object) => {
-  await setDoc(resolveDocRef(path), data, { merge: true });
+  await setDoc(resolveDocRef(path), {
+    ...data,
+    createdAt: new Date().toISOString(),
+  }, { merge: true });
+};
+
+// Create a new project request
+const createProjectRequest = async (projectData: {
+  userId: string;
+  name: string;
+  email: string;
+  projectTitle: string;
+  microcontroller: string;
+  components: string;
+  description: string;
+  college?: string;
+  status?: string;
+}) => {
+  try {
+    const projectRef = collection(db, 'projectRequests');
+    const newProject = await addDoc(projectRef, {
+      ...projectData,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+    return { id: newProject.id, success: true };
+  } catch (error) {
+    console.error('Error creating project request:', error);
+    throw error;
+  }
 };
 
 const readDocument = async (path: string) => {
   const snapshot = await getDoc(resolveDocRef(path));
   return snapshot.exists() ? snapshot.data() : null;
+};
+
+// Fetch user's project requests
+const getUserProjectRequests = async (userId: string) => {
+  try {
+    const projectsRef = collection(db, 'projectRequests');
+    const q = query(projectsRef, where('userId', '==', userId));
+    const querySnapshot = await getDocs(q);
+    
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error('Error fetching user projects:', error);
+    throw error;
+  }
+};
+
+// Fetch all project requests (for admin)
+const getAllProjectRequests = async () => {
+  try {
+    const projectsRef = collection(db, 'projectRequests');
+    const querySnapshot = await getDocs(projectsRef);
+    
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error('Error fetching all projects:', error);
+    throw error;
+  }
+};
+
+// Update project status
+const updateProjectStatus = async (projectId: string, status: string, notes?: string) => {
+  try {
+    const projectRef = doc(db, 'projectRequests', projectId);
+    await updateDoc(projectRef, {
+      status,
+      notes,
+      updatedAt: new Date().toISOString()
+    });
+    return { success: true };
+  } catch (error) {
+    console.error('Error updating project status:', error);
+    throw error;
+  }
 };
 
 const updateDocument = async (path: string, data: object) => {
@@ -103,6 +181,10 @@ export {
   getCollectionDocs,
   getUserProfile,
   setUserProfile,
+  createProjectRequest,
+  getUserProjectRequests,
+  getAllProjectRequests,
+  updateProjectStatus,
   // Auth exports
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 

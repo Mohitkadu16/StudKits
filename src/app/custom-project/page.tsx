@@ -12,15 +12,7 @@ import { Send, Lightbulb, Settings, Package, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import { projects, type Project } from '@/lib/projects';
 import { projectMicrocontrollers } from '@/lib/project-microcontrollers';
-
-export async function submitProjectRequest(data: any) {
-  try {
-    // Implementation of your project request submission
-    return { success: true, message: 'Project request submitted successfully' };
-  } catch (error) {
-    return { success: false, message: error instanceof Error ? error.message : 'Failed to submit request' };
-  }
-}
+import { createProjectRequest } from '@/lib/project-store';
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgvlyklz";
 
@@ -110,20 +102,27 @@ export default function CustomProjectPage() {
     setIsLoading(true);
 
     try {
-      // First submit project request
-      const projectResponse = await submitProjectRequest({
+      // First submit project request to Firebase
+      const projectResponse = await createProjectRequest({
+        userId: user?.uid || '',
         name: formData.name,
         email: formData.email,
-        type: 'project',
         projectTitle: formData.projectTitle,
         microcontroller: formData.microcontroller,
         components: formData.components,
         description: formData.description,
+        college: formData.college
       });
 
       if (!projectResponse.success) {
-        throw new Error(projectResponse.message);
+        throw new Error('Failed to create project request');
       }
+
+      // Track the event in Google Analytics
+      window.gtag?.('event', 'project_request_submitted', {
+        event_category: 'engagement',
+        event_label: formData.projectTitle,
+      });
 
       // Then send email notification
       const formResponse = await fetch(FORMSPREE_ENDPOINT, {
