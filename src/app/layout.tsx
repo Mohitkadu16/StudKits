@@ -29,10 +29,10 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "StudKits - Ready-to-Assemble Tech Project Kits & Services",
+    default: "StudKits - Tech Project Kits & Engineering Solutions",
     template: "%s | StudKits"
   },
-  description: "Empower your tech journey with StudKits' high-quality project kits for IoT, Robotics, and Electronics. Expert services in PCB design, microcontroller programming, and custom solutions for students and professionals.",
+  description: "Expert provider of IoT, Robotics, and Electronics project kits. Custom PCB design and microcontroller solutions for students and tech enthusiasts.",
   keywords: ["project kits", "robotics", "IoT", "electronics", "PCB design", "microcontroller", "Arduino", "ESP32", "student projects", "tech education"],
   authors: [{ name: "StudKits Team" }],
   creator: "StudKits",
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://studkits.in",
     siteName: "StudKits",
-    title: "StudKits - Ready-to-Assemble Tech Project Kits & Services",
-    description: "Empower your tech journey with StudKits' high-quality project kits for IoT, Robotics, and Electronics. Expert services in PCB design, microcontroller programming, and custom solutions.",
+    title: "StudKits - Tech Project Kits & Engineering Solutions",
+    description: "Expert provider of IoT, Robotics, and Electronics project kits. Custom PCB design and microcontroller solutions for students and tech enthusiasts.",
     images: [
       {
         url: "/images/android-chrome-512x512.png",
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "StudKits - Ready-to-Assemble Tech Project Kits & Services",
-    description: "Empower your tech journey with StudKits' high-quality project kits for IoT, Robotics, and Electronics.",
+    title: "StudKits - Tech Project Kits & Engineering Solutions",
+    description: "Expert provider of IoT, Robotics, and Electronics project kits. Custom solutions for students and tech enthusiasts.",
     images: ["/images/android-chrome-512x512.png"],
   },
   icons: {
