@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Users, Target, Lightbulb, Zap } from 'lucide-react';
 

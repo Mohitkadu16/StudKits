@@ -341,11 +341,6 @@ body {
   /* Ghost button style override */
   button[class*="ghost"],
   .button[class*="ghost"] {
-    color: rgb(17, 24, 39) !important;
-  }
-
-  button[class*="ghost"],
-  .button[class*="ghost"] {
     color: rgb(241, 245, 249) !important;
   }
 
@@ -362,7 +357,7 @@ body {
   .category-button,
   a[role="button"],
   .badge-button {
-    color: rgb(17, 24, 39) !important;
+    color: rgb(241, 245, 249) !important;
     background-color: rgba(255, 255, 255, 0.8) !important;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -564,8 +559,10 @@ body {
   /* Color overrides for text */
   .dropdown-menu-content [role="menuitem"],
   .dropdown-content [role="menuitem"],
-  .menu-item {
-    color: rgb(241, 245, 249) !important;  /* Light text color */
+  .menu-item,
+  button,
+  .button {
+    color: rgb(241, 245, 249) !important; /* White text */
     font-weight: 500;
   }
 
