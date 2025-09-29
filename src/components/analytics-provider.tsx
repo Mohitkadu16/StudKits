@@ -3,24 +3,28 @@
 import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { pageview, GA_MEASUREMENT_ID } from '@/lib/analytics';
+import { GA_MEASUREMENT_ID } from '@/lib/analytics';
 
 export function AnalyticsProvider() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (pathname && searchParams) {
+    // Don't track page views on first render
+    if (window.gtag) {
       const url = pathname + searchParams.toString();
-      pageview(url);
+      window.gtag('event', 'page_view', {
+        page_path: url,
+        send_to: GA_MEASUREMENT_ID
+      });
     }
   }, [pathname, searchParams]);
 
   return (
     <>
       <Script
-        strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        strategy="afterInteractive"
       />
       <Script
         id="google-analytics"
@@ -30,8 +34,13 @@ export function AnalyticsProvider() {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            gtag('consent', 'default', {
+              'analytics_storage': 'granted'
+            });
             gtag('config', '${GA_MEASUREMENT_ID}', {
+              page_location: window.location.href,
               page_path: window.location.pathname,
+              send_page_view: true
             });
           `,
         }}
