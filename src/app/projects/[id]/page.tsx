@@ -1,6 +1,5 @@
 'use client';
 
-import { Metadata } from 'next';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,35 +27,6 @@ import { Badge } from '@/components/ui/badge';
 import { PenSquare, ArrowLeft, CheckCircle, Tag } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
-
-// Generate dynamic metadata based on project
-export async function generateMetadata({ params }): Promise<Metadata> {
-  const project = getProjectById(params.id);
-  
-  if (!project) {
-    return {
-      title: 'Project Not Found',
-      description: 'The requested project could not be found.'
-    };
-  }
-
-  return {
-    title: `${project.title} - StudKits Project Kit`,
-    description: project.longDescription || project.description,
-    openGraph: {
-      title: project.title,
-      description: project.longDescription || project.description,
-      images: [
-        {
-          url: project.image,
-          width: 800,
-          height: 600,
-          alt: project.title
-        }
-      ],
-    }
-  };
-}
 
 export default function ProjectDetailPage() {
   const params = useParams();
