@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from '@/context/auth-context';
 import { ThemeProvider } from '@/components/theme-provider';
+import { AnalyticsProvider } from '@/components/analytics-provider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -114,6 +115,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
         <AuthProvider>
+          <AnalyticsProvider />
           <Navbar />
           <main className="flex-grow">
             {children}
