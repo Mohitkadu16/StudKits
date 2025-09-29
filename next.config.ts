@@ -1,18 +1,15 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Enable asset optimization and CDN caching
-  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://cdn.studkits.in' : '',
-  // Configure image optimization and CDN
+  // Configure image optimization
   images: {
-    domains: ['cdn.studkits.in', 'placehold.co'],
+    domains: ['placehold.co', 'studkits.vercel.app'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -22,45 +19,74 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cdn.studkits.in',
+        hostname: 'studkits.vercel.app',
         port: '',
         pathname: '/**',
-      },
+      }
     ],
-    // Enable image optimization
     unoptimized: false,
-    // Configure image caching
-    minimumCacheTTL: 60,
   },
-  // Enable static asset caching
+  // Performance optimizations
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
+  compress: true,
+  // Increase build time limits
   staticPageGenerationTimeout: 120,
+  // Domain configuration
+  basePath: '',
+  // Configure asset handling for Vercel
+  output: 'standalone',
+  // Optimize for Vercel deployment
   experimental: {
-    // Enable optimizations for static assets
-    optimizeCss: true,
-    // Enable modern JavaScript optimizations
     optimizePackageImports: ['@/components', '@/lib'],
   },
-  // Configure headers for caching
+  // Configure headers for caching and security
   async headers() {
     return [
       {
-        source: '/:all*(svg|jpg|jpeg|png|gif|ico|css|js)',
+        source: '/:path*',
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
           },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
+          }
         ],
       },
       {
-        source: '/_next/image/:all*',
+        source: '/static/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
+            value: 'public, max-age=31536000, immutable'
+          }
         ],
       },
+      {
+        source: '/_next/image/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, must-revalidate'
+          }
+        ],
+      }
     ];
   },
 };
