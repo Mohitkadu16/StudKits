@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   },
   // Configure image optimization
   images: {
-    domains: ['placehold.co', 'studkits.vercel.app'],
+    domains: ['placehold.co', 'studkits.vercel.app', 'studkits.shop', 'www.studkits.shop'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -20,6 +20,18 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'studkits.vercel.app',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'studkits.shop',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.studkits.shop',
         port: '',
         pathname: '/**',
       }
@@ -37,6 +49,11 @@ const nextConfig: NextConfig = {
   basePath: '',
   // Configure asset handling for Vercel
   output: 'standalone',
+  // Production domain configuration
+  env: {
+    NEXT_PUBLIC_DOMAIN: 'studkits.shop',
+    NEXT_PUBLIC_URL: 'https://studkits.shop',
+  },
   // Optimize for Vercel deployment
   experimental: {
     optimizePackageImports: ['@/components', '@/lib'],

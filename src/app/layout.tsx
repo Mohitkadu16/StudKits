@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://studkits.in",
+    url: "https://studkits.shop",
     siteName: "StudKits",
     title: "StudKits - Tech Project Kits & Engineering Solutions",
     description: "Expert provider of IoT, Robotics, and Electronics project kits. Custom PCB design and microcontroller solutions for students and tech enthusiasts.",

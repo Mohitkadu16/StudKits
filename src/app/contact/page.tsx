@@ -279,7 +279,7 @@ export default function ContactUsPage() {
               </Link>
             </Button>
             <Button variant="outline" asChild className="shadow-sm h-auto py-2">
-               <Link href="https://www.instagram.com/studkits.in/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full">
+               <Link href="https://www.instagram.com/studkits.shop/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full">
                 <Instagram className="mr-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
                 <span className="text-sm sm:text-base">Follow on Instagram</span>
               </Link>

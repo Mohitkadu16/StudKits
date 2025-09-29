@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   const headers = response.headers;
 
   // CORS headers
-  headers.set('Access-Control-Allow-Origin', 'https://studkits.in');
+  headers.set('Access-Control-Allow-Origin', 'https://studkits.shop');
   headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   headers.set('Access-Control-Allow-Headers', 'Content-Type');
 

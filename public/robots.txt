@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://studkits.in/sitemap.xml
+Sitemap: https://studkits.shop/sitemap.xml
 
 # Disallow admin and private routes
 Disallow: /admin/
