@@ -116,7 +116,7 @@ See the full license in the [LICENSE](./LICENSE)
 
 **Studkits**
 - Gmail: studkits25@gmail.com
-- Instagram: [@studkits.shop](https://www.instagram.com/studkits.shop/)
+- Instagram: [@studkits.in](https://www.instagram.com/studkits.in/)
 
 **Mohit Kadu**
 - GitHub: [@Mohitkadu16](https://github.com/Mohitkadu16)
