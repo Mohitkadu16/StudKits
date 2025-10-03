@@ -129,8 +129,8 @@ export default function AboutUsPage() {
       </section>
 
       <section className="py-8 relative">
-        <h2 className="text-3xl font-bold text-center text-primary mb-8">Meet the Founders</h2>
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center text-primary mb-8">Meet "Team StudKits"</h2>
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto px-4">
          <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
             <CardHeader>
                 <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
@@ -209,6 +209,46 @@ export default function AboutUsPage() {
               <CardDescription className="text-base text-primary">Managing Director</CardDescription>
               <p className="text-sm text-muted-foreground pt-2">
                 Hello I am Amit Prajapati Managing Director of Studkits. Currently pursuing Btech at Ratan Tata Maharashtra State Skill University
+              </p>
+            </CardContent>
+            </Card>
+            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+            <CardHeader>
+              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
+                <Image
+                  src={encodeURI('/images/mihir.jpg')}
+                  alt="Mihir Mota"
+                  width={128}
+                  height={128}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <CardTitle className="text-2xl">Mihir Mota</CardTitle>
+              <CardDescription className="text-base text-primary">Marketing Head</CardDescription>
+              <p className="text-sm text-muted-foreground pt-2">
+                Hello I am Mihir Mota Marketing Head of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
+              </p>
+            </CardContent>
+          </Card>
+            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+            <CardHeader>
+              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
+                <Image
+                  src={encodeURI('/images/abhishek.jpg')}
+                  alt="Abhishek Awasthi"
+                  width={128}
+                  height={128}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <CardTitle className="text-2xl">Abhishek Awasthi</CardTitle>
+              <CardDescription className="text-base text-primary">Accounts Manager</CardDescription>
+                <p className="text-sm text-muted-foreground pt-2">
+                  Hello I am Abhishek Awasthi Accounts Manager of Studkits. Currently pursuing bachelors in Electronics and Telecommunication Engineering in Shivajirao Jondhle Of Engineering
               </p>
             </CardContent>
           </Card>
