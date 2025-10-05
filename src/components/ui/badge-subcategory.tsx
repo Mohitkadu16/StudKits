@@ -5,8 +5,8 @@ interface SubcategoryBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const badgeColors = {
-  'Micro Project': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 rounded-full',
-  'Capstone Project': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300 rounded-full'
+  'Micro Project': 'bg-blue-900 text-blue-300 rounded-full',
+  'Capstone Project': 'bg-purple-900 text-purple-300 rounded-full'
 }
 
 export function SubcategoryBadge({ subcategory, className, ...props }: SubcategoryBadgeProps) {
@@ -15,7 +15,7 @@ export function SubcategoryBadge({ subcategory, className, ...props }: Subcatego
       className={cn(
         "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset",
         badgeColors[subcategory],
-        "ring-blue-700/10 dark:ring-blue-700/30",
+        "ring-blue-700/30",
         className
       )}
       {...props}

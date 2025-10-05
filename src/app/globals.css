@@ -207,34 +207,17 @@ body {
     inset: 0;
     background: linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.4) 0%,
-      rgba(255, 255, 255, 0.1) 100%
-    );
-    pointer-events: none;
-    border-radius: inherit;
-  }
-
-  .dark .card::before,
-  .dark button::before,
-  .dark .button::before,
-  .dark .badge::before,
-  .dark .alert-dialog::before,
-  .dark .select::before {
-    background: linear-gradient(
-      145deg,
       rgba(255, 255, 255, 0.1) 0%,
       rgba(255, 255, 255, 0.02) 100%
     );
+    pointer-events: none;
+    border-radius: inherit;
   }
 
   /* Special effect for badges */
   .badge {
     backdrop-filter: blur(12px) saturate(160%);
     -webkit-backdrop-filter: blur(12px) saturate(160%);
-    background-color: rgba(255, 255, 255, 0.15) !important;
-  }
-
-  .dark .badge {
     background-color: rgba(30, 41, 59, 0.15) !important;
   }
 
@@ -264,12 +247,8 @@ body {
   /* Add hover effect for cards */
   .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
-    transition: all 0.3s ease;
-  }
-
-  .dark .card:hover {
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+    transition: all 0.3s ease;
   }
 
   /* Add subtle gradient overlay for depth */
@@ -323,13 +302,8 @@ body {
   /* Button text color styles */
   button,
   .button {
-    color: rgb(17, 24, 39) !important; /* Dark text for light mode */
-    font-weight: 500;
-  }
-
-  .dark button,
-  .dark .button {
     color: rgb(241, 245, 249) !important; /* Light text for dark mode */
+    font-weight: 500;
   }
 
   /* Primary button style override */
@@ -358,22 +332,11 @@ body {
   a[role="button"],
   .badge-button {
     color: rgb(241, 245, 249) !important;
-    background-color: rgba(255, 255, 255, 0.8) !important;
+    background-color: rgba(30, 41, 59, 0.4) !important;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(17, 24, 39, 0.1) !important;
-    font-weight: 500;
-  }
-
-  button[class*="filter"],
-  .filter-button,
-  button[class*="category"],
-  .category-button,
-  a[role="button"],
-  .badge-button {
-    color: rgb(241, 245, 249) !important;
-    background-color: rgba(30, 41, 59, 0.4) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    font-weight: 500;
   }
 
   /* Hover states for filter buttons */
@@ -383,18 +346,8 @@ body {
   .category-button:hover,
   a[role="button"]:hover,
   .badge-button:hover {
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    transform: translateY(-1px);
-    border: 1px solid rgba(17, 24, 39, 0.2) !important;
-  }
-
-  .dark button[class*="filter"]:hover,
-  .dark .filter-button:hover,
-  .dark button[class*="category"]:hover,
-  .dark .category-button:hover,
-  .dark a[role="button"]:hover,
-  .dark .badge-button:hover {
     background-color: rgba(30, 41, 59, 0.6) !important;
+    transform: translateY(-1px);
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
   }
 
