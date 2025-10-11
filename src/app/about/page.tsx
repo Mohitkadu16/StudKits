@@ -52,6 +52,7 @@ export default function AboutUsPage() {
               <li>Embedded Systems (Arduino, ESP32, Raspberry Pi)</li>
               <li>PCB Design & Prototyping Services</li>
               <li>Custom Project Presentations for any topic</li>
+              <li>Troubleshooting Service</li>
             </ul>
             <p>
               Each kit comes with all necessary components and clear instructions to ensure a smooth
@@ -92,10 +93,10 @@ export default function AboutUsPage() {
             <strong className="text-foreground">Curated Projects:</strong> Our projects are carefully selected to be engaging, educational, and relevant to current industry trends.
           </p>
            <p>
-            <strong className="text-foreground">Expert Services:</strong> From PCB design to custom presentations, our services are designed to help you succeed.
+            <strong className="text-foreground">Expert Services:</strong> From Project designing to custom presentations to troubleshooting services, our services are designed to help you succeed.
           </p>
           <p>
-            <strong className="text-foreground">Support:</strong> While we provide comprehensive guides, we're here to help if you get stuck.
+            <strong className="text-foreground">Support:</strong> While we provide comprehensive guides & troubleshooting, we're here to help if you get stuck.
           </p>
           <p>
             <strong className="text-foreground">Customization:</strong> Have a unique idea? We offer custom project and presentation design services to bring your vision to life.

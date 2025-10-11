@@ -37,6 +37,7 @@ export function Navbar() {
     { href: '/custom-project', label: 'Custom Project', icon: Edit3 },
     { href: '/custom-presentation', label: 'Custom Presentation', icon: Presentation },
     { href: '/tracking', label: 'Track Order', icon: PackageSearch },
+    { href: '/troubleshooting-service', label: 'Troubleshooting Service', icon: Wand2 },
     { href: '/contact', label: 'Contact Us', icon: Mail },
   ];
 

@@ -66,30 +66,30 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    shortcut: "/images/favicon-16x16.png",
+    apple: "/images/apple-touch-icon.png",
     other: [
       {
         rel: "icon",
         type: "image/png",
         sizes: "32x32",
-        url: "/favicon-32x32.png",
+        url: "/images/favicon-32x32.png",
       },
       {
         rel: "icon",
         type: "image/png",
         sizes: "16x16",
-        url: "/favicon-16x16.png",
+        url: "/images/favicon-16x16.png",
       },
       {
         rel: "android-chrome",
         sizes: "192x192",
-        url: "/android-chrome-192x192.png",
+        url: "/images/android-chrome-192x192.png",
       },
       {
         rel: "android-chrome",
         sizes: "512x512",
-        url: "/android-chrome-512x512.png",
+        url: "/images/android-chrome-512x512.png",
       },
     ],
   },
