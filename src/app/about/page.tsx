@@ -2,7 +2,9 @@
 
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Users, Target, Lightbulb, Zap } from 'lucide-react';
+import { Users, Target, Lightbulb, Zap, Mail, Instagram, Phone } from 'lucide-react';      
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function AboutUsPage() {
   return (
@@ -149,6 +151,23 @@ export default function AboutUsPage() {
                <p className="text-sm text-muted-foreground pt-2">
                 Hello I am Ved Bhardwaj Founder of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
               </p>
+              <div className="flex items-center justify-center gap-4 mt-4 p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="mailto:ved.bhardwaj2006@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <Mail className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="https://www.instagram.com/bhardwaj_ved123/" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="tel:+918976451602">
+                    <Phone className="h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
            </Card>
            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
@@ -169,6 +188,23 @@ export default function AboutUsPage() {
               <p className="text-sm text-muted-foreground pt-2">
                 Hello I am Mohit Kadu Co Founder | Web Developer of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
               </p>
+              <div className="flex items-center justify-center gap-4 mt-4 p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="mailto:mohitkadu13@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <Mail className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="https://www.instagram.com/mohitkadu15/" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="tel:+917506104767">
+                    <Phone className="h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
            </Card>
            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
@@ -190,6 +226,23 @@ export default function AboutUsPage() {
               <p className="text-sm text-muted-foreground pt-2">
                 Hello I am Maverick D'Silva Co Founder | App Developer of Studkits. Currently pursuing degree in Information Technology from Don Bosco Institute of Technology
               </p>
+              <div className="flex items-center justify-center gap-4 mt-4 p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="mailto:maverickdsilva31@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <Mail className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="https://www.instagram.com/mav_dsilva/" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="tel:+919819637606">
+                    <Phone className="h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
             </Card>
             <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
@@ -210,6 +263,23 @@ export default function AboutUsPage() {
               <p className="text-sm text-muted-foreground pt-2">
                 Hello I am Amit Prajapati Managing Director of Studkits. Currently pursuing Btech at Ratan Tata Maharashtra State Skill University
               </p>
+              <div className="flex items-center justify-center gap-4 mt-4 p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="mailto:amitprajapati4441@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <Mail className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="https://www.instagram.com/amit_pjp_74/" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="tel:+917339555257">
+                    <Phone className="h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
             </Card>
             <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
@@ -230,6 +300,23 @@ export default function AboutUsPage() {
               <p className="text-sm text-muted-foreground pt-2">
                 Hello I am Mihir Mota Marketing Head of Studkits. Currently pursuing Diploma in Electronics and Telecommunication at Vidyalankar Polytechnic
               </p>
+              <div className="flex items-center justify-center gap-4 mt-4 p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="mailto:mihirmota4@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <Mail className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="https://www.instagram.com/surreal.meher/" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="tel:+919594854611">
+                    <Phone className="h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
             <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
@@ -250,6 +337,23 @@ export default function AboutUsPage() {
                 <p className="text-sm text-muted-foreground pt-2">
                   Hello I am Abhishek Awasthi Accounts Manager of Studkits. Currently pursuing bachelors in Electronics and Telecommunication Engineering in Shivajirao Jondhle Of Engineering
               </p>
+              <div className="flex items-center justify-center gap-4 mt-4 p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                <Button variant="ghost" size="icon"  asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="mailto:abhishekawasthi85704@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <Mail className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="https://www.instagram.com/abhishekkkk_5853/" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
+                  <Link href="tel:+918097652340">
+                    <Phone className="h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

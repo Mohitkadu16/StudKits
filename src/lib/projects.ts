@@ -161,6 +161,29 @@ export const projects: Project[] = [
     ],
     "dataAiHint": "iot gas-detection"
   },
+  {
+    id: 'iot-10',
+    "title": "Intruder Alert System Using Arduino",
+    "description": "Detects unauthorized access and triggers an alarm.",
+    "longDescription": "This project utilizes a LDR sensor and a Laser Module to detect unauthorized access. When an intruder is detected, the system triggers a loud alarm. It is controlled by an Arduino Uno and provides an effective security solution for homes or offices.",
+    "category": "IoT-Based Projects",
+    "subcategories": ["Micro Project"],
+    "categoryIcon": Network,
+    "image": "/images/intruder alert.png",
+    "features": [
+      "LDR Sensor",
+      "Laser Module",
+      "Buzzer",
+      "Arduino Uno",
+    ],
+    "benefits": [
+      "Enhanced Safety",
+      "Early Intrusion Detection",
+      "Automatic Response",
+      "Audible & Visual Alerts"
+    ],
+    "dataAiHint": "iot intruder-alert"
+  },
   // New Robotics & Automation Projects
   {
     id: 'robotics-1',
@@ -253,6 +276,46 @@ export const projects: Project[] = [
     features: ['Pulse Sensor (e.g., MAX30100 or similar)', 'ESP32 Microcontroller (with Bluetooth/Wi-Fi)', 'OLED Display', 'Compact Wearable Design', 'Battery Power'],
     benefits: ['Personal Health Tracking', 'Early Detection of Irregularities', 'Portable and Convenient', 'Potential for IoT Integration'],
     dataAiHint: 'embedded health'
+  },
+  {
+    id: 'embedded-4',
+    title: 'NES Emulator on ESP32',
+    description: 'Emulation of NES games on ESP32 hardware.',
+    longDescription: 'A project to emulate classic NES games using the ESP32. The emulator runs on the ESP32 and outputs video and audio signals, allowing you to play NES games on a compatible display. Can be enhanced with additional features like save states and custom controls.',
+    category: 'Embedded Systems',
+    subcategories: ['Micro Project','Capstone Project'],
+    categoryIcon: Cpu,
+    image: '/images/nes emulator.png',
+    features: ['ESP32 Microcontroller', 'TFT Display', 'Inbuild Controller Support', 'Save States', 'Custom Controls'],
+    benefits: ['Play Classic NES Games', 'Portable Gaming Solution', 'Customizable Controls', 'Potential for Online Multiplayer'],
+    dataAiHint: 'embedded nes'
+  },
+  {
+    id: 'embedded-5',
+    title: 'NES Emulator on Raspberry Pi',
+    description: 'Portable NES gaming console using Raspberry Pi.',
+    longDescription: 'A compact handheld NES emulator built with Raspberry Pi. Features a high-quality 2.0" display, integrated audio amplifier, tactile controls, and rechargeable battery for portable gaming. Includes a 3D printed case for professional finish.',
+    category: 'Embedded Systems',
+    subcategories: ['Micro Project','Capstone Project'],
+    categoryIcon: Cpu,
+    image: '/images/nes emulator rpi.png',
+    features: [
+      'Raspberry Pi Zero 2 W',
+      '2.0" ST7789 SPI Display (240×320)',
+      'MAX98357A I²S Audio Amplifier + Speaker',
+      '8× Tactile Push Buttons',
+      'PowerBoost 1000C with 2000mAh LiPo',
+      '16-32GB MicroSD Storage',
+      '3D Printed Handheld Case'
+    ],
+    benefits: [
+      'Professional-Grade Portable Gaming',
+      'High-Quality Display & Audio',
+      'Long Battery Life (2000mAh)',
+      'Expandable Storage for Large Game Library',
+      'Customizable 3D Printed Design'
+    ],
+    dataAiHint: 'embedded nes'
   },
   // New PCB Design & Prototyping Projects
   {
