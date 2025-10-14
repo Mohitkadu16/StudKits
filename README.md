@@ -36,14 +36,14 @@ StudKits is a comprehensive web platform designed to support students and educat
 - Project reports
 - Research presentation templates
 
-### � Troubleshooting Services
+### 🛠️ Troubleshooting Services
 - Expert technical support
 - Project debugging assistance
 - Component testing guidance
 - Circuit analysis and fixes
 - Real-time problem solving
 
-### �📱 User Experience
+### 📱 User Experience
 - Easy-to-use interface
 - Seamless project tracking
 - Quick response times
