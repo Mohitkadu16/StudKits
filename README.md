@@ -52,7 +52,7 @@ StudKits is a comprehensive web platform designed to support students and educat
 ---
 ## 🏗️ Project Architecture
 
-![StudKits Architecture](docs/studkits_artitecture.png)
+![StudKits Architecture](docs/studkits%20artitecture%20final.svg)
 
 ---
 
