@@ -21,6 +21,8 @@ import { projectMicrocontrollers } from '@/lib/project-microcontrollers';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
+  mobile: z.string().min(10, { message: 'Mobile number must be at least 10 digits' })
+    .regex(/^[0-9]+$/, { message: 'Must be a valid mobile number' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
 });
 
@@ -36,6 +38,7 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
+      mobile: '',
       password: '',
     },
   });
@@ -43,7 +46,13 @@ export default function LoginPage() {
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
+      
+      // Verify mobile number matches
+      if (userCredential.user.phoneNumber !== data.mobile) {
+        throw new Error('Invalid mobile number');
+      }
+
       toast({
         title: 'Login Successful',
         description: "Welcome back!",
@@ -101,6 +110,25 @@ export default function LoginPage() {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="m@example.com" {...field} disabled={isLoading} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="mobile"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Mobile Number</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="tel"
+                        placeholder="Enter your mobile number" 
+                        {...field} 
+                        disabled={isLoading}
+                        maxLength={10}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

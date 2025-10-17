@@ -19,6 +19,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgvlyklz";
 interface CustomProjectFormState {
   name: string;
   email: string;
+  mobile: string;
   projectTitle: string;
   microcontroller: string;
   components: string;
@@ -36,6 +37,7 @@ export default function CustomProjectPage() {
   const [formData, setFormData] = useState<CustomProjectFormState>({
     name: '',
     email: '',
+    mobile: '',
     projectTitle: '',
     microcontroller: '',
     components: '',
@@ -72,6 +74,7 @@ export default function CustomProjectPage() {
           ...prev,
           name: user.displayName || prev.name,
           email: user.email || prev.email,
+          mobile: (user as any).phoneNumber || (user as any).mobile || prev.mobile,
           projectTitle: title || prev.projectTitle,
           description: description || prev.description,
           components: features ? features.split('\\n').join(', ') : prev.components,
@@ -90,10 +93,19 @@ export default function CustomProjectPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.email || !formData.projectTitle || !formData.description) {
+    if (!formData.name || !formData.email || !formData.mobile || !formData.projectTitle || !formData.description) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!/^[0-9]{10}$/.test(formData.mobile)) {
+      toast({
+        title: "Invalid Mobile Number",
+        description: "Please enter a valid 10-digit mobile number.",
         variant: "destructive",
       });
       return;
@@ -202,6 +214,20 @@ StudKits Team`,
               <div className="space-y-2">
                 <Label htmlFor="email">Your Email <span className="text-destructive">*</span></Label>
                 <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required disabled={isLoading}/>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="mobile">Mobile Number <span className="text-destructive">*</span></Label>
+                <Input 
+                  id="mobile" 
+                  name="mobile" 
+                  type="tel" 
+                  pattern="[0-9]{10}"
+                  value={formData.mobile} 
+                  onChange={handleChange} 
+                  placeholder="Enter 10-digit mobile number" 
+                  required 
+                  disabled={isLoading}
+                />
               </div>
             </div>
             <div className="space-y-2">

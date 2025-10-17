@@ -23,6 +23,9 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
+  mobile: z.string().regex(/^[0-9]{10}$/, {
+    message: "Please enter a valid 10-digit mobile number.",
+  }),
   institution: z.string().min(2, {
     message: "School/College name must be at least 2 characters.",
   }),
@@ -52,6 +55,7 @@ export default function TroubleshootingServicePage() {
     defaultValues: {
       name: "",
       email: "",
+      mobile: "",
       institution: "",
       projectCategory: "",
       projectSource: "",
@@ -69,6 +73,7 @@ export default function TroubleshootingServicePage() {
         ...form.getValues(),
         name: user.displayName || "",
         email: user.email || "",
+        mobile: (user as any).phoneNumber || (user as any).mobile || "",
         institution:  (user as any).college || (user as any).collegeName || "",
       });
     }
@@ -169,7 +174,7 @@ StudKits Support Team`,
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>Name <span className="text-destructive">*</span></FormLabel>
                         <FormControl>
                           <Input placeholder="Your name" {...field} />
                         </FormControl>
@@ -182,9 +187,24 @@ StudKits Support Team`,
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>Email <span className="text-destructive">*</span></FormLabel>
                         <FormControl>
                           <Input type="email" placeholder="your@email.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="mobile"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Mobile Number <span className="text-destructive">*</span></FormLabel>
+                        <FormControl>
+                          <Input type="tel" placeholder="Enter 10-digit mobile number" pattern="[0-9]{10}" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

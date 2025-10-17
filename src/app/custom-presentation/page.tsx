@@ -16,6 +16,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgvlyklz"; // Using the same 
 interface CustomPresentationFormState {
   name: string;
   email: string;
+  mobile: string;
   college?: string;
   topic: string;
   audience: string;
@@ -49,6 +50,7 @@ export default function CustomPresentationPage() {
           ...prev,
           name: user.displayName || prev.name,
           email: user.email || prev.email,
+          mobile: (user as any).phoneNumber || (user as any).mobile || prev.mobile,
           college: (user as any).college || (user as any).collegeName || prev.college,
         }));
       }
@@ -57,6 +59,7 @@ export default function CustomPresentationPage() {
   const [formData, setFormData] = useState<CustomPresentationFormState>({
     name: '',
     email: '',
+    mobile: '',
     college: '',
     topic: '',
     audience: '',
@@ -72,10 +75,19 @@ export default function CustomPresentationPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.topic || !formData.instructions) {
+    if (!formData.name || !formData.email || !formData.mobile || !formData.topic || !formData.instructions) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields (Name, Email, Topic, and Instructions).",
+        description: "Please fill in all required fields (Name, Email, Mobile Number, Topic, and Instructions).",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!/^[0-9]{10}$/.test(formData.mobile)) {
+      toast({
+        title: "Invalid Mobile Number",
+        description: "Please enter a valid 10-digit mobile number.",
         variant: "destructive",
       });
       return;
@@ -119,6 +131,7 @@ export default function CustomPresentationPage() {
       setFormData({
         name: '',
         email: '',
+        mobile: '',
         college: '',
         topic: '',
         audience: '',
@@ -167,6 +180,20 @@ export default function CustomPresentationPage() {
               <div className="space-y-2">
                 <Label htmlFor="email">Your Email <span className="text-destructive">*</span></Label>
                 <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required disabled={isLoading} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="mobile">Mobile Number <span className="text-destructive">*</span></Label>
+                <Input 
+                  id="mobile" 
+                  name="mobile" 
+                  type="tel" 
+                  pattern="[0-9]{10}"
+                  value={formData.mobile} 
+                  onChange={handleChange} 
+                  placeholder="Enter 10-digit mobile number" 
+                  required 
+                  disabled={isLoading} 
+                />
               </div>
             </div>
 

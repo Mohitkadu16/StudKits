@@ -14,11 +14,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { auth, createUserWithEmailAndPassword } from '@/lib/firebase';
+import { updateProfile } from 'firebase/auth';
 import { Loader2 } from 'lucide-react';
 import { Eye, EyeOff } from 'lucide-react';
 
 const signupSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
+  mobile: z.string().min(10, { message: 'Mobile number must be at least 10 digits' })
+    .regex(/^[0-9]+$/, { message: 'Must be a valid mobile number' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
 });
 
@@ -34,6 +37,7 @@ export default function SignupPage() {
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
+      mobile: '',
       password: '',
     },
   });
@@ -41,7 +45,10 @@ export default function SignupPage() {
   const onSubmit: SubmitHandler<SignupFormValues> = async (data) => {
     setIsLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      
+      // Note: Phone number updates require a different approach
+      // Consider storing it in a separate database collection
       toast({
         title: 'Account Created',
         description: "Welcome! You have been successfully signed up.",
@@ -77,6 +84,25 @@ export default function SignupPage() {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="m@example.com" {...field} disabled={isLoading} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="mobile"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Mobile Number</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="tel"
+                        placeholder="Enter your mobile number" 
+                        {...field} 
+                        disabled={isLoading}
+                        maxLength={10}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
