@@ -1,9 +1,9 @@
 # StudKits - Your Electronics Project Companion
 
 Welcome to StudKits - A dedicated platform that bridges the gap between electronics students and professional project development. Whether you're a student looking for project guidance or an educator seeking custom presentations, StudKits is your one-stop solution.
-- Visit: [studkits.shop](https://www.studkits.shop)
 
-<!-- ![StudKits Preview]()) -->
+![StudKits Preview](public/images/screenshoot.png)
+- Visit: [studkits.shop](https://www.studkits.shop)
 ---
 ## 🎯 What is StudKits?
 
