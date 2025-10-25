@@ -8,7 +8,6 @@ import {
   ToastViewport,
   type ToastProps,
 } from "@/components/ui/toast"
-import { useToast as useToastBase } from "@/components/ui/use-toast-base"
 
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
@@ -17,7 +16,7 @@ type ToasterToast = ToastProps & {
   id: string
   title?: React.ReactNode
   description?: React.ReactNode
-  action?: () => void
+  action?: () => React.ReactNode
 }
 
 const actionTypes = {
@@ -207,7 +206,7 @@ export function Toaster() {
                 <ToastDescription>{description}</ToastDescription>
               )}
             </div>
-            {action}
+            {action && action()}
             <ToastClose />
           </Toast>
         )
