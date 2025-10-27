@@ -14,10 +14,9 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { auth, signInWithEmailAndPassword } from '@/lib/firebase';
+import { auth, signInWithEmailAndPassword, signOut, getUserProfile } from '@/lib/firebase';
 import { Loader2 } from 'lucide-react';
 import { Eye, EyeOff } from 'lucide-react';
-import { projectMicrocontrollers } from '@/lib/project-microcontrollers';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
