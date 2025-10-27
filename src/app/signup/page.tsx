@@ -13,10 +13,12 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { auth, createUserWithEmailAndPassword } from '@/lib/firebase';
+import { auth, createUserWithEmailAndPassword, db } from '@/lib/firebase';
 import { updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { Loader2 } from 'lucide-react';
 import { Eye, EyeOff } from 'lucide-react';
+import { useEffect } from 'react';
 
 const signupSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -42,18 +44,50 @@ export default function SignupPage() {
     },
   });
 
+  useEffect(() => {
+    // Check for stored signup data from login redirect
+    const storedData = sessionStorage.getItem('signupData');
+    if (storedData) {
+      const data = JSON.parse(storedData);
+      form.setValue('email', data.email);
+      form.setValue('mobile', data.mobile);
+      // Clear the stored data after using it
+      sessionStorage.removeItem('signupData');
+    }
+  }, [form]);
+
   const onSubmit: SubmitHandler<SignupFormValues> = async (data) => {
     setIsLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
-      
-      // Note: Phone number updates require a different approach
-      // Consider storing it in a separate database collection
+      const user = userCredential.user;
+
+      // Store additional user data in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        email: data.email,
+        mobile: data.mobile,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      });
+
+      // Update the user profile
+      await updateProfile(user, {
+        displayName: data.email.split('@')[0], // Set initial display name as email username
+      });
+
       toast({
         title: 'Account Created',
         description: "Welcome! You have been successfully signed up.",
       });
-      router.push('/profile');
+      
+      // Check if there's a redirect URL stored
+      const redirectUrl = sessionStorage.getItem('redirectAfterLogin');
+      if (redirectUrl) {
+        sessionStorage.removeItem('redirectAfterLogin');
+        router.push(redirectUrl);
+      } else {
+        router.push('/profile');
+      }
     } catch (error: any) {
       console.error('Signup error:', error);
       toast({

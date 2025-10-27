@@ -48,9 +48,18 @@ export default function LoginPage() {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
       
-      // Verify mobile number matches
-      if (userCredential.user.phoneNumber !== data.mobile) {
-        throw new Error('Invalid mobile number');
+      // Check if user exists in our database
+      const userProfile = await getUserProfile(userCredential.user.uid);
+      
+      if (!userProfile) {
+        await signOut(auth); // Sign out the user from Firebase
+        throw new Error('user-not-registered');
+      }
+      
+      // Verify mobile number matches from our database
+      if (userProfile.mobile !== data.mobile) {
+        await signOut(auth);
+        throw new Error('invalid-mobile');
       }
 
       toast({
@@ -69,11 +78,16 @@ export default function LoginPage() {
     } catch (error: any) {
       console.error('Login error:', error);
       let errorMessage = 'An unexpected error occurred. Please try again.';
+      let redirectToSignup = false;
       
-      if (error.code === 'auth/invalid-credential') {
-        errorMessage = 'Invalid email or password. Please check your credentials and try again.';
-      } else if (error.code === 'auth/user-not-found') {
-        errorMessage = 'No account found with this email. Please sign up first.';
+      if (error.message === 'user-not-registered') {
+        errorMessage = 'This email is not registered. Redirecting you to sign up...';
+        redirectToSignup = true;
+      } else if (error.message === 'invalid-mobile') {
+        errorMessage = 'Incorrect mobile number. Please try again.';
+      } else if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found') {
+        errorMessage = 'No account found with this email. Redirecting you to sign up...';
+        redirectToSignup = true;
       } else if (error.code === 'auth/wrong-password') {
         errorMessage = 'Incorrect password. Please try again.';
       } else if (error.code === 'auth/too-many-requests') {
@@ -83,8 +97,20 @@ export default function LoginPage() {
       toast({
         title: 'Login Failed',
         description: errorMessage,
-        variant: 'destructive',
+        variant: redirectToSignup ? 'default' : 'destructive',
       });
+
+      if (redirectToSignup) {
+        // Store the user's data in sessionStorage for auto-fill in signup
+        sessionStorage.setItem('signupData', JSON.stringify({
+          email: data.email,
+          mobile: data.mobile
+        }));
+        // Redirect to signup page after a short delay
+        setTimeout(() => {
+          router.push('/signup');
+        }, 1500);
+      }
     } finally {
       setIsLoading(false);
     }
