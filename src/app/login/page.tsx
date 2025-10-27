@@ -55,16 +55,37 @@ export default function LoginPage() {
         throw new Error('user-not-registered');
       }
       
-      // Format mobile numbers consistently by removing any non-digits
+      // Log full user profile for debugging
+      console.log('Full User Profile:', JSON.stringify(userProfile, null, 2));
+      
+      // Handle possible variations in mobile number storage
       const inputMobile = data.mobile.replace(/\D/g, '');
-      const storedMobile = userProfile.mobile ? userProfile.mobile.replace(/\D/g, '') : '';
+      const storedMobile = userProfile.mobile || userProfile.mobileNumber || userProfile.phone || userProfile.phoneNumber;
+      const formattedStoredMobile = storedMobile ? storedMobile.replace(/\D/g, '') : '';
       
       console.log('Debug - Input mobile:', inputMobile);
-      console.log('Debug - Stored mobile:', storedMobile);
-      console.log('Debug - User Profile:', userProfile);
+      console.log('Debug - Raw stored mobile:', storedMobile);
+      console.log('Debug - Formatted stored mobile:', formattedStoredMobile);
 
+      // If no mobile number is stored at all, we should update it
+      if (!storedMobile) {
+        // Update the user profile with the new mobile number
+        try {
+          await setDoc(doc(db, 'users', userCredential.user.uid), {
+            ...userProfile,
+            mobile: inputMobile
+          }, { merge: true });
+          console.log('Updated user profile with new mobile number');
+        } catch (updateError) {
+          console.error('Failed to update mobile number:', updateError);
+        }
+      } 
       // Verify mobile number matches from our database
-      if (storedMobile !== inputMobile) {
+      else if (formattedStoredMobile !== inputMobile) {
+        console.log('Mobile number mismatch:', {
+          input: inputMobile,
+          stored: formattedStoredMobile
+        });
         await signOut(auth);
         throw new Error('invalid-mobile');
       }
