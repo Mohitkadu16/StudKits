@@ -55,8 +55,16 @@ export default function LoginPage() {
         throw new Error('user-not-registered');
       }
       
+      // Format mobile numbers consistently by removing any non-digits
+      const inputMobile = data.mobile.replace(/\D/g, '');
+      const storedMobile = userProfile.mobile ? userProfile.mobile.replace(/\D/g, '') : '';
+      
+      console.log('Debug - Input mobile:', inputMobile);
+      console.log('Debug - Stored mobile:', storedMobile);
+      console.log('Debug - User Profile:', userProfile);
+
       // Verify mobile number matches from our database
-      if (userProfile.mobile !== data.mobile) {
+      if (storedMobile !== inputMobile) {
         await signOut(auth);
         throw new Error('invalid-mobile');
       }
