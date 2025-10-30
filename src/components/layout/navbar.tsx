@@ -103,8 +103,8 @@ export function Navbar() {
 
   return (
     <header className="bg-primary text-primary-foreground shadow-md sticky top-0 z-50">
-      <MaxWidthWrapper className="flex items-center justify-between p-4 h-16">
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold" onClick={handleLinkClick}>
+      <MaxWidthWrapper className="flex items-center justify-center p-4 h-16 space-x-4">
+        <Link href="/" className="flex items-center gap-2 text-xl font-bold space-x-1" onClick={handleLinkClick}>
           <Target className="h-7 w-7" />
           <span>StudKits</span>
         </Link>
@@ -117,10 +117,10 @@ export function Navbar() {
           {isMenuOpen ? (
             <X className="h-6 w-6" />
           ) : (
-            <Menu className="h-6 w-6" />
+            <Menu className="h-6 w-6 space-x-2" />
           )}
         </Button>
-        <nav className="hidden md:flex items-center space-x-1">
+        <nav className="hidden md:flex items-center space-x-2">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -134,7 +134,7 @@ export function Navbar() {
                 )}
               >
                 <Link href={item.href} className="flex items-center">
-                  <Icon className="h-4 w-4 mr-2" />
+                  <Icon className="h-4 w-4 mr-1" />
                   <span>{item.label}</span>
                 </Link>
               </Button>

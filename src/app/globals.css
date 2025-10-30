@@ -2,6 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Text effect for hero heading */
+  .hero-heading {
+    text-shadow: 
+      /* White border */
+      -2px -2px 0 rgb(255,255,255),
+      2px -2px 0 rgb(255,255,255),
+      -2px 2px 0 rgb(255,255,255),
+      2px 2px 0 rgb(255,255,255),
+      /* Bright blue glow */
+      0 0 15px rgba(66, 133, 244, 0.7),
+      0 0 30px rgba(66, 133, 244, 0.5);
+    position: relative;
+    z-index: 1;
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  /* Glow animation */
+  @keyframes glow-pulse {
+    0%, 100% {
+      text-shadow: 
+        /* White border (constant) */
+        -2px -2px 0 rgb(255,255,255),
+        2px -2px 0 rgb(255,255,255),
+        -2px 2px 0 rgb(255,255,255),
+        2px 2px 0 rgb(255,255,255),
+        /* Blue glow (pulsing) */
+        0 0 15px rgba(0, 102, 255, 0.5),
+        0 0 30px rgba(0, 102, 255, 0.3);
+    }
+    50% {
+      text-shadow: 
+        /* White border (constant) */
+        -2px -2px 0 rgb(255,255,255),
+        2px -2px 0 rgb(255,255,255),
+        -2px 2px 0 rgb(255,255,255),
+        2px 2px 0 rgb(255,255,255),
+        /* Blue glow (pulsing) */
+        0 0 20px rgba(0, 102, 255, 0.6),
+        0 0 35px rgba(0, 102, 255, 0.4);
+    }
+  }
+  /* Add the glow text effect */
+  .glow-text {
+    text-shadow: 
+      /* White border effect */
+      -1px -1px 0 rgba(255, 255, 255, 0.4),
+      1px -1px 0 rgba(255, 255, 255, 0.4),
+      -1px 1px 0 rgba(255, 255, 255, 0.4),
+      1px 1px 0 rgba(255, 255, 255, 0.4),
+      /* Blue glow effect */
+      0 0 15px rgba(0, 102, 255, 0.5),
+      0 0 30px rgba(0, 102, 255, 0.3),
+      0 0 45px rgba(0, 102, 255, 0.1);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Add animated pulse effect */
+  @keyframes glow-pulse {
+    0%, 100% {
+      text-shadow: 
+        0 0 15px rgba(0, 102, 255, 0.5),
+        0 0 30px rgba(0, 102, 255, 0.3),
+        0 0 45px rgba(0, 102, 255, 0.1);
+    }
+    50% {
+      text-shadow: 
+        0 0 20px rgba(0, 102, 255, 0.6),
+        0 0 35px rgba(0, 102, 255, 0.4),
+        0 0 50px rgba(0, 102, 255, 0.2);
+    }
+  }
+
+  .glow-text {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+}
+
 :root { 
   --header-height: 64px;
 }

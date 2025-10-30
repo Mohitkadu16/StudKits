@@ -94,7 +94,7 @@ export default function ProjectDetailPage() {
         </Button>
       </div>
 
-      <Card className="overflow-hidden shadow-lg">
+      <Card className="overflow-hidden shadow-lg opacity-100 border-4 border-[#4285F4] rounded-xl">
         <div className="grid md:grid-cols-2 gap-0">
           <div className="relative aspect-[4/3] md:aspect-auto md:h-full min-h-[300px]">
             {project.sketchfabEmbedUrl ? (
