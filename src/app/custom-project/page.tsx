@@ -187,14 +187,14 @@ StudKits Team`,
 
   return (
     <div className="space-y-8">
-      <section className="text-center py-8 bg-card rounded-lg shadow">
+      <section className="text-center py-8 bg-card shadow border-2 border-[#4285F4] rounded-xl">
         <h1 className="text-4xl font-bold text-primary mb-2">Request a Custom Project</h1>
         <p className="text-lg text-muted-foreground">
           Have a unique idea? Tell us about it, and we'll help bring it to life!
         </p>
       </section>
 
-      <Card className="max-w-2xl mx-auto shadow-lg">
+      <Card className="max-w-2xl mx-auto shadow-lg border-2 border-[#4285F4] rounded-xl">
         <CardHeader>
           <CardTitle className="flex items-center text-2xl">
             <Lightbulb className="mr-3 h-7 w-7 text-primary" />

@@ -29,7 +29,7 @@ export const projects: Project[] = [
     category: 'IoT-Based Projects',
     subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Network,
-    image: '/images/smart home automation.png', // Fallback image
+    image: '/images/smart home automation.svg', // Fallback image
     features: ['ESP32 Microcontroller', 'Relay Modules', 'Environment Sensors', 'Voice Control Integration', 'Mobile App Interface'],
     benefits: ['Convenient Home Control', 'Energy Savings', 'Enhanced Security', 'Customizable Automation'],
     dataAiHint: 'iot smart-home',
@@ -43,7 +43,7 @@ export const projects: Project[] = [
     category: 'IoT-Based Projects',
     subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Network,
-    image: '/images/agriculture iot.png', // Fallback image
+    image: '/images/agriculture iot.svg', // Fallback image
     features: ['Soil Moisture Sensor', 'NodeMCU (ESP8266)', 'Water Pump Control', 'Automated Irrigation Logic', 'Data Logging (optional)'],
     benefits: ['Water Conservation', 'Improved Crop Yield', 'Reduced Manual Labor', 'Remote Monitoring Potential'],
     dataAiHint: 'iot agriculture',
@@ -57,7 +57,7 @@ export const projects: Project[] = [
     category: 'IoT-Based Projects',
     subcategories: ['Capstone Project'],
     categoryIcon: Network,
-    image: '/images/helth monitor.png',
+    image: '/images/helth monitor.svg',
     features: ['Vibration Sensor', 'ESP32 Microcontroller', 'OLED Display', 'Data Analysis for Anomalies', 'Wireless Connectivity'],
     benefits: ['Predictive Maintenance', 'Reduced Downtime', 'Extended Machine Lifespan', 'Improved Safety'],
     dataAiHint: 'iot industrial'
@@ -70,7 +70,7 @@ export const projects: Project[] = [
     category: 'IoT-Based Projects',
     subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Network,
-    image: '/images/water quality monitor.png',
+    image: '/images/water quality monitor.svg',
     features: ['pH Sensor', 'TDS Sensor', 'Arduino Microcontroller', 'LCD/OLED Display (optional)', 'Data Logging'],
     benefits: ['Ensures Water Safety', 'Environmental Protection', 'Real-time Data', 'Suitable for Various Applications'],
     dataAiHint: 'iot water-quality'
@@ -83,7 +83,7 @@ export const projects: Project[] = [
     "category": "IoT-Based Projects",
     "subcategories": ["Capstone Project"],
     "categoryIcon": Network,
-    "image": "/images/smart energy monitoring.png",
+    "image": "/images/smart energy monitoring.svg",
     "features": ["ACS712 Current Sensor","Relay","OLED Display","Buzzer"],
     "benefits": ["Real-time Energy Monitoring","Overload Protection","Energy Conservation","Automated Alerts"],
     "dataAiHint": "iot energy-monitoring"
@@ -96,7 +96,7 @@ export const projects: Project[] = [
     "category": "IoT-Based Projects",
     "subcategories": ["Capstone Project"],
     "categoryIcon": Network,
-    "image": "/images/wether logging.png",
+    "image": "/images/wether logging.svg",
     "features": ["DHT22 Sensor","BMP280 Sensor","OLED Display","Buzzer"],
     "benefits": ["Accurate Weather Data","Remote Monitoring","Data Logging & Analysis","Customizable Dashboard"],
     "dataAiHint": "iot weather-station"
@@ -109,7 +109,7 @@ export const projects: Project[] = [
     "category": "IoT-Based Projects",
     "subcategories": ["Capstone Project", "Micro Project"],
     "categoryIcon": Network,
-    "image": "/images/plant watering.png",
+    "image": "/images/plant watering.svg",
     "features": ["Soil Moisture Sensor","DHT11 Sensor","Relay","Buzzer","LCD Display"],
     "benefits": ["Water Conservation","Reduced Manual Labor","Plant Health Monitoring","Adjustable Automation"],
     "dataAiHint": "iot plant-watering"
@@ -122,7 +122,7 @@ export const projects: Project[] = [
     "category": "IoT-Based Projects",
     "subcategories": ["Capstone Project", "Micro Project"],
     "categoryIcon": Network,
-    "image": "/images/door security.png",
+    "image": "/images/door security.svg",
     "features": [
       "PIR Sensor",
       "4x4 Keypad",
@@ -146,7 +146,7 @@ export const projects: Project[] = [
     "category": "IoT-Based Projects",
     "subcategories": ["Capstone Project", "Micro Project"],
     "categoryIcon": Network,
-    "image": "/images/gas leakage.png",
+    "image": "/images/gas leakage.svg",
     "features": [
       "MQ-2 Gas Sensor",
       "Relay",
@@ -169,7 +169,7 @@ export const projects: Project[] = [
     "category": "IoT-Based Projects",
     "subcategories": ["Micro Project"],
     "categoryIcon": Network,
-    "image": "/images/intruder alert.png",
+    "image": "/images/intruder alert.svg",
     "features": [
       "LDR Sensor",
       "Laser Module",
@@ -193,7 +193,7 @@ export const projects: Project[] = [
     category: 'Robotics & Automation',
     subcategories: ['Capstone Project'],
     categoryIcon: Bot,
-    image: '/images/water cleaning boat.png',
+    image: '/images/water cleaning boat.svg',
     features: ['DC Motors', 'Floaters/Buoyancy System', 'Arduino Controller', 'IR Sensors for Detection', 'Garbage Collection Mechanism'],
     benefits: ['Automated Water Cleaning', 'Environmental Improvement', 'Reduces Manual Effort', 'Scalable Design'],
     dataAiHint: 'robotics boat'
@@ -206,7 +206,7 @@ export const projects: Project[] = [
     category: 'Robotics & Automation',
     subcategories: ['Micro Project', 'Capstone Project'],
     categoryIcon: Bot,
-    image: '/images/obstacle avoid robot.png',
+    image: '/images/obstacle avoid robot.svg',
     features: ['Ultrasonic Sensor', 'Arduino Microcontroller', 'Robot Chassis & Wheels', 'Motor Driver', 'Autonomous Navigation Algorithm'],
     benefits: ['Introduction to Robotics', 'Understanding Sensor Integration', 'Autonomous Movement', 'Fun and Educational'],
     dataAiHint: 'robotics autonomous'
@@ -219,7 +219,7 @@ export const projects: Project[] = [
     category: 'Robotics & Automation',
     subcategories: ['Capstone Project'],
     categoryIcon: Bot,
-    image: '/images/robotic arm.png',
+    image: '/images/robotic arm.svg',
     features: ['Servo Motors (Multiple)', 'Arduino Controller', 'Robotic Arm Structure', 'Gripper Mechanism', 'Control Interface (e.g., potentiometers or code)'],
     benefits: ['Learn about Kinematics', 'Precise Motor Control', 'Automation Principles', 'Hands-on Mechanical Assembly'],
     dataAiHint: 'robotics arm'
@@ -232,7 +232,7 @@ export const projects: Project[] = [
     category: 'Robotics & Automation',
     subcategories: ['Capstone Project'],
     categoryIcon: Bot,
-    image: '/images/solar panel robot.png',
+    image: '/images/solar panel robot.svg',
     features: ['Wiper Motor & Cleaning Brush/Squeegee', 'Solar Panel for Power (optional)', 'ESP32 Microcontroller', 'Movement Mechanism (wheels/tracks)', 'Automated Cleaning Cycle'],
     benefits: ['Maintains Solar Panel Efficiency', 'Reduces Manual Cleaning', 'Water-Saving (if dry cleaning)', 'Automated Operation'],
     dataAiHint: 'robotics solar'
@@ -246,7 +246,7 @@ export const projects: Project[] = [
     category: 'Embedded Systems',
     subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Cpu,
-    image: '/images/attendance system.png',
+    image: '/images/attendance system.svg',
     features: ['Fingerprint Sensor Module', 'Arduino Microcontroller', 'LCD Display', 'Real-Time Clock (RTC) (optional)', 'Data Storage (SD card/EEPROM)'],
     benefits: ['Accurate Attendance Tracking', 'Prevents Proxy Attendance', 'Easy to Use', 'Automated Record Keeping'],
     dataAiHint: 'embedded fingerprint'
@@ -259,7 +259,7 @@ export const projects: Project[] = [
     category: 'Embedded Systems',
     subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Cpu,
-    image: '/images/traffic light system.png',
+    image: '/images/traffic light system.svg',
     features: ['IR Sensors for Vehicle Detection', 'Arduino Microcontroller', 'LEDs for Traffic Lights', 'Dynamic Signal Timing Algorithm', 'Pedestrian Button (optional)'],
     benefits: ['Reduced Traffic Congestion', 'Improved Traffic Flow', 'Energy Efficient', 'Adaptable to Real-time Conditions'],
     dataAiHint: 'embedded traffic'
@@ -272,7 +272,7 @@ export const projects: Project[] = [
     category: 'Embedded Systems',
     subcategories: ['Capstone Project'],
     categoryIcon: Cpu,
-    image: '/images/health wearable.png',
+    image: '/images/health wearable.svg',
     features: ['Pulse Sensor (e.g., MAX30100 or similar)', 'ESP32 Microcontroller (with Bluetooth/Wi-Fi)', 'OLED Display', 'Compact Wearable Design', 'Battery Power'],
     benefits: ['Personal Health Tracking', 'Early Detection of Irregularities', 'Portable and Convenient', 'Potential for IoT Integration'],
     dataAiHint: 'embedded health'
@@ -285,7 +285,7 @@ export const projects: Project[] = [
     category: 'Embedded Systems',
     subcategories: ['Micro Project','Capstone Project'],
     categoryIcon: Cpu,
-    image: '/images/nes emulator.png',
+    image: '/images/nes emulator.svg',
     features: ['ESP32 Microcontroller', 'TFT Display', 'Inbuild Controller Support', 'Save States', 'Custom Controls'],
     benefits: ['Play Classic NES Games', 'Portable Gaming Solution', 'Customizable Controls', 'Potential for Online Multiplayer'],
     dataAiHint: 'embedded nes'
@@ -298,7 +298,7 @@ export const projects: Project[] = [
     category: 'Embedded Systems',
     subcategories: ['Micro Project','Capstone Project'],
     categoryIcon: Cpu,
-    image: '/images/nes emulator rpi.png',
+    image: '/images/nes emulator rpi.svg',
     features: [
       'Raspberry Pi Zero 2 W',
       '2.0" ST7789 SPI Display (240×320)',
@@ -326,7 +326,7 @@ export const projects: Project[] = [
     category: 'PCB Design & Prototyping',
     subcategories: ['Capstone Project'],
     categoryIcon: CircuitBoard,
-    image: '/images/pcb designing.png',
+    image: '/images/pcb designing.svg',
     features: ['Schematic Design', 'Component Footprint Creation', 'Single-Layer Routing', 'Gerber File Generation', 'Bill of Materials (BOM) (optional)'],
     benefits: ['Professional & Compact Circuits', 'Reduced Wiring Errors', 'Reliable Performance', 'Ready for Manufacturing'],
     dataAiHint: 'pcb design'
@@ -339,7 +339,7 @@ export const projects: Project[] = [
     category: 'PCB Design & Prototyping',
     subcategories: ['Capstone Project'],
     categoryIcon: CircuitBoard,
-    image: '/images/breakout board.png',
+    image: '/images/breakout board.svg',
     features: ['Optimized for Specific Sensor', 'Easy Pin Access', 'On-board Components (if needed)', 'Compact Design', 'Gerber Files Provided'],
     benefits: ['Simplified Sensor Integration', 'Plug-and-Play Usage', 'Reduced Prototyping Time', 'Space Saving'],
     dataAiHint: 'pcb sensor'
@@ -352,7 +352,7 @@ export const projects: Project[] = [
     category: 'PCB Design & Prototyping',
     subcategories: ['Capstone Project'],
     categoryIcon: CircuitBoard,
-    image: '/images/power management.png',
+    image: '/images/power management.svg',
     features: ['Battery Charging Circuit Design', 'Solar Charge Controller Design', 'Voltage Regulation', 'Protection Circuitry (overcharge, over-discharge)', 'Gerber Files Provided'],
     benefits: ['Reliable Power for Projects', 'Efficient Energy Use', 'Safe Battery Operation', 'Compact Power Solution'],
     dataAiHint: 'pcb power'
@@ -366,7 +366,7 @@ export const projects: Project[] = [
     category: 'Services',
     subcategories: ['Capstone Project', 'Micro Project'],
     categoryIcon: Presentation,
-    image: '/images/custom presentation.png',
+    image: '/images/custom presentation.svg',
     features: ['Tailored Content on Any Topic', 'Professional & Modern Design', 'Clear Explanations of Technical Details', 'Inclusion of Diagrams and Visuals', 'Source File Delivery (PPTX)'],
     benefits: ['Saves Time and Effort', 'Clearly Communicates Your Ideas', 'Improves Grades or Pitch Success', 'Professional Quality'],
     dataAiHint: 'presentation service',

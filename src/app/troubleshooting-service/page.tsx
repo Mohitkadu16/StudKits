@@ -151,7 +151,7 @@ StudKits Support Team`,
 
   return (
     <div className="container max-w-4xl py-6 space-y-6">
-      <Card className="border-primary/20">
+      <Card className="border-2 border-[#4285F4] shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Troubleshooting Service Request</CardTitle>
           <CardDescription>

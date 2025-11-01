@@ -16,7 +16,7 @@ export default function AboutUsPage() {
         </p>
       </section>
 
-      <Card className="hover:scale-[1.01] transition-all duration-300">
+      <Card className="hover:scale-[1.01] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
         <CardHeader>
           <CardTitle className="flex items-center text-2xl">
             <Users className="mr-3 h-7 w-7 text-primary" />
@@ -34,7 +34,7 @@ export default function AboutUsPage() {
       </Card>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <Card className="hover:scale-[1.02] transition-all duration-300">
+        <Card className="hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Target className="mr-2 h-6 w-6 text-accent" />
@@ -61,7 +61,7 @@ export default function AboutUsPage() {
           </CardContent>
         </Card>
 
-        <Card className="hover:scale-[1.02] transition-all duration-300">
+        <Card className="hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Lightbulb className="mr-2 h-6 w-6 text-accent" />
@@ -78,7 +78,7 @@ export default function AboutUsPage() {
         </Card>
       </div>
 
-      <Card className="shadow-lg">
+      <Card className="shadow-lg border-2 border-[#4285F4] rounded-xl">
         <CardHeader>
           <CardTitle className="flex items-center text-2xl">
             <Zap className="mr-3 h-7 w-7 text-primary" />
@@ -107,7 +107,7 @@ export default function AboutUsPage() {
       <section className="py-8 relative">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">Strategic Partners</h2>
         <div className="max-w-4xl mx-auto px-4">
-          <Card className="text-center p-6 hover:scale-[1.02] transition-all duration-300">
+          <Card className="text-center p-6 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
               <div className="mx-auto h-40 w-40 overflow-hidden rounded-lg p-2">
                 <Image
@@ -134,7 +134,7 @@ export default function AboutUsPage() {
       <section className="py-8 relative">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">Meet "Team StudKits"</h2>
         <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto px-4">
-         <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+         <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
                 <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                   <Image
@@ -171,7 +171,7 @@ export default function AboutUsPage() {
               </div>
             </CardContent>
            </Card>
-           <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+           <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                 <Image
@@ -208,7 +208,7 @@ export default function AboutUsPage() {
               </div>
             </CardContent>
            </Card>
-           <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+           <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                 <Image
@@ -246,7 +246,7 @@ export default function AboutUsPage() {
               </div>
             </CardContent>
             </Card>
-            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                 <Image
@@ -283,7 +283,7 @@ export default function AboutUsPage() {
               </div>
             </CardContent>
             </Card>
-            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                 <Image
@@ -320,7 +320,7 @@ export default function AboutUsPage() {
               </div>
             </CardContent>
           </Card>
-            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300">
+            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                 <Image

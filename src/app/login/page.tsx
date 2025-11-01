@@ -14,7 +14,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { auth, signInWithEmailAndPassword, signOut, getUserProfile } from '@/lib/firebase';
+import { auth, db, signInWithEmailAndPassword, signOut, getUserProfile } from '@/lib/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 import { Loader2 } from 'lucide-react';
 import { Eye, EyeOff } from 'lucide-react';
 
@@ -146,7 +147,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4 sm:p-6">
-      <Card className="w-full max-w-sm mx-auto shadow-lg my-4">
+      <Card className="w-full max-w-sm mx-auto shadow-lg my-4 border-2 border-[#4285F4] rounded-xl">
         <CardHeader className="space-y-1 p-4 sm:p-6">
           <CardTitle className="text-xl sm:text-2xl font-bold text-center">Login</CardTitle>
           <CardDescription className="text-center text-sm sm:text-base">

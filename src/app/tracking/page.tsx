@@ -59,7 +59,7 @@ export default function TrackingPage() {
   if (!user) {
     return (
       <div className="space-y-8">
-        <section className="text-center py-8 bg-card rounded-lg shadow">
+        <section className="text-center py-8 bg-card rounded-lg shadow ">
           <h1 className="text-4xl font-bold text-primary mb-2">Project Tracking</h1>
           <p className="text-lg text-muted-foreground">Please login to view your project status.</p>
           <Button asChild className="mt-4">
@@ -81,14 +81,14 @@ export default function TrackingPage() {
   if (!project) {
     return (
       <div className="space-y-8">
-        <section className="text-center py-8 bg-card rounded-lg shadow">
+        <section className="text-center py-8 bg-card rounded-lg shadow ">
           <h1 className="text-4xl font-bold text-primary mb-2">Project Tracking</h1>
           <p className="text-lg text-muted-foreground">No active projects found.</p>
           <div className="flex gap-4 justify-center mt-4">
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className='border-2 border-[#4285F4] rounded-xl'>
               <Link href="/custom-project">Request Custom Project</Link>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className='border-2 border-[#4285F4] rounded-xl'>
               <Link href="/custom-presentation">Request Custom Presentation</Link>
             </Button>
           </div>

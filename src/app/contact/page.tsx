@@ -148,7 +148,7 @@ export default function ContactUsPage() {
 
   return (
     <div className="space-y-8 px-4 sm:px-6">
-      <section className="text-center py-6 sm:py-8 bg-card rounded-lg shadow mx-auto max-w-[95%] sm:max-w-2xl">
+      <section className="text-center py-6 sm:py-8 bg-card shadow mx-auto max-w-[95%] sm:max-w-2xl border-2 border-[#4285F4] rounded-xl">
         <h1 className="text-2xl sm:text-4xl font-bold text-primary mb-2">Contact Us</h1>
         <p className="text-base sm:text-lg text-muted-foreground px-2">
           Have questions or feedback? We'd love to hear from you!
@@ -156,7 +156,7 @@ export default function ContactUsPage() {
       </section>
 
       <div className="w-full max-w-xl mx-auto">
-        <Card className="shadow-lg">
+        <Card className="shadow-lg border-2 border-[#4285F4] rounded-xl">
           <CardHeader className="p-4 sm:p-6">
             <CardTitle className="flex items-center text-xl sm:text-2xl flex-wrap gap-2">
               <Mail className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
@@ -167,12 +167,12 @@ export default function ContactUsPage() {
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
-            <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+            <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6 ">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="flex items-center text-sm sm:text-base">
+                <div className="space-y-2 rounded-2xl">
+                  <Label htmlFor="name" className="flex items-center text-sm sm:text-base ">
                     <User className="mr-2 h-4 w-4 text-muted-foreground flex-shrink-0" />
-                    Your Name <span className="text-destructive">*</span>
+                    Your Name <span className="text-destructive ">*</span>
                   </Label>
                   <Input 
                     id="name" 
