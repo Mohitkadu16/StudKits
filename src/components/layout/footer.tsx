@@ -34,7 +34,7 @@ export function Footer() {
                 className="flex items-center justify-center hover:text-foreground/90 transition-colors"
               >
                 <Image
-                  src="/images/Whatsapp logo.png"
+                  src="/images/Whatsapp logo.svg"
                   alt="WhatsApp"
                   width={16}
                   height={16}
@@ -49,7 +49,7 @@ export function Footer() {
                 className="flex items-center justify-center hover:text-foreground/90 transition-colors"
               >
                 <Image
-                  src="/images/Whatsapp logo.png"
+                  src="/images/Whatsapp logo.svg"
                   alt="WhatsApp"
                   width={16}
                   height={16}
