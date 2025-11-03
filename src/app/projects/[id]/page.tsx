@@ -113,7 +113,7 @@ export default function ProjectDetailPage() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                priority
+                priority = {false}
                 data-ai-hint={project.dataAiHint || "project detail"}
               />
             )}
