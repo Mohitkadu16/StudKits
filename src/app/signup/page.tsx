@@ -102,24 +102,44 @@ export default function SignupPage() {
 
   return (
     <div className="flex items-center justify-center py-12">
-      <Card className="mx-auto max-w-sm shadow-lg border-2 border-[#4285F4] rounded-xl">
+      <a 
+        href="#signup-form"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md"
+      >
+        Skip to sign up form
+      </a>
+      <Card className="mx-auto max-w-sm shadow-lg border-2 border-[#4285F4] rounded-xl" id="signup-form">
         <CardHeader>
-          <CardTitle className="text-xl">Sign Up</CardTitle>
+          <CardTitle id="signup-title" className="text-xl">Sign Up</CardTitle>
           <CardDescription>Enter your information to create an account</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form 
+              onSubmit={form.handleSubmit(onSubmit)} 
+              className="space-y-4"
+              role="form"
+              aria-labelledby="signup-title"
+              noValidate
+            >
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Email <span className="text-destructive" aria-hidden="true">*</span></FormLabel>
                     <FormControl>
-                      <Input placeholder="m@example.com" {...field} disabled={isLoading} />
+                      <Input 
+                        placeholder="m@example.com" 
+                        {...field} 
+                        disabled={isLoading} 
+                        aria-required="true"
+                        aria-describedby="email-description"
+                        aria-invalid={form.formState.errors.email ? "true" : undefined}
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <span id="email-description" className="sr-only">Enter your email address. This will be used for login and communication.</span>
+                    <FormMessage role="alert" />
                   </FormItem>
                 )}
               />
@@ -128,7 +148,7 @@ export default function SignupPage() {
                 name="mobile"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Mobile Number</FormLabel>
+                    <FormLabel>Mobile Number <span className="text-destructive" aria-hidden="true">*</span></FormLabel>
                     <FormControl>
                       <Input 
                         type="tel"
@@ -136,9 +156,13 @@ export default function SignupPage() {
                         {...field} 
                         disabled={isLoading}
                         maxLength={10}
+                        aria-required="true"
+                        aria-describedby="mobile-description"
+                        aria-invalid={form.formState.errors.mobile ? "true" : undefined}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <span id="mobile-description" className="sr-only">Enter your 10-digit mobile number for account verification and security.</span>
+                    <FormMessage role="alert" />
                   </FormItem>
                 )}
               />
@@ -147,7 +171,7 @@ export default function SignupPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Password <span className="text-destructive" aria-hidden="true">*</span></FormLabel>
                     <FormControl>
                       <div className="relative w-full">
                         <Input
@@ -155,6 +179,9 @@ export default function SignupPage() {
                           {...field}
                           disabled={isLoading}
                           className="pr-10"
+                          aria-required="true"
+                          aria-describedby="password-description"
+                          aria-invalid={form.formState.errors.password ? "true" : undefined}
                         />
                         <button
                           type="button"
@@ -162,23 +189,34 @@ export default function SignupPage() {
                           onClick={() => setShowPassword((s) => !s)}
                           className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
                         >
-                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          {showPassword ? <EyeOff className="h-4 w-4" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
                         </button>
                       </div>
                     </FormControl>
-                    <FormMessage />
+                    <span id="password-description" className="sr-only">Choose a secure password that is at least 6 characters long.</span>
+                    <FormMessage role="alert" />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button 
+                type="submit" 
+                className="w-full" 
+                disabled={isLoading}
+                aria-busy={isLoading}
+                aria-label={isLoading ? "Creating your account..." : "Create your account"}
+              >
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
                 Create an account
               </Button>
             </form>
           </Form>
-          <div className="mt-4 text-center text-sm">
+          <div className="mt-4 text-center text-sm" role="complementary">
             Already have an account?{' '}
-            <Link href="/login" className="underline">
+            <Link 
+              href="/login" 
+              className="underline"
+              aria-label="Log in to your existing account"
+            >
               Login
             </Link>
           </div>

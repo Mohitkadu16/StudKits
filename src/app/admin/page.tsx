@@ -4,19 +4,24 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/auth-context';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { type ProjectTrackingInfo, type StageKey } from '@/lib/tracking';
 import { type ProjectRequest } from '@/lib/requests';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { UserCog, Loader2, Database, AlertCircle, Inbox, Check, X, Package } from 'lucide-react';
+import { UserCog, Loader2, Database, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { updateProjectInFirestore, seedInitialProject, approveProjectRequest, declineProjectRequest } from './actions';
 import { db } from '@/lib/firebase';
 import { doc, onSnapshot, getDoc, collection, query } from 'firebase/firestore';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+
+const ProjectRequests = dynamic(() => import('@/components/admin/project-requests').then(mod => mod.ProjectRequests), {
+  loading: () => <div className="animate-pulse h-48 bg-muted rounded-lg"/>
+});
+
+const ProjectManager = dynamic(() => import('@/components/admin/project-manager').then(mod => mod.ProjectManager), {
+  loading: () => <div className="animate-pulse h-48 bg-muted rounded-lg"/>
+});
 
 const MOCK_PROJECT_ID = 'SK-1024';
 
@@ -133,18 +138,6 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleSaveChanges = async (projectId: string) => {
-    if (!project) return;
-    setIsLoading(true);
-    const result = await updateProjectInFirestore(projectId, { currentStage: project.currentStage, stages: project.stages });
-    if (result.success) {
-      toast({ title: "Project Updated", description: result.message });
-    } else {
-      toast({ title: "Update Failed", description: result.message, variant: 'destructive' });
-    }
-    setIsLoading(false);
-  };
-
   const handleSeedData = async () => {
     setIsSeeding(true);
     const result = await seedInitialProject();
@@ -175,6 +168,13 @@ const AdminDashboard = () => {
       }
   };
 
+  const handleProjectSelect = (projectId: string) => {
+    const selectedProject = allProjects.find(p => p.projectId === projectId);
+    if (selectedProject) {
+      setProject(selectedProject);
+    }
+  };
+
   return (
     <div className="space-y-8">
       <section className="text-center py-8 bg-card rounded-lg shadow">
@@ -196,103 +196,19 @@ const AdminDashboard = () => {
         </Alert>
       )}
 
-      <Card className="shadow-lg">
-        <CardHeader>
-            <CardTitle className="flex items-center text-2xl"><Inbox className="mr-3 h-7 w-7 text-primary"/> Project Requests</CardTitle>
-            <CardDescription>Review and approve new custom project and presentation requests.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-            {projectRequests.length > 0 ? (
-                projectRequests.map(req => (
-                    <Card key={req.id} className="bg-muted/50">
-                        <CardHeader>
-                             <CardTitle className="text-lg">{req.projectTitle || req.topic}</CardTitle>
-                             <CardDescription>From: {req.name} ({req.email})</CardDescription>
-                        </CardHeader>
-                        <CardContent className="text-sm space-y-2">
-                             {req.projectTitle && <p><strong>Type:</strong> Custom Project</p>}
-                             {req.topic && <p><strong>Type:</strong> Custom Presentation</p>}
-                             {req.description && <p><strong>Description:</strong> {req.description}</p>}
-                             {req.instructions && <p><strong>Instructions:</strong> {req.instructions}</p>}
-                             {req.components && <p><strong>Components:</strong> {req.components}</p>}
-                        </CardContent>
-                        <CardFooter className="flex justify-end gap-2">
-                            <Button variant="outline" size="sm" onClick={() => handleDecline(req)}><X className="mr-2 h-4 w-4"/>Decline</Button>
-                            <Button size="sm" onClick={() => handleApprove(req)}><Check className="mr-2 h-4 w-4"/>Approve & Create Project</Button>
-                        </CardFooter>
-                    </Card>
-                ))
-            ) : (
-                <p className="text-center text-muted-foreground py-4">No new project requests.</p>
-            )}
-        </CardContent>
-      </Card>
+      <ProjectRequests 
+        projectRequests={projectRequests} 
+        onApprove={handleApprove} 
+        onDecline={handleDecline} 
+      />
 
-      <Card className="shadow-md">
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Package className="mr-2 h-5 w-5" /> Active Projects
-          </CardTitle>
-          <CardDescription>Select a project to manage its progress</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Select value={project?.projectId} onValueChange={(value) => {
-            const selectedProject = allProjects.find(p => p.projectId === value);
-            if (selectedProject) {
-              setProject(selectedProject);
-            }
-          }}>
-            <SelectTrigger><SelectValue placeholder="Select a project to manage" /></SelectTrigger>
-            <SelectContent>
-              {allProjects.map(p => (
-                <SelectItem key={p.projectId} value={p.projectId}>
-                  {p.projectId} - {p.userId}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </CardContent>
-      </Card>
-
-      {project && (
-        <Card className="shadow-md">
-          <CardHeader>
-            <CardTitle>Manage Project: {project.projectId}</CardTitle>
-            <CardDescription>Customer: {project.userId}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label htmlFor={`stage-select-${project.projectId}`}>Current Stage</Label>
-              <Select value={project.currentStage} onValueChange={(value: StageKey) => handleStageChange(project.projectId, value)}>
-                <SelectTrigger id={`stage-select-${project.projectId}`}><SelectValue placeholder="Select stage" /></SelectTrigger>
-                <SelectContent>
-                  {Object.keys(project.stages).map(stageKey => (
-                    <SelectItem key={stageKey} value={stageKey}>{stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-medium text-foreground">Stage Notes</h4>
-              {Object.keys(project.stages).map(stage => {
-                const stageKey = stage as StageKey;
-                return (
-                  <div key={stageKey}>
-                    <Label htmlFor={`notes-${project.projectId}-${stageKey}`}>Notes for {stageKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</Label>
-                    <Textarea
-                      id={`notes-${project.projectId}-${stageKey}`}
-                      placeholder={`Update notes for ${stageKey.replace(/_/g, ' ')}...`}
-                      value={project.stages[stageKey]?.notes || ''}
-                      onChange={(e) => handleNotesChange(project.projectId, stageKey, e.target.value)}
-                      rows={2}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      <ProjectManager 
+        project={project}
+        allProjects={allProjects}
+        onProjectSelect={handleProjectSelect}
+        onStageChange={handleStageChange}
+        onNotesChange={handleNotesChange}
+      />
     </div>
   );
 };

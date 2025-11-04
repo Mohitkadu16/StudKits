@@ -153,8 +153,11 @@ export default function CustomPresentationPage() {
 
   return (
     <div className="space-y-8">
-      <section className="text-center py-8 bg-card shadow border-2 border-[#4285F4] rounded-xl">
-        <h1 className="text-4xl font-bold text-primary mb-2">Request a Custom Presentation</h1>
+      <section 
+        className="text-center py-8 bg-card shadow border-2 border-[#4285F4] rounded-xl"
+        aria-labelledby="page-heading"
+      >
+        <h1 id="page-heading" className="text-4xl font-bold text-primary mb-2">Request a Custom Presentation</h1>
         <p className="text-lg text-muted-foreground">
           Need a professional presentation? We can create one for any topic.
         </p>
@@ -162,20 +165,30 @@ export default function CustomPresentationPage() {
 
       <Card className="max-w-2xl mx-auto shadow-lg border-2 border-[#4285F4] rounded-xl">
         <CardHeader>
-          <CardTitle className="flex items-center text-2xl">
-            <Presentation className="mr-3 h-7 w-7 text-primary" />
+          <CardTitle className="flex items-center text-2xl" id="form-title">
+            <Presentation className="mr-3 h-7 w-7 text-primary" aria-hidden="true" />
             Presentation Requirements
           </CardTitle>
           <CardDescription>
             Fill out the form below with your presentation details. The more information you provide, the better we can tailor it to your needs.
           </CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} aria-labelledby="form-title" noValidate>
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6" role="group" aria-label="Personal Information">
               <div className="space-y-2">
-                <Label htmlFor="name">Your Name <span className="text-destructive">*</span></Label>
-                <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required disabled={isLoading} />
+                <Label htmlFor="name">Your Name <span className="text-destructive" aria-hidden="true">*</span><span className="sr-only">(required)</span></Label>
+                <Input 
+                  id="name" 
+                  name="name" 
+                  value={formData.name} 
+                  onChange={handleChange} 
+                  placeholder="Enter your full name" 
+                  required 
+                  disabled={isLoading}
+                  aria-required="true"
+                  aria-invalid={!formData.name && "true"}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Your Email <span className="text-destructive">*</span></Label>
@@ -207,20 +220,36 @@ export default function CustomPresentationPage() {
               <Input id="topic" name="topic" value={formData.topic} onChange={handleChange} placeholder="e.g., The Future of AI, Quantum Computing Basics" required disabled={isLoading} />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6" role="group" aria-label="Presentation Details">
                 <div className="space-y-2">
                     <Label htmlFor="audience" className="flex items-center">
-                        <Users className="mr-2 h-4 w-4 text-muted-foreground" />
+                        <Users className="mr-2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
                         Target Audience
                     </Label>
-                    <Input id="audience" name="audience" value={formData.audience} onChange={handleChange} placeholder="e.g., University Students, Business Investors" disabled={isLoading} />
+                    <Input 
+                      id="audience" 
+                      name="audience" 
+                      value={formData.audience} 
+                      onChange={handleChange} 
+                      placeholder="e.g., University Students, Business Investors" 
+                      disabled={isLoading}
+                      aria-label="Target audience for your presentation"
+                    />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="purpose" className="flex items-center">
-                        <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
+                        <FileText className="mr-2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
                         Purpose / Goal
                     </Label>
-                    <Input id="purpose" name="purpose" value={formData.purpose} onChange={handleChange} placeholder="e.g., To inform, to persuade, for a grade" disabled={isLoading} />
+                    <Input 
+                      id="purpose" 
+                      name="purpose" 
+                      value={formData.purpose} 
+                      onChange={handleChange} 
+                      placeholder="e.g., To inform, to persuade, for a grade" 
+                      disabled={isLoading}
+                      aria-label="Purpose or goal of your presentation"
+                    />
                 </div>
             </div>
 
@@ -247,11 +276,16 @@ export default function CustomPresentationPage() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md" disabled={isLoading}>
+            <Button 
+              type="submit" 
+              className="w-full bg-primary hover:bg-primary/90 shadow-md" 
+              disabled={isLoading}
+              aria-label={isLoading ? "Submitting presentation request..." : "Submit presentation request"}
+            >
                {isLoading ? (
-                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</>
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> Submitting...</>
                 ) : (
-                    <><Send className="mr-2 h-4 w-4" /> Submit Presentation Request</>
+                    <><Send className="mr-2 h-4 w-4" aria-hidden="true" /> Submit Presentation Request</>
                 )}
             </Button>
           </CardFooter>

@@ -48,6 +48,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1020px) 50vw, 33vw"
                 className="object-cover"
+                priority={true}
                 data-ai-hint={project.dataAiHint || "project image"}
               />
             </div>

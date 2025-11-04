@@ -59,11 +59,15 @@ export function Navbar() {
   const UserMenu = () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <Button 
+          variant="ghost" 
+          className="relative h-8 w-8 rounded-full"
+          aria-label={`User menu for ${user?.displayName || 'User'}`}
+        >
           <Avatar className="h-9 w-9">
             <AvatarImage src={user?.photoURL ?? undefined} alt={user?.displayName ?? "User"} />
             <AvatarFallback>
-              <UserCircle />
+              <UserCircle aria-hidden="true" />
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -102,10 +106,10 @@ export function Navbar() {
   );
 
   return (
-    <header className="bg-primary text-primary-foreground shadow-md sticky top-0 z-50">
+    <header className="bg-primary text-primary-foreground shadow-md sticky top-0 z-50" role="banner">
       <MaxWidthWrapper className="flex items-center justify-center p-4 h-16 space-x-4">
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold space-x-1" onClick={handleLinkClick}>
-          <Target className="h-7 w-7" />
+        <Link href="/" className="flex items-center gap-2 text-xl font-bold space-x-1" onClick={handleLinkClick} aria-label="StudKits Home">
+          <Target className="h-7 w-7" aria-hidden="true" />
           <span>StudKits</span>
         </Link>
         {/* Mobile menu button */}
@@ -113,16 +117,20 @@ export function Navbar() {
           variant="ghost"
           className="md:hidden rounded-full w-9 h-9 p-0"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMenuOpen ? (
             <X className="h-6 w-6" />
           ) : (
-            <Menu className="h-6 w-6 space-x-2" />
+            <Menu className="h-6 w-6" />
           )}
         </Button>
-        <nav className="hidden md:flex items-center space-x-2">
+        <nav className="hidden md:flex items-center space-x-2" role="navigation" aria-label="Main navigation">
           {navItems.map((item) => {
             const Icon = item.icon;
+            const isActive = pathname === item.href;
             return (
               <Button
                 key={item.href}
@@ -130,11 +138,12 @@ export function Navbar() {
                 asChild
                 className={cn(
                   "hover:bg-primary-foreground/10 hover:text-primary-foreground px-3 py-2 rounded-full",
-                  pathname === item.href ? 'bg-primary-foreground/20 font-semibold' : ''
+                  isActive ? 'bg-primary-foreground/20 font-semibold' : ''
                 )}
+                aria-current={isActive ? 'page' : undefined}
               >
                 <Link href={item.href} className="flex items-center">
-                  <Icon className="h-4 w-4 mr-1" />
+                  <Icon className="h-4 w-4 mr-1" aria-hidden="true" />
                   <span>{item.label}</span>
                 </Link>
               </Button>
@@ -157,9 +166,14 @@ export function Navbar() {
         </nav>
       </MaxWidthWrapper>
       {isMenuOpen && (
-        <div className="md:hidden bg-primary pb-4 border-t border-primary-foreground/10">
+        <div 
+          id="mobile-menu"
+          className="md:hidden bg-primary pb-4 border-t border-primary-foreground/10"
+          role="navigation"
+          aria-label="Mobile navigation"
+        >
           <MaxWidthWrapper>
-            <ul className="flex flex-col space-y-2 pt-2">
+            <ul className="flex flex-col space-y-2 pt-2" role="menu">
               {navItems.map((item) => {
               const Icon = item.icon;
               return (

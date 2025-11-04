@@ -148,8 +148,11 @@ export default function ContactUsPage() {
 
   return (
     <div className="space-y-8 px-4 sm:px-6">
-      <section className="text-center py-6 sm:py-8 bg-card shadow mx-auto max-w-[95%] sm:max-w-2xl border-2 border-[#4285F4] rounded-xl">
-        <h1 className="text-2xl sm:text-4xl font-bold text-primary mb-2">Contact Us</h1>
+      <section 
+        className="text-center py-6 sm:py-8 bg-card shadow mx-auto max-w-[95%] sm:max-w-2xl border-2 border-[#4285F4] rounded-xl"
+        aria-labelledby="contact-heading"
+      >
+        <h1 id="contact-heading" className="text-2xl sm:text-4xl font-bold text-primary mb-2">Contact Us</h1>
         <p className="text-base sm:text-lg text-muted-foreground px-2">
           Have questions or feedback? We'd love to hear from you!
         </p>
@@ -158,21 +161,22 @@ export default function ContactUsPage() {
       <div className="w-full max-w-xl mx-auto">
         <Card className="shadow-lg border-2 border-[#4285F4] rounded-xl">
           <CardHeader className="p-4 sm:p-6">
-            <CardTitle className="flex items-center text-xl sm:text-2xl flex-wrap gap-2">
-              <Mail className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+            <CardTitle className="flex items-center text-xl sm:text-2xl flex-wrap gap-2" id="form-title">
+              <Mail className="h-6 w-6 sm:h-7 sm:w-7 text-primary" aria-hidden="true" />
               Get in Touch
             </CardTitle>
             <CardDescription className="mt-2 text-sm sm:text-base">
               Fill out the form below, and we'll get back to you as soon as possible.
             </CardDescription>
           </CardHeader>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} aria-labelledby="form-title" noValidate>
             <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6 ">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                <div className="space-y-2 rounded-2xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6" role="group" aria-label="Contact Information">
+                <div className="space-y-2">
                   <Label htmlFor="name" className="flex items-center text-sm sm:text-base ">
-                    <User className="mr-2 h-4 w-4 text-muted-foreground flex-shrink-0" />
-                    Your Name <span className="text-destructive ">*</span>
+                    <User className="mr-2 h-4 w-4 text-muted-foreground flex-shrink-0" aria-hidden="true" />
+                    Your Name <span className="text-destructive" aria-hidden="true">*</span>
+                    <span className="sr-only">(required)</span>
                   </Label>
                   <Input 
                     id="name" 
@@ -256,31 +260,50 @@ export default function ContactUsPage() {
 
             </CardContent>
             <CardFooter>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md" disabled={isLoading}>
+              <Button 
+                type="submit" 
+                className="w-full bg-primary hover:bg-primary/90 shadow-md" 
+                disabled={isLoading}
+                aria-label={isLoading ? "Sending message..." : "Send message"}
+              >
                 {isLoading ? (
-                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...</>
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> Sending...</>
                 ) : (
-                    <><Send className="mr-2 h-4 w-4" /> Send Message</>
+                    <><Send className="mr-2 h-4 w-4" aria-hidden="true" /> Send Message</>
                 )}
               </Button>
             </CardFooter>
           </form>
         </Card>
         
-        <Separator className="my-8" />
+        <Separator className="my-8" role="separator" />
 
         <div className="text-center space-y-4 px-4">
-          <h3 className="text-base sm:text-lg font-semibold text-foreground">Or connect with us directly</h3>
-          <div className="flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3 sm:gap-6">
+          <h3 id="direct-contact" className="text-base sm:text-lg font-semibold text-foreground">Or connect with us directly</h3>
+          <div 
+            className="flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3 sm:gap-6"
+            role="navigation" 
+            aria-labelledby="direct-contact"
+          >
             <Button variant="outline" asChild className="shadow-sm h-auto py-2">
-              <Link href="mailto:studkits25@gmail.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full">
-                <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+              <Link 
+                href="mailto:studkits25@gmail.com" 
+                className="flex items-center justify-center w-full"
+                aria-label="Send us an email at studkits25@gmail.com"
+              >
+                <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" aria-hidden="true" />
                 <span className="text-sm sm:text-base">Email Us</span>
               </Link>
             </Button>
             <Button variant="outline" asChild className="shadow-sm h-auto py-2">
-               <Link href="https://www.instagram.com/studkits.shop/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full">
-                <Instagram className="mr-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+               <Link 
+                href="https://www.instagram.com/studkits.shop/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center justify-center w-full"
+                aria-label="Follow StudKits on Instagram"
+              >
+                <Instagram className="mr-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" aria-hidden="true" />
                 <span className="text-sm sm:text-base">Follow on Instagram</span>
               </Link>
             </Button>

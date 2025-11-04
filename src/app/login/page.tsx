@@ -1,4 +1,3 @@
-// src/app/login/page.tsx
 'use client';
 
 import { useState } from 'react';
@@ -6,27 +5,21 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-
+import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { auth, db, signInWithEmailAndPassword, signOut, getUserProfile } from '@/lib/firebase';
 import { doc, setDoc } from 'firebase/firestore';
-import { Loader2 } from 'lucide-react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Loader2, Eye, EyeOff } from 'lucide-react';
+import { loginSchema, type LoginFormValues } from '@/lib/schemas/login-form';
 
-const loginSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-  mobile: z.string().min(10, { message: 'Mobile number must be at least 10 digits' })
-    .regex(/^[0-9]+$/, { message: 'Must be a valid mobile number' }),
-  password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
+const LoginFormFields = dynamic(
+  () => import('@/components/auth/login-form-fields').then(mod => mod.LoginFormFields),
+  { loading: () => <div className="animate-pulse space-y-4"><div className="h-10 bg-muted rounded" /><div className="h-10 bg-muted rounded" /><div className="h-10 bg-muted rounded" /></div> }
+);
 
 export default function LoginPage() {
   const router = useRouter();
@@ -149,33 +142,47 @@ export default function LoginPage() {
     <div className="flex items-center justify-center min-h-screen p-4 sm:p-6">
       <Card className="w-full max-w-sm mx-auto shadow-lg my-4 border-2 border-[#4285F4] rounded-xl">
         <CardHeader className="space-y-1 p-4 sm:p-6">
-          <CardTitle className="text-xl sm:text-2xl font-bold text-center">Login</CardTitle>
+          <CardTitle id="login-title" className="text-xl sm:text-2xl font-bold text-center">Login</CardTitle>
           <CardDescription className="text-center text-sm sm:text-base">
-            Enter your email below to login to your account
+            Enter your email and password below to login to your account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form 
+              onSubmit={form.handleSubmit(onSubmit)} 
+              className="space-y-4"
+              role="form"
+              aria-labelledby="login-title"
+              noValidate
+            >
               <FormField
                 control={form.control}
                 name="email"
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Email <span className="text-destructive" aria-hidden="true">*</span></FormLabel>
                     <FormControl>
-                      <Input placeholder="m@example.com" {...field} disabled={isLoading} />
+                      <Input 
+                        placeholder="m@example.com" 
+                        {...field} 
+                        disabled={isLoading}
+                        aria-required="true"
+                        aria-describedby="email-description"
+                        aria-invalid={form.formState.errors.email ? "true" : undefined}
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <span id="email-description" className="sr-only">Enter your registered email address</span>
+                    <FormMessage role="alert" />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
                 name="mobile"
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <FormItem>
-                    <FormLabel>Mobile Number</FormLabel>
+                    <FormLabel>Mobile Number <span className="text-destructive" aria-hidden="true">*</span></FormLabel>
                     <FormControl>
                       <Input 
                         type="tel"
@@ -183,20 +190,28 @@ export default function LoginPage() {
                         {...field} 
                         disabled={isLoading}
                         maxLength={10}
+                        aria-required="true"
+                        aria-describedby="mobile-description"
+                        aria-invalid={form.formState.errors.mobile ? "true" : undefined}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <span id="mobile-description" className="sr-only">Enter your registered 10-digit mobile number</span>
+                    <FormMessage role="alert" />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
                 name="password"
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <FormItem>
                     <div className="flex items-center">
-                      <FormLabel>Password</FormLabel>
-                      <Link href="#" className="ml-auto inline-block text-sm underline">
+                      <FormLabel>Password <span className="text-destructive" aria-hidden="true">*</span></FormLabel>
+                      <Link 
+                        href="#" 
+                        className="ml-auto inline-block text-sm underline"
+                        aria-label="Reset your password"
+                      >
                         Forgot your password?
                       </Link>
                     </div>
@@ -207,6 +222,9 @@ export default function LoginPage() {
                           {...field}
                           disabled={isLoading}
                           className="pr-10"
+                          aria-required="true"
+                          aria-describedby="password-description"
+                          aria-invalid={form.formState.errors.password ? "true" : undefined}
                         />
                         <button
                           type="button"
@@ -214,23 +232,34 @@ export default function LoginPage() {
                           onClick={() => setShowPassword((s) => !s)}
                           className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
                         >
-                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          {showPassword ? <EyeOff className="h-4 w-4" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
                         </button>
                       </div>
                     </FormControl>
-                    <FormMessage />
+                    <span id="password-description" className="sr-only">Enter your account password</span>
+                    <FormMessage role="alert" />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button 
+                type="submit" 
+                className="w-full" 
+                disabled={isLoading}
+                aria-label={isLoading ? "Logging in..." : "Log in to your account"}
+                aria-busy={isLoading}
+              >
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
                 Login
               </Button>
             </form>
           </Form>
-          <div className="mt-4 text-center text-sm">
+          <div className="mt-4 text-center text-sm" role="complementary">
             Don&apos;t have an account?{' '}
-            <Link href="/signup" className="underline">
+            <Link 
+              href="/signup" 
+              className="underline"
+              aria-label="Create a new account"
+            >
               Sign up
             </Link>
           </div>
