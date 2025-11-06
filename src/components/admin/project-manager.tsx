@@ -5,21 +5,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 
-interface ProjectManagerProps {
-  project: ProjectTrackingInfo | null;
-  allProjects: ProjectTrackingInfo[];
-  onProjectSelect: (projectId: string) => void;
-  onStageChange: (projectId: string, stage: StageKey) => Promise<void>;
-  onNotesChange: (projectId: string, stageKey: StageKey, notes: string) => Promise<void>;
-}
+import { useProjectManager } from '@/app/admin/providers/project-manager-provider';
 
-export function ProjectManager({ 
-  project, 
-  allProjects, 
-  onProjectSelect,
-  onStageChange,
-  onNotesChange
-}: ProjectManagerProps) {
+export function ProjectManager() {
+  const { 
+    project, 
+    allProjects, 
+    handleProjectSelect: onProjectSelect,
+    handleStageChange: onStageChange,
+    handleNotesChange: onNotesChange
+  } = useProjectManager();
   return (
     <>
       <Card className="shadow-md">

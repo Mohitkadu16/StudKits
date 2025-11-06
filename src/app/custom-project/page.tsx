@@ -1,31 +1,51 @@
 'use client';
 
-import { useState, type FormEvent, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Lightbulb, Settings, Package, Loader2 } from 'lucide-react';
+import { Send, Lightbulb, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
-import { projects, type Project } from '@/lib/projects';
+import { projects } from '@/lib/projects';
 import { projectMicrocontrollers } from '@/lib/project-microcontrollers';
 import { createProjectRequest } from '@/lib/project-store';
+import { z } from 'zod';
+import { contactSchema } from '@/components/custom-project/contact-section';
+import { projectDetailsSchema } from '@/components/custom-project/project-details-section';
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgvlyklz";
 
-interface CustomProjectFormState {
-  name: string;
-  email: string;
-  mobile: string;
-  projectTitle: string;
-  microcontroller: string;
-  components: string;
-  description: string; // Added for project's suggested price
-  college?: string;
-}
+const ContactSection = dynamic(
+  () => import('@/components/custom-project/contact-section').then(mod => mod.ContactSection),
+  { loading: () => <div className="animate-pulse space-y-4">
+      <div className="h-10 bg-muted rounded" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="h-20 bg-muted rounded" />
+        <div className="h-20 bg-muted rounded" />
+      </div>
+    </div> }
+);
+
+const ProjectDetailsSection = dynamic(
+  () => import('@/components/custom-project/project-details-section').then(mod => mod.ProjectDetailsSection),
+  { loading: () => <div className="animate-pulse space-y-4">
+      <div className="h-10 bg-muted rounded" />
+      <div className="space-y-6">
+        <div className="h-20 bg-muted rounded" />
+        <div className="h-32 bg-muted rounded" />
+      </div>
+    </div> }
+);
+
+const formSchema = z.object({
+  ...contactSchema.shape,
+  ...projectDetailsSchema.shape,
+});
 
 export default function CustomProjectPage() {
   const { toast } = useToast();
@@ -34,15 +54,18 @@ export default function CustomProjectPage() {
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
 
-  const [formData, setFormData] = useState<CustomProjectFormState>({
-    name: '',
-    email: '',
-    mobile: '',
-    projectTitle: '',
-    microcontroller: '',
-    components: '',
-    description: '',
-    college: ''
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      mobile: '',
+      college: '',
+      projectTitle: '',
+      microcontroller: '',
+      components: '',
+      description: '',
+    },
   });
 
   useEffect(() => {
@@ -59,57 +82,29 @@ export default function CustomProjectPage() {
         
         router.push('/login');
       } else {
-        // Combine all form data updates in a single setFormData call
         const title = searchParams.get('title');
         const description = searchParams.get('description');
         const features = searchParams.get('features');
 
-        // Find the selected project
-        const selectedProject = title ? projects.find(p => p.title === title) : null;
-        
         // Get recommended microcontroller from our mapping
         const recommendedMicrocontroller = title ? projectMicrocontrollers[title] || '' : '';
 
-        setFormData(prev => ({
-          ...prev,
-          name: user.displayName || prev.name,
-          email: user.email || prev.email,
-          mobile: (user as any).phoneNumber || (user as any).mobile || prev.mobile,
-          projectTitle: title || prev.projectTitle,
-          description: description || prev.description,
-          components: features ? features.split('\\n').join(', ') : prev.components,
-          microcontroller: recommendedMicrocontroller || prev.microcontroller,
-          college: (user as any).college || (user as any).collegeName || prev.college,
-        }));
+        // Reset form with user data and URL params
+        form.reset({
+          name: user.displayName || '',
+          email: user.email || '',
+          mobile: (user as any).phoneNumber || (user as any).mobile || '',
+          college: (user as any).college || (user as any).collegeName || '',
+          projectTitle: title || '',
+          description: description || '',
+          components: features ? features.split('\\n').join(', ') : '',
+          microcontroller: recommendedMicrocontroller || '',
+        });
       }
     }
-  }, [user, authLoading, router, toast, searchParams]);
+  }, [user, authLoading, router, toast, searchParams, form]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.email || !formData.mobile || !formData.projectTitle || !formData.description) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!/^[0-9]{10}$/.test(formData.mobile)) {
-      toast({
-        title: "Invalid Mobile Number",
-        description: "Please enter a valid 10-digit mobile number.",
-        variant: "destructive",
-      });
-      return;
-    }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
 
     setIsLoading(true);
 
@@ -117,13 +112,7 @@ export default function CustomProjectPage() {
       // First submit project request to Firebase
       const projectResponse = await createProjectRequest({
         userId: user?.uid || '',
-        name: formData.name,
-        email: formData.email,
-        projectTitle: formData.projectTitle,
-        microcontroller: formData.microcontroller,
-        components: formData.components,
-        description: formData.description,
-        college: formData.college
+        ...values
       });
 
       if (!projectResponse.success) {
@@ -133,7 +122,7 @@ export default function CustomProjectPage() {
       // Track the event in Google Analytics
       window.gtag?.('event', 'project_request_submitted', {
         event_category: 'engagement',
-        event_label: formData.projectTitle,
+        event_label: values.projectTitle,
       });
 
       // Then send email notification
@@ -144,14 +133,14 @@ export default function CustomProjectPage() {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          ...formData,
-          _subject: `New Project Request: ${formData.projectTitle}`,
-          _autoresponse: `Hi ${formData.name}, 
+          ...values,
+          _subject: `New Project Request: ${values.projectTitle}`,
+          _autoresponse: `Hi ${values.name}, 
 
 Thank you for submitting your project request to StudKits!
 
 Project Details:
-- Title: ${formData.projectTitle}
+- Title: ${values.projectTitle}
 
 We'll review your request and get back to you within 3 business days.
 
@@ -207,105 +196,23 @@ StudKits Team`,
             Fill out the form below to request a custom project kit. We'll review your requirements and get back to you.
           </CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="name">Your Name <span className="text-destructive">*</span></Label>
-                <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required disabled={isLoading}/>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Your Email <span className="text-destructive">*</span></Label>
-                <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required disabled={isLoading}/>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="mobile">Mobile Number <span className="text-destructive">*</span></Label>
-                <Input 
-                  id="mobile" 
-                  name="mobile" 
-                  type="tel" 
-                  pattern="[0-9]{10}"
-                  value={formData.mobile} 
-                  onChange={handleChange} 
-                  placeholder="Enter 10-digit mobile number" 
-                  required 
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="college">College (auto-filled)</Label>
-              <Input id="college" name="college" value={formData.college} onChange={handleChange} placeholder="Your college or institution" disabled={isLoading} />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="projectTitle">Project Title / Idea <span className="text-destructive">*</span></Label>
-              <Input id="projectTitle" name="projectTitle" value={formData.projectTitle} onChange={handleChange} placeholder="e.g., Automated Pet Feeder" required disabled={isLoading}/>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="microcontroller" className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
-                  Recommended Microcontroller
-                </div>
-                {formData.microcontroller && (
-                  <span className="text-xs text-muted-foreground">(Auto-filled based on project)</span>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <CardContent className="space-y-6">
+              <ContactSection form={form as any} />
+              <ProjectDetailsSection form={form as any} />
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md" disabled={isLoading}>
+                {isLoading ? (
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting Request...</>
+                ) : (
+                  <><Send className="mr-2 h-4 w-4" /> Submit Request</>
                 )}
-              </Label>
-              <Input 
-                id="microcontroller" 
-                name="microcontroller" 
-                value={formData.microcontroller} 
-                onChange={handleChange} 
-                placeholder="Microcontroller will be auto-filled based on project" 
-                className={formData.microcontroller ? "bg-muted" : ""}
-                readOnly
-                disabled={isLoading}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="components" className="flex items-center">
-                <Package className="mr-2 h-4 w-4 text-muted-foreground" />
-                Key Components List (if known)
-              </Label>
-              <Textarea
-                id="components"
-                name="components"
-                value={formData.components}
-                onChange={handleChange}
-                placeholder="List any specific components you have in mind (e.g., Servo motor SG90, DHT11 sensor, 16x2 LCD)"
-                rows={3}
-                disabled={isLoading}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description">Detailed Project Description <span className="text-destructive">*</span></Label>
-              <Textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Describe your project, its features, and how it should work."
-                rows={5}
-                required
-                disabled={isLoading}
-              />
-            </div>
-
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md" disabled={isLoading}>
-              {isLoading ? (
-                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting Request...</>
-              ) : (
-                <><Send className="mr-2 h-4 w-4" /> Submit Request</>
-              )}
-            </Button>
-          </CardFooter>
-        </form>
+              </Button>
+            </CardFooter>
+          </form>
+        </Form>
       </Card>
     </div>
   );

@@ -12,6 +12,7 @@ export interface Project {
   image: string; // Fallback image if no 3D model
   features: string[];
   benefits: string[];
+  requirements?: string[]; // Technical requirements for the project
   dataAiHint?: string;
   sketchfabEmbedUrl?: string; // Optional Sketchfab embed URL
   isService?: boolean; // To differentiate services from projects
