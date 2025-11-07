@@ -8,16 +8,22 @@ interface ContactSectionProps {
 }
 
 export const contactSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  mobile: z.string().regex(/^[0-9]{10}$/, {
-    message: "Please enter a valid 10-digit mobile number.",
-  }),
-  college: z.string().optional(),
+  name: z.string()
+    .min(2, { message: "Name must be at least 2 characters." })
+    .max(50, { message: "Name must not exceed 50 characters." })
+    .regex(/^[a-zA-Z\s.'-]+$/, { message: "Name can only contain letters, spaces, and basic punctuation." }),
+  email: z.string()
+    .email({ message: "Please enter a valid email address." })
+    .max(100, { message: "Email must not exceed 100 characters." })
+    .toLowerCase(),
+  mobile: z.string()
+    .regex(/^[0-9]{10}$/, { message: "Please enter a valid 10-digit mobile number." })
+    .transform(val => val.replace(/\D/g, '')), // Remove non-digits
+  college: z.string()
+    .min(2, { message: "College name must be at least 2 characters." })
+    .max(100, { message: "College name must not exceed 100 characters." })
+    .optional()
+    .or(z.literal('')),
 });
 
 export function ContactSection({ form }: ContactSectionProps) {

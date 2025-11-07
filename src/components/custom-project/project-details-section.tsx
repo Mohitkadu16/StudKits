@@ -10,14 +10,26 @@ interface ProjectDetailsSectionProps {
 }
 
 export const projectDetailsSchema = z.object({
-  projectTitle: z.string().min(2, {
-    message: "Project title must be at least 2 characters.",
-  }),
-  microcontroller: z.string(),
-  components: z.string(),
-  description: z.string().min(20, {
-    message: "Please provide a detailed description of your project.",
-  }),
+  projectTitle: z.string()
+    .min(10, { message: "Project title must be at least 10 characters." })
+    .max(100, { message: "Project title must not exceed 100 characters." })
+    .regex(/^[a-zA-Z0-9\s\-_./()]+$/, { 
+      message: "Project title can only contain letters, numbers, spaces, and basic punctuation." 
+    }),
+  microcontroller: z.string()
+    .min(2, { message: "Please select or specify a microcontroller." })
+    .max(50, { message: "Microcontroller name must not exceed 50 characters." }),
+  components: z.string()
+    .min(10, { message: "Please list at least a few components (minimum 10 characters)." })
+    .max(1000, { message: "Component list is too long (maximum 1000 characters)." })
+    .optional()
+    .or(z.literal('')),
+  description: z.string()
+    .min(20, { message: "Please provide a more detailed description (minimum 20 characters)." })
+    .max(2000, { message: "Description is too long (maximum 2000 characters)." })
+    .refine(val => val.trim().split(/\s+/).length >= 5, {
+      message: "Please provide at least 5 words in your description."
+    }),
 });
 
 export function ProjectDetailsSection({ form }: ProjectDetailsSectionProps) {

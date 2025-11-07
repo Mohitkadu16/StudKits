@@ -31,14 +31,17 @@ export function Navbar() {
 
   const isAdmin = user?.email === 'studkits25@gmail.com';
 
-  const navItems = [
+  const mainNavItems = [
     { href: '/', label: 'Home', icon: HomeIcon },
     { href: '/about', label: 'About Us', icon: Info },
+    { href: '/tracking', label: 'Track Order', icon: PackageSearch },
+    { href: '/contact', label: 'Contact Us', icon: Mail },
+  ];
+
+  const formItems = [
     { href: '/custom-project', label: 'Custom Project', icon: Edit3 },
     { href: '/custom-presentation', label: 'Custom Presentation', icon: Presentation },
-    { href: '/tracking', label: 'Track Order', icon: PackageSearch },
     { href: '/troubleshooting-service', label: 'Troubleshooting Service', icon: Wand2 },
-    { href: '/contact', label: 'Contact Us', icon: Mail },
   ];
 
   const handleLinkClick = () => {
@@ -128,7 +131,7 @@ export function Navbar() {
           )}
         </Button>
         <nav className="hidden md:flex items-center space-x-2" role="navigation" aria-label="Main navigation">
-          {navItems.map((item) => {
+          {mainNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
             return (
@@ -149,6 +152,42 @@ export function Navbar() {
               </Button>
             );
           })}
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="ghost"
+                className={cn(
+                  "hover:bg-primary-foreground/10 hover:text-primary-foreground px-3 py-2 rounded-full text-primary-foreground",
+                  formItems.some(item => pathname === item.href) ? 'bg-primary-foreground/20 font-semibold' : ''
+                )}
+              >
+                <Menu className="h-4 w-4 mr-1" />
+                <span>Forms</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 bg-primary border-primary-foreground/10">
+              {formItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href;
+                return (
+                  <DropdownMenuItem
+                    key={item.href}
+                    className={cn(
+                      "cursor-pointer text-primary-foreground hover:bg-primary-foreground/10",
+                      isActive ? 'bg-primary-foreground/20 font-semibold' : ''
+                    )}
+                    onClick={() => {
+                      router.push(item.href);
+                    }}
+                  >
+                    <Icon className="h-4 w-4 mr-2" />
+                    <span>{item.label}</span>
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div className="ml-4">
             {user ? (
               <UserMenu />
@@ -174,27 +213,53 @@ export function Navbar() {
         >
           <MaxWidthWrapper>
             <ul className="flex flex-col space-y-2 pt-2" role="menu">
-              {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <li key={item.href}>
-                  <Button
-                    variant="ghost"
-                    asChild
-                    className={cn(
-                      "w-full justify-start hover:bg-primary-foreground/10 hover:text-primary-foreground text-lg py-6 rounded-full",
-                      pathname === item.href ? 'bg-primary-foreground/20 font-semibold' : ''
-                    )}
-                    onClick={handleLinkClick}
-                  >
-                    <Link href={item.href} className="flex items-center">
-                      <Icon className="h-5 w-5 mr-4" />
-                      <span>{item.label}</span>
-                    </Link>
-                  </Button>
-                </li>
-              );
-            })}
+              {mainNavItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.href}>
+                    <Button
+                      variant="ghost"
+                      asChild
+                      className={cn(
+                        "w-full justify-start hover:bg-primary-foreground/10 hover:text-primary-foreground text-lg py-6 rounded-full",
+                        pathname === item.href ? 'bg-primary-foreground/20 font-semibold' : ''
+                      )}
+                      onClick={handleLinkClick}
+                    >
+                      <Link href={item.href} className="flex items-center">
+                        <Icon className="h-5 w-5 mr-4" />
+                        <span>{item.label}</span>
+                      </Link>
+                    </Button>
+                  </li>
+                );
+              })}
+              
+              <Separator className="my-2 bg-primary-foreground/20"/>
+              <li>
+                <p className="px-4 py-2 text-sm font-semibold text-primary-foreground/70">Forms</p>
+              </li>
+              {formItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.href}>
+                    <Button
+                      variant="ghost"
+                      asChild
+                      className={cn(
+                        "w-full justify-start hover:bg-primary-foreground/10 hover:text-primary-foreground text-lg py-6 rounded-full",
+                        pathname === item.href ? 'bg-primary-foreground/20 font-semibold' : ''
+                      )}
+                      onClick={handleLinkClick}
+                    >
+                      <Link href={item.href} className="flex items-center">
+                        <Icon className="h-5 w-5 mr-4" />
+                        <span>{item.label}</span>
+                      </Link>
+                    </Button>
+                  </li>
+                );
+              })}
              <Separator className="my-2 bg-primary-foreground/20"/>
             {user ? (
               <>

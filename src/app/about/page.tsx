@@ -133,7 +133,9 @@ export default function AboutUsPage() {
 
       <section className="py-8 relative">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">Meet "Team StudKits"</h2>
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto px-4">
+        <div className="space-y-8 max-w-4xl mx-auto px-4">
+          {/* First three cards in a row */}
+          <div className="grid md:grid-cols-3 gap-8">
          <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
                 <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
@@ -212,44 +214,6 @@ export default function AboutUsPage() {
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
                 <Image
-                  src={encodeURI('/images/maverick photo.jpg')}
-                  alt="Maverick D'Silva"
-                  width={128}
-                  height={128}
-                  className="object-cover w-full h-full"
-                  style={{ objectPosition: '80% 15%' }}
-                />
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <CardTitle className="text-2xl">Maverick D'Silva</CardTitle>
-              <CardDescription className="text-base text-primary">App Developer</CardDescription>
-              <p className="text-sm text-muted-foreground pt-2">
-                Hello I am Maverick D'Silva Co Founder | App Developer of Studkits. Currently pursuing degree in Information Technology from Don Bosco Institute of Technology
-              </p>
-              <div className="flex items-center justify-center gap-4 mt-4 p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
-                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
-                  <Link href="mailto:maverickdsilva31@gmail.com" target="_blank" rel="noopener noreferrer">
-                    <Mail className="h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
-                  <Link href="https://www.instagram.com/mav_dsilva/" target="_blank" rel="noopener noreferrer">
-                    <Instagram className="h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
-                  <Link href="tel:+919819637606">
-                    <Phone className="h-5 w-5" />
-                  </Link>
-                </Button>
-              </div>
-            </CardContent>
-            </Card>
-            <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
-            <CardHeader>
-              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
-                <Image
                   src={encodeURI('/images/amit.jpg')}
                   alt="Amit Prajapati"
                   width={128}
@@ -283,6 +247,9 @@ export default function AboutUsPage() {
               </div>
             </CardContent>
             </Card>
+          </div>
+          {/* Last two cards centered */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             <Card className="text-center p-4 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
               <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
@@ -357,6 +324,7 @@ export default function AboutUsPage() {
               </div>
             </CardContent>
           </Card>
+          </div>
         </div>
       </section>
 

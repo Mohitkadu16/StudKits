@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import { FormErrorBoundary } from '@/components/custom-project/form-error-boundary';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
@@ -105,14 +106,49 @@ export default function CustomProjectPage() {
   }, [user, authLoading, router, toast, searchParams, form]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!user?.uid) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to submit a project request.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsLoading(true);
 
     try {
-      // First submit project request to Firebase
+      // Sanitize and format the data
+      const sanitizedValues = {
+        ...values,
+        email: values.email.toLowerCase().trim(),
+        mobile: values.mobile.replace(/\D/g, ''),
+        projectTitle: values.projectTitle.trim(),
+        description: values.description.trim(),
+        components: values.components?.trim() || '',
+      };
+
+      // Add rate limiting check
+      const lastSubmission = localStorage.getItem('lastProjectSubmission');
+      if (lastSubmission) {
+        const timeSinceLastSubmission = Date.now() - parseInt(lastSubmission);
+        if (timeSinceLastSubmission < 300000) { // 5 minutes
+          toast({
+            title: "Please Wait",
+            description: "You can submit another request in " + 
+              Math.ceil((300000 - timeSinceLastSubmission) / 60000) + 
+              " minutes.",
+            variant: "destructive",
+          });
+          setIsLoading(false);
+          return;
+        }
+      }
+
+      // Submit project request to Firebase
       const projectResponse = await createProjectRequest({
-        userId: user?.uid || '',
-        ...values
+        userId: user.uid,
+        ...sanitizedValues
       });
 
       if (!projectResponse.success) {
@@ -196,23 +232,29 @@ StudKits Team`,
             Fill out the form below to request a custom project kit. We'll review your requirements and get back to you.
           </CardDescription>
         </CardHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <CardContent className="space-y-6">
-              <ContactSection form={form as any} />
-              <ProjectDetailsSection form={form as any} />
-            </CardContent>
-            <CardFooter>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md" disabled={isLoading}>
-                {isLoading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting Request...</>
-                ) : (
-                  <><Send className="mr-2 h-4 w-4" /> Submit Request</>
-                )}
-              </Button>
-            </CardFooter>
-          </form>
-        </Form>
+        <FormErrorBoundary>
+          <Form {...form}>
+            <form 
+              onSubmit={form.handleSubmit(onSubmit)} 
+              className="space-y-6"
+              noValidate
+            >
+              <CardContent className="space-y-6">
+                <ContactSection form={form as any} />
+                <ProjectDetailsSection form={form as any} />
+              </CardContent>
+              <CardFooter>
+                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-md" disabled={isLoading}>
+                  {isLoading ? (
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting Request...</>
+                  ) : (
+                    <><Send className="mr-2 h-4 w-4" /> Submit Request</>
+                  )}
+                </Button>
+              </CardFooter>
+            </form>
+          </Form>
+        </FormErrorBoundary>
       </Card>
     </div>
   );
