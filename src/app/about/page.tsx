@@ -109,9 +109,9 @@ export default function AboutUsPage() {
         <div className="max-w-4xl mx-auto px-4">
           <Card className="text-center p-6 hover:scale-[1.02] transition-all duration-300 border-2 border-[#4285F4] rounded-xl">
             <CardHeader>
-              <div className="mx-auto h-40 w-40 overflow-hidden rounded-lg p-2">
+              <div className="mx-auto h-60 w-60 overflow-hidden rounded-lg p-2">
                 <Image
-                  src="/images/aiskool-logo.png"
+                  src="/images/aiskool-logo.webp"
                   alt="AISkool Logo"
                   width={160}
                   height={160}
