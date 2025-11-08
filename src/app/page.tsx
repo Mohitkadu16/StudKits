@@ -32,15 +32,25 @@ export default function HomePage() {
     const interval = setInterval(() => {
       const carousel = carouselRef.current;
       if (carousel) {
-        const scrollAmount = carousel.offsetWidth;
-        carousel.scrollLeft += scrollAmount;
+        // Get all items
+        const items = carousel.querySelectorAll('[role="group"]');
+        const currentScroll = carousel.scrollLeft;
+        const containerWidth = carousel.offsetWidth;
         
-        // Reset to start if we're at the end
-        if (carousel.scrollLeft >= carousel.scrollWidth - carousel.offsetWidth) {
-          carousel.scrollLeft = 0;
+        // Calculate next scroll position
+        let nextScroll = currentScroll + containerWidth;
+        
+        // If we're near the end, prepare to reset
+        if (currentScroll >= carousel.scrollWidth - containerWidth * 1.5) {
+          nextScroll = 0;
         }
+        
+        carousel.scrollTo({
+          left: nextScroll,
+          behavior: nextScroll === 0 ? 'instant' : 'smooth'
+        });
       }
-    }, 5000);
+    }, 4000); // Slightly longer interval for better mobile experience
     setAutoplayInterval(interval);
   }, []);
 
@@ -120,12 +130,15 @@ export default function HomePage() {
               opts={{
                 align: "start",
                 loop: true,
-                slidesToScroll: 1
+                slidesToScroll: 1,
+                skipSnaps: false, // More precise control
+                dragFree: false, // Better control on mobile
+                containScroll: "trimSnaps"
               }}
               className="w-full"
             >
-              <CarouselContent>
-                <CarouselItem className="basis-full sm:basis-1/3">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                <CarouselItem className="pl-2 md:pl-4 basis-[85%] sm:basis-1/2 md:basis-1/3 transition-transform duration-200">
                   <div className="group flex flex-col items-center bg-[rgba(15,23,42,0.7)] p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden hover:-translate-y-1 border-2 border-[#4285F4]  h-60 w-full">  
                     <div className="absolute inset-0 bg-[#4285F4]/5 backdrop-blur-sm group-hover:bg-[#4285F4]/10 transition-colors duration-300"></div>
                     <div className="absolute inset-0 bg-gradient-to-b from-[#4285F4]/10 to-transparent group-hover:from-[#4285F4]/20"></div>
@@ -224,8 +237,8 @@ export default function HomePage() {
                 ))}
 
               </CarouselContent>
-              <CarouselPrevious className="absolute left-0 sm:left-[-20px] top-1/2 -translate-y-1/2 bg-[#4285F4]/10 hover:bg-[#4285F4]/20 border-[#4285F4]/50" />
-              <CarouselNext className="absolute right-0 sm:right-[-20px] top-1/2 -translate-y-1/2 bg-[#4285F4]/10 hover:bg-[#4285F4]/20 border-[#4285F4]/50" />
+              <CarouselPrevious className="flex absolute left-1 sm:left-[-20px] top-1/2 -translate-y-1/2 h-8 w-8 sm:h-10 sm:w-10 bg-[#4285F4]/30 hover:bg-[#4285F4]/40 border-[#4285F4] transition-all duration-200 rounded-full" />
+              <CarouselNext className="flex absolute right-1 sm:right-[-20px] top-1/2 -translate-y-1/2 h-8 w-8 sm:h-10 sm:w-10 bg-[#4285F4]/30 hover:bg-[#4285F4]/40 border-[#4285F4] transition-all duration-200 rounded-full" />
             </Carousel>
           </div>
         </MaxWidthWrapper>
