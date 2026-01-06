@@ -3,6 +3,7 @@ import { type ProjectRequest } from '@/lib/requests';
 import { db } from '@/lib/firebase';
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
+import { approveProjectRequest, declineProjectRequest } from '@/lib/requests';
 
 interface ProjectRequestsContextType {
   projectRequests: ProjectRequest[];

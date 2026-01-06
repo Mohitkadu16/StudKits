@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User, PackageSearch, UserCog } from 'lucide-react';
+import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User, PackageSearch, UserCog, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import { usePathname, useRouter } from 'next/navigation';
@@ -34,6 +34,7 @@ export function Navbar() {
   const mainNavItems = [
     { href: '/', label: 'Home', icon: HomeIcon },
     { href: '/about', label: 'About Us', icon: Info },
+    { href: '/marketplace', label: 'Marketplace', icon: ShoppingCart },
     { href: '/tracking', label: 'Track Order', icon: PackageSearch },
     { href: '/contact', label: 'Contact Us', icon: Mail },
   ];

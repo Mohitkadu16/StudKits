@@ -3,14 +3,14 @@ import { type CompletedProject } from '@/components/showcase/project-showcase';
 export const completedProjects: CompletedProject[] = [
   {
     id: '1',
-    title: 'Smart Home Automation',
-    description: 'IoT-based home automation system with voice control and mobile app integration.',
+    title: 'Water Quality Monitoring System',
+    description: 'Monitor water quality using TDS sensors with Arduino.',
     studentName: 'Rahul Kumar',
     college: 'MIT World Peace University',
     category: 'IoT',
-    imageUrl: '/images/projects/smart-home.jpg',
+    imageUrl: '/images/water quality monitor_converted.webp',
     completionDate: '2025-10-15',
-    technologies: ['ESP32', 'Arduino', 'Node.js', 'Firebase'],
+    technologies: ['ESP32', 'Arduino', 'TDS Sensor', 'pH Sensor'],
   },
   {
     id: '2',

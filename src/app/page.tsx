@@ -256,7 +256,7 @@ export default function HomePage() {
             <p className="text-lg text-muted-foreground">Find the perfect kit to kickstart your next build.</p>
           </div>
 
-          {/* Container for Search and Filters */}
+          {/* Container for Search and Filters */} 
           <div className="space-y-6 mb-8" role="search" aria-label="Search projects">
             <div className="relative w-full max-w-2xl mx-auto rounded-3xl overflow-hidden border-2 border-[#4285F4]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" aria-hidden="true" />

@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from '@/context/auth-context';
+import { CartProvider } from '@/context/cart-context';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AnalyticsProvider } from '@/components/analytics-provider';
 
@@ -115,16 +116,18 @@ export default function RootLayout({
           disableTransitionOnChange
         >
         <AuthProvider>
-          <AnalyticsProvider />
-          <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-background focus:text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
-            Skip to main content
-          </a>
-          <Navbar />
-          <main id="main-content" tabIndex={-1} className="flex-grow outline-none focus:ring-0">
-            {children}
-          </main>
-          <Footer />
-          <Toaster />
+          <CartProvider>
+            <AnalyticsProvider />
+            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-background focus:text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
+              Skip to main content
+            </a>
+            <Navbar />
+            <main id="main-content" tabIndex={-1} className="flex-grow outline-none focus:ring-0">
+              {children}
+            </main>
+            <Footer />
+            <Toaster />
+          </CartProvider>
         </AuthProvider>
         </ThemeProvider>
       </body>

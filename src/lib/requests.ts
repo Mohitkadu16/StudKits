@@ -1,5 +1,5 @@
 
-import { doc, deleteDoc } from 'firebase/firestore';
+ import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import { sendEmail } from './email';
 

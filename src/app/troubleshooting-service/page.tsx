@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type UseFormReturn } from "react-hook-form";
 import * as z from "zod";
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/auth-context";
 import { useEffect, useState } from "react";
 import { createTroubleshootingRequest } from '@/lib/troubleshooting-store';
+import { Loader2 } from 'lucide-react';
 
 const ContactInfoSection = dynamic(
   () => import('@/components/troubleshooting/contact-info-section').then(mod => mod.ContactInfoSection),
@@ -75,7 +77,8 @@ const formSchema = z.object({
 });
 
 export default function TroubleshootingServicePage() {
-  const { user } = useAuth();
+  const router = useRouter();
+  const { user, isLoading: authLoading } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -93,6 +96,13 @@ export default function TroubleshootingServicePage() {
     },
   });
 
+  // Redirect to login if user is not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, authLoading, router]);
+
   useEffect(() => {
     if (user) {
       form.reset({
@@ -104,6 +114,20 @@ export default function TroubleshootingServicePage() {
       });
     }
   }, [user, form]);
+
+  // Show loading state while checking authentication
+  if (authLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader2 className="h-16 w-16 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  // Don't render form if user is not authenticated
+  if (!user) {
+    return null;
+  }
 
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
