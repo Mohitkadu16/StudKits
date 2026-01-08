@@ -20,8 +20,8 @@ export interface Product {
 }
 
 export const sampleProducts: Product[] = [
-  { id: 'p1', title: 'Arduino Uno R3', price: 800, sku: 'A000066', inStock: true, image: '/images/comp-images/arduino uno.webp' },
-  { id: 'p2', title: 'Arduino Uno R2 (WiFi)', price: 4500, sku: 'ABX00021', inStock: true, image: '/images/comp-images/arduino uno r2 wifi.webp' },
+  { id: 'p1', title: 'Arduino Uno (DIP)', price: 800, sku: 'A000066', inStock: true, image: '/images/comp-images/arduino uno.webp' },
+  { id: 'p2', title: 'Arduino Uno (SMD)', price: 4500, sku: 'ABX00021', inStock: true, image: '/images/comp-images/arduino uno r2 wifi.webp' },
   { id: 'p3', title: 'Arduino Nano R3', price: 550, sku: 'A000005', inStock: true, image: '/images/comp-images/arduino nano r3.webp' },
   { id: 'p4', title: 'Arduino Micro', price: 1500, sku: 'A000053', inStock: true, image: '/images/comp-images/arduino micro.webp' },
   { id: 'p5', title: 'Arduino Leonardo R3', price: 500, sku: 'A000057', inStock: true, image: '/images/comp-images/arduino leonardo.webp' },
@@ -45,7 +45,7 @@ export const sampleProducts: Product[] = [
     price: 50,
     sku: 'JUMPER-WIRES',
     inStock: true,
-    image: '/images/comp-images/jumper wires mf.webp',
+    image: '/images/comp-images/jumper-wires-set.webp',
     hasVariants: true,
     variants: [
       {
@@ -57,7 +57,7 @@ export const sampleProducts: Product[] = [
       }
     ]
   },
-  { id: 'p21', title: 'Arduino Starter Kit', price: 2500, sku: 'ARD-ST-KIT', inStock: true, image: '/images/comp-images/arduino starter kit.webp' },
+  { id: 'p21', title: 'Arduino Starter Kit', price: 2500, sku: 'ARD-ST-KIT', inStock: true },
   { id: 'p22', title: '9V Battery with Barrel-Jack Holder', price: 15, sku: 'BATTERY-9V', inStock: true, image: '/images/comp-images/9v battery with holder.webp' },
   { 
     id: 'p23', 
@@ -65,7 +65,7 @@ export const sampleProducts: Product[] = [
     price: 1, 
     sku: 'LED', 
     inStock: true, 
-    image: '/images/comp-images/red led.webp',
+    image: '/images/comp-images/leds-rgb.webp',
     hasVariants: true,
     variants: [
       {
@@ -186,8 +186,5 @@ export const sampleProducts: Product[] = [
   { id: 'p53', title: 'Zero PCB / Perfboard', price: 30, sku: 'ZERO-PCB', inStock: true, image: '/images/comp-images/zero-pcb.webp' },
   { id: 'p54', title: 'Potentiometer', price: 20, sku: 'POTENTIOMETER', inStock: true, image: '/images/comp-images/potentiometer.webp' },
   { id: 'p55', title: 'Soldering Wire', price: 80, sku: 'SOLDER-WIRE', inStock: true, image: '/images/comp-images/soldering-wire.webp' },
-  { id: 'p56', title: 'Flux (Gel)', price: 50, sku: 'FLUX-GEL', inStock: true, image: '/images/comp-images/flux-gel.webp' },
-  { id: 'p57', title: 'Heat Shrink Tubes', price: 40, sku: 'HEAT-SHRINK', inStock: true, image: '/images/comp-images/heat-shrink.webp' },
-  { id: 'p58', title: 'USB Cable (Type-B, Micro-USB, Type-C)', price: 50, sku: 'USB-CABLE-SET', inStock: true, image: '/images/comp-images/usb-cable-set.webp' },
-  { id: 'p59', title: 'ESP32 IoT Kit', price: 3200, sku: 'ESP32-IOT-KIT', inStock: true, image: '/images/comp-images/esp32-iot-kit.webp' },
+  { id: 'p56', title: 'ESP32 IoT Kit', price: 3200, sku: 'ESP32-IOT-KIT', inStock: true },
 ];
