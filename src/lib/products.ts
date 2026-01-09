@@ -184,5 +184,5 @@ export const sampleProducts: Product[] = [
   { id: 'p52', title: 'Zero PCB / Perfboard', price: 30, sku: 'ZERO-PCB', inStock: true, image: '/images/comp-images/zero-pcb.webp' },
   { id: 'p53', title: 'Potentiometer', price: 20, sku: 'POTENTIOMETER', inStock: true, image: '/images/comp-images/potentiometer.webp' },
   { id: 'p54', title: 'Soldering Wire', price: 80, sku: 'SOLDER-WIRE', inStock: true, image: '/images/comp-images/soldering-wire.webp' },
-  { id: 'p55', title: 'ESP32 IoT Kit', price: 3200, sku: 'ESP32-IOT-KIT', inStock: true },
+  { id: 'p55', title: 'ESP32 IoT Kit', price: 3200, sku: 'ESP32-IOT-KIT', inStock: true, image: '/images/Esp final-year project kits.svg' },
 ];
