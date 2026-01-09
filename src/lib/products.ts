@@ -20,21 +20,21 @@ export interface Product {
 }
 
 export const sampleProducts: Product[] = [
-  { id: 'p1', title: 'Arduino Uno (DIP)', price: 800, sku: 'A000066', inStock: true, image: '/images/comp-images/arduino uno.webp' },
-  { id: 'p2', title: 'Arduino Uno (SMD)', price: 4500, sku: 'ABX00021', inStock: true, image: '/images/comp-images/arduino uno r2 wifi.webp' },
+  { id: 'p1', title: 'Arduino Uno (DIP)', price: 450, sku: 'A000066', inStock: true, image: '/images/comp-images/arduino uno.webp' },
+  { id: 'p2', title: 'Arduino Uno (SMD)', price: 300, sku: 'ABX00021', inStock: true, image: '/images/comp-images/arduino uno r2 wifi.webp' },
   { id: 'p3', title: 'Arduino Nano R3', price: 550, sku: 'A000005', inStock: true, image: '/images/comp-images/arduino nano r3.webp' },
   { id: 'p4', title: 'Arduino Micro', price: 1500, sku: 'A000053', inStock: true, image: '/images/comp-images/arduino micro.webp' },
   { id: 'p5', title: 'Arduino Leonardo R3', price: 500, sku: 'A000057', inStock: true, image: '/images/comp-images/arduino leonardo.webp' },
   { id: 'p6', title: 'Arduino Mega 2560  R3', price: 1000 , sku: 'A000067', inStock: true, image: '/images/comp-images/arduino mega r3.webp' },
   { id: 'p7', title: 'Arduino Lilypad', price: 550, sku: 'DEV-13342', inStock: true, image: '/images/comp-images/arduino lilypad.webp' },
-  { id: 'p8', title: 'ESP32 Development Board', price: 320, sku: 'ESP32-WROOM-32', inStock: true, image: '/images/comp-images/esp32.webp' },
+  { id: 'p8', title: 'ESP32 Development Board', price: 400, sku: 'ESP32-WROOM-32', inStock: true, image: '/images/comp-images/esp32.webp' },
   { id: 'p9', title: 'Raspberry Pi 4 Model B', price: 3500, sku: 'RPI4-MODB-4GB', inStock: true, image: '/images/comp-images/rpi4.webp' },
-  { id: 'p10', title: 'HC-SR04 Ultrasonic Distance Sensor', price: 85, sku: 'HC-SR04', inStock: true, image: '/images/comp-images/hc sr40 ultra sensor.webp' },
+  { id: 'p10', title: 'HC-SR04 Ultrasonic Distance Sensor', price: 150, sku: 'HC-SR04', inStock: true, image: '/images/comp-images/hc sr40 ultra sensor.webp' },
   { id: 'p11', title: 'DHT22 Temperature & Humidity Sensor', price: 180, sku: 'dht22', inStock: true, image: '/images/comp-images/dht22.webp' },
-  { id: 'p12', title: 'L298N Motor Driver Module', price: 120, sku: 'L298N', inStock: true, image: '/images/comp-images/l298n driver.webp' },
+  { id: 'p12', title: 'L298N Motor Driver Module', price: 150, sku: 'L298N', inStock: true, image: '/images/comp-images/l298n driver.webp' },
   { id: 'p13', title: '16x2 Lcd with I2C Module', price: 150, sku: 'LCD-I2C', inStock: true, image: '/images/comp-images/lcd with i2c.webp' },
   { id: 'p14', title:'TFT Display', price: 1000, sku: 'TFT', inStock: true, image: '/images/comp-images/tft display.webp' },
-  { id: 'p15', title: 'Breadboard and Jumper Wires Kit', price: 250, sku: 'BB-JW-KIT', inStock: true, image: '/images/comp-images/breadboard with jumper.webp' },
+  { id: 'p15', title: 'Breadboard and Jumper Wires Kit', price: 200, sku: 'BB-JW-KIT', inStock: true, image: '/images/comp-images/breadboard with jumper.webp' },
   { id: 'p16', title: 'Assorted Sensor Kit', price: 1200, sku: 'SENSOR-KIT', inStock: true, image: '/images/comp-images/sensor kit.webp' },
   { id: 'p17', title: 'DC Motors (Set of 2)', price: 300, sku: 'DC-MOTOR-2', inStock: true, image: '/images/comp-images/dc motors.webp' },
   { id: 'p18', title: 'LiPo Battery 3.7V 1000mAh', price: 400, sku: 'LIPO-1000MAH', inStock: true, image: '/images/comp-images/lipo battery.webp' },
@@ -57,7 +57,7 @@ export const sampleProducts: Product[] = [
       }
     ]
   },
-  { id: 'p21', title: 'Arduino Starter Kit', price: 2500, sku: 'ARD-ST-KIT', inStock: true },
+  { id: 'p21', title: 'Arduino Starter Kit', price:1250, sku: 'ARD-ST-KIT', inStock: true },
   { id: 'p22', title: '9V Battery with Barrel-Jack Holder', price: 15, sku: 'BATTERY-9V', inStock: true, image: '/images/comp-images/9v battery with holder.webp' },
   { 
     id: 'p23', 
