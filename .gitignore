@@ -47,3 +47,8 @@ firestore-debug.log
 # service account key for admin scripts
 scripts/serviceAccountKey.json
 /src/generated/prisma
+
+# gmail templates
+gmail template.html
+gmail template project.html
+gmail template presentation.html
