@@ -3,7 +3,7 @@ export const organizationSchema = {
   '@type': 'Organization',
   name: 'StudKits',
   url: 'https://studkits.shop',
-  logo: 'https://studkits.shop/images/android-chrome-512x512.png',
+  logo: 'https://studkits.shop/images/studkits logo_converted.webp',
   description: 'Expert provider of IoT, Robotics, and Electronics project kits. Custom PCB design and microcontroller solutions for students and tech enthusiasts.',
   address: {
     '@type': 'PostalAddress',

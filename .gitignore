@@ -49,6 +49,6 @@ scripts/serviceAccountKey.json
 /src/generated/prisma
 
 # gmail templates
-gmail template.html
-gmail template project.html
-gmail template presentation.html
+Order Confirmation template.html
+Presentation order template.html
+project request template.html

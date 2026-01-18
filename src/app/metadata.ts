@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/home-hero.png',
+        url: '/images/studkits logo_converted.webp',
         width: 1200,
         height: 630,
         alt: 'StudKits Project Kits Overview',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'StudKits - Tech Project Kits & Engineering Solutions',
     description: 'High-quality IoT, robotics, and electronics project kits with expert support. Start building your next innovation today!',
-    images: ['/images/home-hero.png'],
+    images: ['/images/studkits logo_converted.webp'],
   },
   alternates: {
     canonical: 'https://studkits.shop',
