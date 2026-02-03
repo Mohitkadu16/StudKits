@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'StudKits - Turn Your College Projects into Real Innovations',
     description: 'High-quality IoT, robotics, and electronics project kits with expert support. Start building your next innovation today!',
-    url: 'https://studkits.shop',
+    url: 'https://www.studkits.shop',
     type: 'website',
     images: [
       {
@@ -25,6 +25,6 @@ export const metadata: Metadata = {
     images: ['/images/studkits logo_converted.webp'],
   },
   alternates: {
-    canonical: 'https://studkits.shop',
+    canonical: 'https://www.studkits.shop',
   },
 };

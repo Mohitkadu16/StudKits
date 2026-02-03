@@ -16,6 +16,8 @@ import {
   AlertDialogCancel
 } from '@/components/ui/alert-dialog';
 import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 interface ProjectCardProps {
   project: Project;
@@ -24,11 +26,18 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   const CategoryIcon = project.categoryIcon;
   const linkHref = project.isService ? (project.servicePageUrl || '/contact') : `/projects/${project.id}`;
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="w-full px-2 sm:px-4 rounded-full">
-      <Card className="w-full sm:max-w-md mx-auto flex flex-col h-full overflow-hidden transition-all duration-300 ease-in-out relative rounded-3xl opacity-100 border-2 border-[#4285F4]">
-        <CardHeader className="p-0">
+    <motion.div 
+      className="w-full px-2 sm:px-4 rounded-full"
+      whileHover={{ scale: 1.03, y: -8 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+    >
+      <Card className="w-full sm:max-w-md mx-auto flex flex-col h-full overflow-hidden transition-all duration-300 ease-in-out relative rounded-3xl opacity-100 border-2 border-[#4285F4] hover:border-[#5A9FFF] hover:shadow-2xl hover:shadow-primary/20">
+        <CardHeader className="p-0 relative">
           {project.sketchfabEmbedUrl ? (
             <div className="aspect-[3/2] relative w-full min-h-[180px]">
               <iframe
@@ -41,16 +50,32 @@ export function ProjectCard({ project }: ProjectCardProps) {
               />
             </div>
           ) : (
-            <div className="aspect-[3/2] relative w-full min-h-[180px]">
+            <div className="aspect-[3/2] relative w-full min-h-[180px] overflow-hidden">
               <Image
                 src={project.image}
                 alt={project.title}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1020px) 50vw, 33vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-300 hover:scale-110"
                 priority={true}
                 data-ai-hint={project.dataAiHint || "project image"}
               />
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+              
+              {/* Quick Stats Overlay on Hover */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
+                transition={{ duration: 0.2 }}
+                className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80"
+              >
+                <div className="flex gap-3 text-white text-xs">
+                  <span>⚡ 1-2 weeks</span>
+                  <span>📦 Complete kit</span>
+                  <span>⭐ 4.8 rating</span>
+                </div>
+              </motion.div>
             </div>
           )}
         </CardHeader>
@@ -161,6 +186,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </AlertDialog>
         </CardFooter>
       </Card>
-    </div>
+    </motion.div>
   );
 }

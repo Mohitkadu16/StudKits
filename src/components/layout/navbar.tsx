@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User, PackageSearch, UserCog, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -28,8 +28,21 @@ export function Navbar() {
   const { toast } = useToast();
   const { user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const isAdmin = user?.email === 'studkits25@gmail.com';
+
+  // Track scroll progress
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const mainNavItems = [
     { href: '/', label: 'Home', icon: HomeIcon },
@@ -110,7 +123,12 @@ export function Navbar() {
   );
 
   return (
-    <header className="bg-primary text-primary-foreground shadow-md sticky top-0 z-50" role="banner">
+    <header className="bg-primary text-primary-foreground shadow-md sticky top-0 z-50 relative" role="banner">
+      {/* Scroll Progress Bar */}
+      <div 
+        className="absolute top-0 left-0 h-1 bg-primary-foreground/30 transition-all duration-100 ease-out"
+        style={{ width: `${scrollProgress}%` }}
+      />
       <MaxWidthWrapper className="flex items-center justify-center p-4 h-16 space-x-4">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold space-x-1" onClick={handleLinkClick} aria-label="StudKits Home">
           <Target className="h-7 w-7" aria-hidden="true" />

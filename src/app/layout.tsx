@@ -8,6 +8,7 @@ import { AuthProvider } from '@/context/auth-context';
 import { CartProvider } from '@/context/cart-context';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AnalyticsProvider } from '@/components/analytics-provider';
+import { FloatingActionMenu } from '@/components/ui/floating-action-menu';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,8 +37,8 @@ export const metadata: Metadata = {
   },
   description: "Expert provider of IoT, Robotics, and Electronics project kits. Custom PCB design and microcontroller solutions for students and tech enthusiasts.",
   keywords: ["project kits", "robotics", "IoT", "electronics", "PCB design", "microcontroller", "Arduino", "ESP32", "student projects", "tech education"],
-  authors: [{ name: "StudKits Team" }],
-  creator: "StudKits",
+  authors: [{ name: "Mohit Kadu, StudKits Team" }],
+  creator: "Mohit Kadu",
   publisher: "StudKits",
   robots: {
     index: true,
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://studkits.shop",
+    url: "https://www.studkits.shop",
     siteName: "StudKits",
     title: "StudKits - Tech Project Kits & Engineering Solutions",
     description: "Expert provider of IoT, Robotics, and Electronics project kits. Custom PCB design and microcontroller solutions for students and tech enthusiasts.",
@@ -127,6 +128,7 @@ export default function RootLayout({
             </main>
             <Footer />
             <Toaster />
+            <FloatingActionMenu />
           </CartProvider>
         </AuthProvider>
         </ThemeProvider>

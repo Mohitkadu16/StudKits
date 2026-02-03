@@ -13,12 +13,11 @@
   .hero-heading {
     text-shadow: 
       /* White border */
-      -2px -2px 0 rgb(255,255,255),
-      2px -2px 0 rgb(255,255,255),
-      -2px 2px 0 rgb(255,255,255),
-      2px 2px 0 rgb(255,255,255),
-      /* Bright blue glow */
-      0 0 15px rgba(66, 133, 244, 0.7),
+      -2px -2px 0 rgb(255, 255, 255),
+      2px -2px 0 rgb(255, 255, 255),
+      -2px 2px 0 rgb(255, 255, 255),
+      2px 2px 0 rgb(255, 255, 255),
+      /* Bright blue glow */ 0 0 15px rgba(66, 133, 244, 0.7),
       0 0 30px rgba(66, 133, 244, 0.5);
     position: relative;
     z-index: 1;
@@ -27,26 +26,25 @@
 
   /* Glow animation */
   @keyframes glow-pulse {
-    0%, 100% {
+    0%,
+    100% {
       text-shadow: 
         /* White border (constant) */
-        -2px -2px 0 rgb(255,255,255),
-        2px -2px 0 rgb(255,255,255),
-        -2px 2px 0 rgb(255,255,255),
-        2px 2px 0 rgb(255,255,255),
-        /* Blue glow (pulsing) */
-        0 0 15px rgba(0, 102, 255, 0.5),
+        -2px -2px 0 rgb(255, 255, 255),
+        2px -2px 0 rgb(255, 255, 255),
+        -2px 2px 0 rgb(255, 255, 255),
+        2px 2px 0 rgb(255, 255, 255),
+        /* Blue glow (pulsing) */ 0 0 15px rgba(0, 102, 255, 0.5),
         0 0 30px rgba(0, 102, 255, 0.3);
     }
     50% {
       text-shadow: 
         /* White border (constant) */
-        -2px -2px 0 rgb(255,255,255),
-        2px -2px 0 rgb(255,255,255),
-        -2px 2px 0 rgb(255,255,255),
-        2px 2px 0 rgb(255,255,255),
-        /* Blue glow (pulsing) */
-        0 0 20px rgba(0, 102, 255, 0.6),
+        -2px -2px 0 rgb(255, 255, 255),
+        2px -2px 0 rgb(255, 255, 255),
+        -2px 2px 0 rgb(255, 255, 255),
+        2px 2px 0 rgb(255, 255, 255),
+        /* Blue glow (pulsing) */ 0 0 20px rgba(0, 102, 255, 0.6),
         0 0 35px rgba(0, 102, 255, 0.4);
     }
   }
@@ -58,8 +56,7 @@
       1px -1px 0 rgba(255, 255, 255, 0.4),
       -1px 1px 0 rgba(255, 255, 255, 0.4),
       1px 1px 0 rgba(255, 255, 255, 0.4),
-      /* Blue glow effect */
-      0 0 15px rgba(0, 102, 255, 0.5),
+      /* Blue glow effect */ 0 0 15px rgba(0, 102, 255, 0.5),
       0 0 30px rgba(0, 102, 255, 0.3),
       0 0 45px rgba(0, 102, 255, 0.1);
     position: relative;
@@ -68,14 +65,15 @@
 
   /* Add animated pulse effect */
   @keyframes glow-pulse {
-    0%, 100% {
-      text-shadow: 
+    0%,
+    100% {
+      text-shadow:
         0 0 15px rgba(0, 102, 255, 0.5),
         0 0 30px rgba(0, 102, 255, 0.3),
         0 0 45px rgba(0, 102, 255, 0.1);
     }
     50% {
-      text-shadow: 
+      text-shadow:
         0 0 20px rgba(0, 102, 255, 0.6),
         0 0 35px rgba(0, 102, 255, 0.4),
         0 0 50px rgba(0, 102, 255, 0.2);
@@ -85,19 +83,65 @@
   .glow-text {
     animation: glow-pulse 3s ease-in-out infinite;
   }
+
+  /* Button glow effect on hover */
+  .button-glow {
+    transition: all 0.3s ease;
+  }
+
+  .button-glow:hover {
+    box-shadow:
+      0 0 20px rgba(66, 133, 244, 0.5),
+      0 0 40px rgba(66, 133, 244, 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Card magnetic hover effect */
+  @keyframes magnetic-hover {
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-4px) scale(1.02);
+    }
+  }
 }
 
-:root { 
+:root {
   --header-height: 64px;
+
+  /* Gradient color variables */
+  --gradient-primary: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+  --gradient-bg: linear-gradient(
+    180deg,
+    rgb(15, 23, 42) 0%,
+    rgb(23, 37, 84) 100%
+  );
+  --gradient-accent: linear-gradient(135deg, #4285f4 0%, #5a9fff 100%);
+
+  /* Accent colors */
+  --accent-green: #34a853;
+  --accent-yellow: #fbbc04;
+  --accent-red: #ea4335;
 }
 
 /* Safe area insets for mobile devices */
-.safe-x { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
-.safe-t { padding-top: env(safe-area-inset-top); }
-.safe-b { padding-bottom: env(safe-area-inset-bottom); }
+.safe-x {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+.safe-t {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-b {
+  padding-bottom: env(safe-area-inset-bottom);
+}
 
 /* Long words/images shouldn't break layout on mobile */
-.prose { overflow-wrap: anywhere; }
+.prose {
+  overflow-wrap: anywhere;
+}
 
 body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
@@ -106,38 +150,38 @@ body {
 @layer base {
   :root {
     /* Navy blue dark theme with glassmorphism */
-    --background: 225 45% 7%;       /* Deep navy blue background for better glass effect */
-    --foreground: 213 31% 91%;      /* Light text for contrast */
-    --card: 223 47% 14% 0.6;        /* Translucent navy for cards */
+    --background: 225 45% 7%; /* Deep navy blue background for better glass effect */
+    --foreground: 213 31% 91%; /* Light text for contrast */
+    --card: 223 47% 14% 0.6; /* Translucent navy for cards */
     --card-foreground: 213 31% 91%; /* Light text for cards */
-    --popover: 223 47% 14% 0.6;     /* Translucent navy for popovers */
+    --popover: 223 47% 14% 0.6; /* Translucent navy for popovers */
     --popover-foreground: 213 31% 91%; /* Light text for popovers */
-    --primary: 221 83% 53%;         /* Bright blue for primary elements */
+    --primary: 221 83% 53%; /* Bright blue for primary elements */
     --primary-foreground: 210 40% 98%; /* Light text on primary */
-    --secondary: 199 89% 48%;       /* Lighter blue for secondary elements */
+    --secondary: 199 89% 48%; /* Lighter blue for secondary elements */
     --secondary-foreground: 210 40% 98%; /* Light text on secondary */
-    --muted: 223 47% 20%;           /* Muted navy blue */
+    --muted: 223 47% 20%; /* Muted navy blue */
     --muted-foreground: 215 20% 65%; /* Muted text */
-    --accent: 199 89% 48%;          /* Same as secondary for consistency */
+    --accent: 199 89% 48%; /* Same as secondary for consistency */
     --accent-foreground: 210 40% 98%; /* Light text on accent */
-    --destructive: 0 84% 60%;       /* Bright red for destructive actions */
+    --destructive: 0 84% 60%; /* Bright red for destructive actions */
     --destructive-foreground: 210 40% 98%; /* Light text on destructive */
-    --border: 223 47% 20%;          /* Darker navy for borders */
-    --input: 223 47% 20%;           /* Same as border */
-    --ring: 221 83% 53%;            /* Primary blue for focus rings */
-    --chart-1: 220 70% 50%;         /* Keeping original chart colors */
+    --border: 223 47% 20%; /* Darker navy for borders */
+    --input: 223 47% 20%; /* Same as border */
+    --ring: 221 83% 53%; /* Primary blue for focus rings */
+    --chart-1: 220 70% 50%; /* Keeping original chart colors */
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     --sidebar-background: 222 47% 11%; /* Same as main background */
     --sidebar-foreground: 213 31% 91%; /* Same as main foreground */
-    --sidebar-primary: 221 83% 53%;    /* Same as primary */
+    --sidebar-primary: 221 83% 53%; /* Same as primary */
     --sidebar-primary-foreground: 210 40% 98%; /* Same as primary foreground */
-    --sidebar-accent: 223 47% 16%;     /* Slightly lighter than background */
+    --sidebar-accent: 223 47% 16%; /* Slightly lighter than background */
     --sidebar-accent-foreground: 213 31% 91%; /* Same as main foreground */
-    --sidebar-border: 223 47% 20%;     /* Same as main border */
-    --sidebar-ring: 221 83% 53%;       /* Same as main ring */
+    --sidebar-border: 223 47% 20%; /* Same as main border */
+    --sidebar-ring: 221 83% 53%; /* Same as main ring */
   }
 }
 
@@ -170,18 +214,28 @@ body {
   .dropdown-item {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(15, 23, 42, 0.95) !important; /* Dark navy blue background */
+    background-color: rgba(
+      15,
+      23,
+      42,
+      0.95
+    ) !important; /* Dark navy blue background */
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
     border-radius: 1rem !important;
   }
-  
+
   /* Special styling for cards with navy blue background */
   .card {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(23, 37, 84, 0.7) !important;  /* Navy blue with opacity */
-    border: 1px solid rgba(17, 24, 39, 0.2) !important;  /* Dark gray border */
+    background-color: rgba(
+      23,
+      37,
+      84,
+      0.7
+    ) !important; /* Navy blue with opacity */
+    border: 1px solid rgba(17, 24, 39, 0.2) !important; /* Dark gray border */
     box-shadow: 0 8px 32px 0 rgba(17, 24, 39, 0.25) !important;
     border-radius: 1.5rem !important;
     border-radius: 1.5rem !important; /* Added rounded corners */
@@ -209,7 +263,12 @@ body {
 
   /* Card styling with deeper navy blue */
   .card {
-    background-color: rgba(15, 23, 42, 0.75) !important;  /* Deeper navy blue with opacity */
+    background-color: rgba(
+      15,
+      23,
+      42,
+      0.75
+    ) !important; /* Deeper navy blue with opacity */
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45) !important;
   }
@@ -245,8 +304,13 @@ body {
   /* Special hover effect for cards */
   .card:hover {
     transform: translateY(-2px);
-    background-color: rgba(23, 37, 84, 0.8) !important;  /* Slightly more opaque on hover */
-    border: 1px solid rgba(17, 24, 39, 0.35) !important;  /* Darker border on hover */
+    background-color: rgba(
+      23,
+      37,
+      84,
+      0.8
+    ) !important; /* Slightly more opaque on hover */
+    border: 1px solid rgba(17, 24, 39, 0.35) !important; /* Darker border on hover */
     box-shadow: 0 12px 40px 0 rgba(17, 24, 39, 0.35) !important;
     transition: all 0.3s ease;
   }
@@ -262,7 +326,12 @@ body {
 
   /* Card hover effect */
   .card:hover {
-    background-color: rgba(15, 23, 42, 0.85) !important;  /* More opaque navy blue on hover */
+    background-color: rgba(
+      15,
+      23,
+      42,
+      0.85
+    ) !important; /* More opaque navy blue on hover */
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.55) !important;
   }
 
@@ -287,7 +356,7 @@ body {
   .badge::before,
   .alert-dialog::before,
   .select::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
@@ -338,7 +407,7 @@ body {
 
   /* Add subtle gradient overlay for depth */
   .card::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
@@ -364,11 +433,11 @@ body {
   .dropdown-content,
   .dropdown-menu-content,
   [role="menu"] {
-    border: 1px solid rgba(17, 24, 39, 0.25);  /* Darker border for light mode */
+    border: 1px solid rgba(17, 24, 39, 0.25); /* Darker border for light mode */
     border-radius: 1.25rem !important;
     overflow: hidden;
   }
-  
+
   /* Rounded corners for dropdown menu items */
   .dropdown-menu-item:first-child,
   [role="menuitem"]:first-child,
@@ -376,7 +445,7 @@ body {
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
   }
-  
+
   .dropdown-menu-item:last-child,
   [role="menuitem"]:last-child,
   .menu-item:last-child {
@@ -394,7 +463,11 @@ body {
   /* Primary button style override */
   button[class*="primary"],
   .button[class*="primary"] {
-    color: rgb(241, 245, 249) !important; /* Light text for primary buttons in both modes */
+    color: rgb(
+      241,
+      245,
+      249
+    ) !important; /* Light text for primary buttons in both modes */
   }
 
   /* Ghost button style override */
@@ -557,64 +630,79 @@ body {
 }
 
 /* Specific styles for dropdown menus and lists */
-  .dropdown-menu-content,
-  [role="menu"],
-  .dropdown-content {
-    background-color: rgba(15, 23, 42, 0.95) !important;  /* Dark navy blue background */
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 
-      0 4px 8px -1px rgba(0, 0, 0, 0.3),
-      0 2px 4px -1px rgba(0, 0, 0, 0.2),
-      0 0 0 1px rgba(255, 255, 255, 0.05) !important;
-    padding: 4px !important;
-  }
+.dropdown-menu-content,
+[role="menu"],
+.dropdown-content {
+  background-color: rgba(
+    15,
+    23,
+    42,
+    0.95
+  ) !important; /* Dark navy blue background */
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow:
+    0 4px 8px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+  padding: 4px !important;
+}
 
-  .dropdown-menu-content [role="menuitem"],
-  .dropdown-content [role="menuitem"],
-  .menu-item {
-    background-color: rgba(30, 41, 59, 0.98) !important;  /* Slightly lighter navy for items */
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    margin: 4px;
-    border-radius: 0.75rem !important;
-    color: rgb(15, 23, 42) !important;  /* Dark text for better visibility */
-    font-weight: 500;
-  }
+.dropdown-menu-content [role="menuitem"],
+.dropdown-content [role="menuitem"],
+.menu-item {
+  background-color: rgba(
+    30,
+    41,
+    59,
+    0.98
+  ) !important; /* Slightly lighter navy for items */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  margin: 4px;
+  border-radius: 0.75rem !important;
+  color: rgb(15, 23, 42) !important; /* Dark text for better visibility */
+  font-weight: 500;
+}
 
-  .dropdown-menu-content [role="menuitem"]:hover,
-  .dropdown-content [role="menuitem"]:hover,
-  .menu-item:hover {
-    background-color: rgba(51, 65, 85, 0.98) !important;  /* Slightly lighter on hover */
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  }
+.dropdown-menu-content [role="menuitem"]:hover,
+.dropdown-content [role="menuitem"]:hover,
+.menu-item:hover {
+  background-color: rgba(
+    51,
+    65,
+    85,
+    0.98
+  ) !important; /* Slightly lighter on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
 
-  /* Color overrides for text */
-  .dropdown-menu-content [role="menuitem"],
-  .dropdown-content [role="menuitem"],
-  .menu-item,
-  button,
-  .button {
-    color: rgb(241, 245, 249) !important; /* White text */
-    font-weight: 500;
-  }
+/* Color overrides for text */
+.dropdown-menu-content [role="menuitem"],
+.dropdown-content [role="menuitem"],
+.menu-item,
+button,
+.button {
+  color: rgb(241, 245, 249) !important; /* White text */
+  font-weight: 500;
+}
 
-  /* Active/selected menu item */
-  .dropdown-menu-content [role="menuitem"][data-state="active"],
-  .dropdown-content [role="menuitem"][data-state="active"],
-  .menu-item[data-state="active"] {
-    background-color: rgba(59, 130, 246, 0.9) !important;
-    color: white !important;
-  }
+/* Active/selected menu item */
+.dropdown-menu-content [role="menuitem"][data-state="active"],
+.dropdown-content [role="menuitem"][data-state="active"],
+.menu-item[data-state="active"] {
+  background-color: rgba(59, 130, 246, 0.9) !important;
+  color: white !important;
+}
 
-  .dark .dropdown-menu-content [role="menuitem"][data-state="active"],
-  .dark .dropdown-content [role="menuitem"][data-state="active"],
-  .dark .menu-item[data-state="active"] {
-    background-color: rgba(59, 130, 246, 0.9) !important;
-    color: white !important;
-  }
+.dark .dropdown-menu-content [role="menuitem"][data-state="active"],
+.dark .dropdown-content [role="menuitem"][data-state="active"],
+.dark .menu-item[data-state="active"] {
+  background-color: rgba(59, 130, 246, 0.9) !important;
+  color: white !important;
+}
