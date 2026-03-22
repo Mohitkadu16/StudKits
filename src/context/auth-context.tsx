@@ -7,7 +7,7 @@ import { auth, getUserProfile } from '@/lib/firebase';
 import { Loader2 } from 'lucide-react';
 
 interface AuthContextType {
-  user: User | null;
+  user: (User & { college?: string; isAdmin?: boolean }) | null;
   isLoading: boolean;
 }
 
@@ -32,16 +32,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (profile) {
           // normalize college/school aliases so forms can read either `college`, `collegeName` or `school`
           const normalizedCollege = (profile as any).college || (profile as any).collegeName || (profile as any).school || '';
+          
+          // Role lookup: Check if user is admin specifically
+          const isAdmin = (profile as any).role === 'admin' || u.email === 'studkits25@gmail.com';
+          
           const merged = {
             ...u,
             ...profile,
             college: normalizedCollege,
             collegeName: normalizedCollege,
             school: normalizedCollege,
-          } as unknown as User;
+            isAdmin
+          } as unknown as (User & { college?: string; isAdmin?: boolean });
           setUser(merged);
         } else {
-          setUser(u);
+          const isAdmin = u.email === 'studkits25@gmail.com';
+          const merged = { ...u, isAdmin } as unknown as (User & { college?: string; isAdmin?: boolean });
+          setUser(merged);
         }
       } catch (err) {
         console.error('Error loading user profile:', err);

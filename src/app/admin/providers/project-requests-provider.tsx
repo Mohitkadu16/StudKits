@@ -3,7 +3,8 @@ import { type ProjectRequest } from '@/lib/requests';
 import { db } from '@/lib/firebase';
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
-import { approveProjectRequest, declineProjectRequest } from '@/lib/requests';
+import { approveProjectRequest, declineProjectRequest } from '../actions';
+import { auth } from '@/lib/firebase';
 
 interface ProjectRequestsContextType {
   projectRequests: ProjectRequest[];
@@ -41,7 +42,10 @@ export function ProjectRequestsProvider({ children }: { children: React.ReactNod
 
   async function approveRequest(request: ProjectRequest) {
     try {
-      const result = await approveProjectRequest(request);
+      const idToken = await auth.currentUser?.getIdToken(true);
+      if (!idToken) throw new Error("Authentication error. Please sign in again.");
+      
+      const result = await approveProjectRequest(idToken, request);
       if (result.success) {
         toast({ title: "Request Approved", description: `Project ${result.projectId} has been created.` });
       } else {
@@ -58,7 +62,10 @@ export function ProjectRequestsProvider({ children }: { children: React.ReactNod
 
   async function declineRequest(request: ProjectRequest) {
     try {
-      const result = await declineProjectRequest(request);
+      const idToken = await auth.currentUser?.getIdToken(true);
+      if (!idToken) throw new Error("Authentication error. Please sign in again.");
+      
+      const result = await declineProjectRequest(idToken, request);
       if (result.success) {
         toast({ title: "Request Declined", description: "The user has been notified." });
       } else {

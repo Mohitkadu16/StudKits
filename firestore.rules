@@ -1,0 +1,54 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Function to verify if user is admin
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'studkits25@gmail.com' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+    
+    // Function to verify if user owns the document
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      // Users can read/write their own profile. Admins can read/write all.
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+    
+    match /projectRequests/{projectId} {
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      allow create: if isOwner(request.resource.data.userId) || isAdmin();
+      allow update, delete: if isAdmin();
+    }
+    
+    match /projects/{projectId} {
+      // Projects use email as userId. Let users track their own projects via email.
+      allow read: if (request.auth != null && request.auth.token.email == resource.data.userId) || isAdmin();
+      allow write: if isAdmin(); // Only admins can create/update projects
+    }
+    
+    match /troubleshootingRequests/{requestId} {
+      // Allow anyone (even unauthenticated) to submit a troubleshooting request form.
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+    
+    match /auditLogs/{logId} {
+      // Only admins can read audit logs.
+      allow read: if isAdmin();
+      // Only allow creation from admin accounts
+      allow create: if isAdmin();
+      allow update, delete: if false; // Logs are immutable
+    }
+
+    match /{document=**} {
+      allow read, write: if false; // default deny to prevent data leakage
+    }
+  }
+}

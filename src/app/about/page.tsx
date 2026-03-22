@@ -163,7 +163,7 @@ export default function AboutUsPage() {
               { year: '2025', title: 'Founded', description: 'StudKits was born from a passion to make technical education accessible', icon: Rocket },
               { year: '2025', title: '10+ Projects', description: 'Completed & Delivered 10+ successful projects', icon: Award },
               { year: '2025', title: '5+ Colleges', description: 'Collaborated with students from over 5+ colleges across India', icon: TrendingUp },
-              { year: '2025', title: 'Marketplace', description: 'Launching marketplace for project kits', icon: Lightbulb },
+              { year: '2026', title: 'Marketplace', description: 'Launching marketplace for project kits', icon: Lightbulb },
             ].map((milestone, index) => (
               <motion.div
                 key={index}
@@ -419,7 +419,7 @@ export default function AboutUsPage() {
           </motion.div>
           </div>
           {/* Last two cards centered */}
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -517,43 +517,6 @@ export default function AboutUsPage() {
             transition={{ duration: 0.5, delay: 0.5 }}
             whileHover={{ y: -8, scale: 1.02 }}
           >
-          <Card className="text-center p-4 h-full transition-all duration-300 border-2 border-[#4285F4] rounded-xl hover:shadow-2xl hover:shadow-primary/20">
-            <CardHeader>
-              <div className="mx-auto h-32 w-32 rounded-full overflow-hidden border-4 border-primary/40 bg-white/20">
-                <Image
-                  src={encodeURI('/images/Janhavi Gangan.jpeg')}
-                  alt="Janhavi Gangan"
-                  width={128}
-                  height={128}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <CardTitle className="text-2xl">Janhavi Gangan</CardTitle>
-              <CardDescription className="text-base text-primary">(PR) Public Relation Head</CardDescription>
-                <p className="text-sm text-muted-foreground pt-2">
-                  Hello I am Janhavi Gangan Public Relation Head of Studkits. Currently pursuing Bachelors in Electronics and Telecommunication Engineering at Datta Meghe College of Engineering.
-              </p>
-              <div className="flex items-center justify-center gap-4 mt-4 p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
-                <Button variant="ghost" size="icon"  asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
-                  <Link href="mailto:janhavi.a05@gmail.com" target="_blank" rel="noopener noreferrer">
-                    <Mail className="h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
-                  <Link href="https://www.instagram.com/janhavi.__.__/" target="_blank" rel="noopener noreferrer">
-                    <Instagram className="h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white/5 backdrop-blur-sm border border-primary/10 shadow-lg">
-                  <Link href="tel:+918779847138">
-                    <Phone className="h-5 w-5" />
-                  </Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
           </motion.div>
           </div>
         </div>

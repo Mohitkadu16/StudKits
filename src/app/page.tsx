@@ -258,9 +258,9 @@ export default function HomePage() {
 
               {/* Statistics Counter Section */}
               <div className="grid grid-cols-2 gap-3">
-                <StatsCounter number="10+" label="Projects Delivered" icon={Package} delay={0} />
-                <StatsCounter number="10+" label="Happy Students" icon={Users} delay={100} />
-                <StatsCounter number="5+" label="Colleges Students Served" icon={Building} delay={200} />
+                <StatsCounter number="15+" label="Projects Delivered" icon={Package} delay={0} />
+                <StatsCounter number="13+" label="Happy Students" icon={Users} delay={100} />
+                <StatsCounter number="12+" label="Colleges Students Served" icon={Building} delay={200} />
                 <StatsCounter number="4.9/5" label="Customer Rating" icon={Star} delay={300} />
               </div>
             </div>

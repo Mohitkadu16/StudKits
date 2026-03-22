@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User, PackageSearch, UserCog, ShoppingCart } from 'lucide-react';
+import { Target, HomeIcon, Info, Edit3, Mail, Presentation, Wand2, Menu, X, UserCircle, LogOut, User, PackageSearch, UserCog, ShoppingCart, ShieldAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import { usePathname, useRouter } from 'next/navigation';
@@ -100,10 +100,16 @@ export function Navbar() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {isAdmin && (
-          <DropdownMenuItem onClick={() => router.push('/admin')}>
-            <UserCog className="mr-2 h-4 w-4" />
-            <span>Admin Panel</span>
-          </DropdownMenuItem>
+          <>
+            <DropdownMenuItem onClick={() => router.push('/admin')}>
+              <UserCog className="mr-2 h-4 w-4" />
+              <span>Admin Panel</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push('/admin/audit')}>
+              <ShieldAlert className="mr-2 h-4 w-4" />
+              <span>Audit Logs</span>
+            </DropdownMenuItem>
+          </>
         )}
         <DropdownMenuItem onClick={() => router.push('/profile')}>
           <User className="mr-2 h-4 w-4" />
@@ -299,14 +305,24 @@ export function Navbar() {
                   </div>
                 </li>
                 {isAdmin && (
-                  <li>
-                    <Button variant="ghost" className="w-full justify-start text-lg py-6 rounded-full" asChild onClick={handleLinkClick}>
-                      <Link href="/admin" className="flex items-center">
-                        <UserCog className="h-5 w-5 mr-4" />
-                        <span>Admin Panel</span>
-                      </Link>
-                    </Button>
-                  </li>
+                  <>
+                    <li>
+                      <Button variant="ghost" className="w-full justify-start text-lg py-6 rounded-full" asChild onClick={handleLinkClick}>
+                        <Link href="/admin" className="flex items-center">
+                          <UserCog className="h-5 w-5 mr-4" />
+                          <span>Admin Panel</span>
+                        </Link>
+                      </Button>
+                    </li>
+                    <li>
+                      <Button variant="ghost" className="w-full justify-start text-lg py-6 rounded-full" asChild onClick={handleLinkClick}>
+                        <Link href="/admin/audit" className="flex items-center">
+                          <ShieldAlert className="h-5 w-5 mr-4" />
+                          <span>Audit Logs</span>
+                        </Link>
+                      </Button>
+                    </li>
+                  </>
                 )}
                 <li>
                   <Button variant="ghost" className="w-full justify-start text-lg py-6 rounded-full" asChild onClick={handleLinkClick}>

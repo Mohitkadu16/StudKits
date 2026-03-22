@@ -4,6 +4,7 @@ import { db } from '@/lib/firebase';
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { updateProjectInFirestore } from '../actions';
+import { auth } from '@/lib/firebase';
 
 interface ProjectManagerContextType {
   project: ProjectTrackingInfo | null;
@@ -90,7 +91,13 @@ export function ProjectManagerProvider({ children }: { children: React.ReactNode
     const updatedProject = { ...project, currentStage: newStage, stages: updatedStages };
     setProject(updatedProject);
     
-    const result = await updateProjectInFirestore(projectId, { 
+    const idToken = await auth.currentUser?.getIdToken(true);
+    if (!idToken) {
+      toast({ title: "Auth Error", description: "You must be signed in to perform this action.", variant: 'destructive' });
+      return;
+    }
+
+    const result = await updateProjectInFirestore(idToken, projectId, { 
       currentStage: newStage, 
       stages: updatedStages 
     });
@@ -116,8 +123,13 @@ export function ProjectManagerProvider({ children }: { children: React.ReactNode
     updatedStages[stageKey] = { ...updatedStages[stageKey], notes: notes };
     
     setProject({ ...project, stages: updatedStages });
-    
-    const result = await updateProjectInFirestore(projectId, { stages: updatedStages });
+    const idToken = await auth.currentUser?.getIdToken(true);
+    if (!idToken) {
+      toast({ title: "Auth Error", description: "You must be signed in to perform this action.", variant: 'destructive' });
+      return;
+    }
+
+    const result = await updateProjectInFirestore(idToken, projectId, { stages: updatedStages });
     if (!result.success) {
       toast({ 
         title: "Save Failed", 

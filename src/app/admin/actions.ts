@@ -1,21 +1,45 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, setDoc, updateDoc, getDoc, addDoc, collection, deleteDoc } from 'firebase/firestore';
+import { admin } from '@/lib/firebase-admin';
+import { getAuth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
 import type { ProjectTrackingInfo } from '@/lib/tracking';
 import type { ProjectRequest } from '@/lib/requests';
 import { revalidatePath } from 'next/cache';
 import { sendEmail as sendEmailFlow } from '@/ai/flows/send-email-flow';
+import { logAdminAction } from '@/lib/audit-logger';
 
 const MOCK_PROJECT_ID = 'SK-1024';
-const MOCK_USER_ID = 'user-abc-123'; 
+const MOCK_USER_ID = 'user-abc-123';
 
-export async function seedInitialProject(): Promise<{ success: boolean; message: string }> {
+// Verify token and check if user is admin
+async function verifyAdmin(token: string) {
+  if (!token) return null;
   try {
-    const projectRef = doc(db, 'projects', MOCK_PROJECT_ID);
-    const projectSnap = await getDoc(projectRef);
+    const decoded = await getAuth(admin).verifyIdToken(token);
+    if (decoded.email === 'studkits25@gmail.com') return decoded;
+    
+    const userDoc = await getFirestore(admin).collection('users').doc(decoded.uid).get();
+    if (userDoc.exists && userDoc.data()?.role === 'admin') return decoded;
+    
+    return null;
+  } catch (error) {
+    console.error('Admin verification failed:', error);
+    return null;
+  }
+}
 
-    if (projectSnap.exists()) {
+
+export async function seedInitialProject(idToken: string): Promise<{ success: boolean; message: string }> {
+  try {
+    const decodedAdmin = await verifyAdmin(idToken);
+    if (!decodedAdmin) throw new Error('Unauthorized');
+
+    const db = getFirestore(admin);
+    const projectRef = db.collection('projects').doc(MOCK_PROJECT_ID);
+    const projectSnap = await projectRef.get();
+
+    if (projectSnap.exists) {
       return { success: true, message: 'Test project already exists.' };
     }
 
@@ -33,7 +57,10 @@ export async function seedInitialProject(): Promise<{ success: boolean; message:
       },
     };
     
-    await setDoc(projectRef, mockProjectData);
+    await projectRef.set(mockProjectData);
+    
+    await logAdminAction('SYSTEM_SEED', decodedAdmin.email || 'unknown', 'Seeded test project');
+    
     revalidatePath('/admin');
     revalidatePath('/tracking');
     return { success: true, message: 'Initial test project seeded successfully!' };
@@ -43,10 +70,17 @@ export async function seedInitialProject(): Promise<{ success: boolean; message:
   }
 }
 
-export async function updateProjectInFirestore(projectId: string, dataToUpdate: Partial<ProjectTrackingInfo>): Promise<{ success: boolean, message: string }> {
+export async function updateProjectInFirestore(idToken: string, projectId: string, dataToUpdate: Partial<ProjectTrackingInfo>): Promise<{ success: boolean, message: string }> {
   try {
-    const projectRef = doc(db, 'projects', projectId);
-    await updateDoc(projectRef, dataToUpdate);
+    const decodedAdmin = await verifyAdmin(idToken);
+    if (!decodedAdmin) throw new Error('Unauthorized');
+
+    const db = getFirestore(admin);
+    const projectRef = db.collection('projects').doc(projectId);
+    await projectRef.update(dataToUpdate);
+    
+    await logAdminAction('PROJECT_UPDATED', decodedAdmin.email || 'unknown', `Updated project data (Stage: ${dataToUpdate.currentStage || 'N/A'})`, projectId);
+    
     revalidatePath('/admin');
     revalidatePath('/tracking');
     return { success: true, message: `Project ${projectId} updated successfully.` };
@@ -56,11 +90,20 @@ export async function updateProjectInFirestore(projectId: string, dataToUpdate: 
   }
 }
 
-export async function submitProjectRequest(requestData: Omit<ProjectRequest, 'id' | 'createdAt'>) {
+export async function submitProjectRequest(idToken: string, requestData: Omit<ProjectRequest, 'id' | 'createdAt'>) {
     try {
-        await addDoc(collection(db, 'projectRequests'), {
+        // We verify token just to map to a user ID. We don't check for admin here because normal users submit requests.
+        let decoded = null;
+        if (idToken) {
+           decoded = await getAuth(admin).verifyIdToken(idToken).catch(() => null);
+        }
+        if (!decoded) throw new Error('Unauthorized. Please login to submit a request.');
+
+        const db = getFirestore(admin);
+        await db.collection('projectRequests').add({
             ...requestData,
             createdAt: new Date().toISOString(),
+            userId: decoded.uid
         });
         
         // Also send an email notification
@@ -81,12 +124,16 @@ export async function submitProjectRequest(requestData: Omit<ProjectRequest, 'id
     }
 }
 
-export async function approveProjectRequest(request: ProjectRequest): Promise<{ success: boolean; message: string; projectId?: string }> {
+export async function approveProjectRequest(idToken: string, request: ProjectRequest): Promise<{ success: boolean; message: string; projectId?: string }> {
     try {
+        const decodedAdmin = await verifyAdmin(idToken);
+        if (!decodedAdmin) throw new Error('Unauthorized');
+
+        const db = getFirestore(admin);
         const newProjectId = `SK-${Math.floor(1000 + Math.random() * 9000)}`;
         const newProject: ProjectTrackingInfo = {
             projectId: newProjectId,
-            userId: request.email, // Use user's email as a temporary ID
+            userId: request.email, // Use user's mapped ID or fallback
             currentStage: 'components_collected',
             stages: {
                 components_collected: { status: 'in_progress', timestamp: new Date().toISOString(), notes: `Project created from request: ${request.projectTitle || request.topic}` },
@@ -98,8 +145,12 @@ export async function approveProjectRequest(request: ProjectRequest): Promise<{ 
             }
         };
 
-        await setDoc(doc(db, 'projects', newProjectId), newProject);
-        await deleteDoc(doc(db, 'projectRequests', request.id));
+        const batch = db.batch();
+        batch.set(db.collection('projects').doc(newProjectId), newProject);
+        batch.delete(db.collection('projectRequests').doc(request.id));
+        await batch.commit();
+
+        await logAdminAction('REQUEST_APPROVED', decodedAdmin.email || 'unknown', `Approved request: ${request.projectTitle || request.topic}`, newProjectId);
 
         // Send acceptance email to user
         const emailSubject = `Your Project Request Has Been Approved! (${request.projectTitle || request.topic})`;
@@ -135,9 +186,15 @@ export async function approveProjectRequest(request: ProjectRequest): Promise<{ 
     }
 }
 
-export async function declineProjectRequest(request: ProjectRequest): Promise<{ success: boolean; message: string }> {
+export async function declineProjectRequest(idToken: string, request: ProjectRequest): Promise<{ success: boolean; message: string }> {
     try {
-        await deleteDoc(doc(db, 'projectRequests', request.id));
+        const decodedAdmin = await verifyAdmin(idToken);
+        if (!decodedAdmin) throw new Error('Unauthorized');
+
+        const db = getFirestore(admin);
+        await db.collection('projectRequests').doc(request.id).delete();
+        
+        await logAdminAction('REQUEST_DECLINED', decodedAdmin.email || 'unknown', `Declined request: ${request.projectTitle || request.topic}`, request.id);
 
         // Send decline email to user
         const emailSubject = `Update on Your Project Request (${request.projectTitle || request.topic})`;
