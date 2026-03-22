@@ -45,7 +45,7 @@ export function FloatingActionMenu() {
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-32 right-4 md:bottom-6 md:right-6 z-[60]">
       {/* Action Buttons - Positioned absolutely above the toggle button */}
       <AnimatePresence>
         {isOpen && (

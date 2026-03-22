@@ -26,12 +26,12 @@ export default function CartDrawer() {
       {/* overlay */}
       <div
         aria-hidden={!open}
-        className={`fixed inset-0 bg-black/50 transition-opacity ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-[100] bg-black/50 transition-opacity ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setOpen(false)}
       />
 
       <aside
-        className={`fixed top-0 right-0 h-full w-80 max-w-full bg-background text-foreground transform transition-transform ${open ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 h-full w-80 max-w-full z-[100] bg-background text-foreground transform transition-transform ${open ? 'translate-x-0' : 'translate-x-full'}`}
         style={{ boxShadow: '0 0 60px rgba(0,0,0,0.6)' }}
       >
         <div className="p-4 flex items-center justify-between border-b border-border">

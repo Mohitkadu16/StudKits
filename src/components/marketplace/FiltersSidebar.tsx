@@ -74,9 +74,9 @@ export default function FiltersSidebar({
   };
 
   return (
-    <aside className="w-full md:w-64">
-      <div className="card p-4">
-        <div className="flex items-center justify-between">
+    <aside className="w-full md:w-64 grid grid-cols-2 md:grid-cols-1 gap-3 md:gap-4 items-start">
+      <div className="card p-3 md:p-4 h-full">
+        <div className="flex items-center justify-between mb-3">
           <h4 className="font-semibold mb-2">Categories</h4>
           <button
             className="text-sm text-muted-foreground px-3 py-1 rounded-md hover:bg-muted/20"
@@ -88,7 +88,7 @@ export default function FiltersSidebar({
         </div>
 
         {/* Microcontrollers dropdown */}
-        <div className="mt-2">
+        <div className="mt-0">
           <button
             onClick={() => toggle('micro')}
             className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
@@ -114,7 +114,7 @@ export default function FiltersSidebar({
         </div>
 
         {/* Sensors dropdown */}
-        <div className="mt-3">
+        <div className="mt-2">
           <button
             onClick={() => toggle('sensors')}
             className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
@@ -140,7 +140,7 @@ export default function FiltersSidebar({
         </div>
 
         {/* Power Management dropdown */}
-        <div className="mt-3">
+        <div className="mt-2">
           <button
             onClick={() => toggle('power')}
             className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
@@ -165,7 +165,7 @@ export default function FiltersSidebar({
         </div>
 
         {/* Communication dropdown */}
-        <div className="mt-3">
+        <div className="mt-2">
           <button
             onClick={() => toggle('comm')}
             className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
@@ -193,7 +193,7 @@ export default function FiltersSidebar({
         </div>
 
         {/* Components dropdown */}
-        <div className="mt-3">
+        <div className="mt-2">
           <button
             onClick={() => toggle('components')}
             className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
@@ -224,7 +224,7 @@ export default function FiltersSidebar({
         </div>
 
         {/* Prototyping & Accessories dropdown */}
-        <div className="mt-3">
+        <div className="mt-2">
           <button
             onClick={() => toggle('proto')}
             className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
@@ -252,8 +252,8 @@ export default function FiltersSidebar({
         </div>
       </div>
 
-      <div className="card p-4 mt-4">
-        <h4 className="font-semibold mb-2">Filters</h4>
+      <div className="card p-3 md:p-4 h-full">
+        <h4 className="font-semibold mb-3">Filters</h4>
 
         {/* Variants Only Filter */}
         <div className="mb-4 pb-4 border-b border-border">
@@ -281,30 +281,34 @@ export default function FiltersSidebar({
 
         <div className="text-sm text-muted-foreground mb-2">Price range</div>
 
-        <div className="flex gap-2 items-center mb-3">
-          <label className="text-xs text-muted-foreground">Min</label>
-          <input
-            type="number"
-            min={0}
-            value={priceMin}
-            onChange={(e) => setPriceMin(Number(e.target.value))}
-            className="input w-24 px-2 py-1"
-            aria-label="Minimum price"
-          />
-          <label className="text-xs text-muted-foreground">Max</label>
-          <input
-            type="number"
-            min={0}
-            value={priceMax}
-            onChange={(e) => setPriceMax(Number(e.target.value))}
-            className="input w-28 px-2 py-1"
-            aria-label="Maximum price"
-          />
+        <div className="flex flex-col xl:flex-row gap-2 xl:items-center mb-4">
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground w-6">Min</label>
+            <input
+              type="number"
+              min={0}
+              value={priceMin}
+              onChange={(e) => setPriceMin(Number(e.target.value))}
+              className="input w-full px-2 py-1 h-8 text-sm"
+              aria-label="Minimum price"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground w-6">Max</label>
+            <input
+              type="number"
+              min={0}
+              value={priceMax}
+              onChange={(e) => setPriceMax(Number(e.target.value))}
+              className="input w-full px-2 py-1 h-8 text-sm"
+              aria-label="Maximum price"
+            />
+          </div>
         </div>
 
-        <div className="flex gap-2">
-          <button onClick={applyPrice} className="px-3 py-2 rounded-md bg-primary text-primary-foreground">Apply</button>
-          <button onClick={resetPrice} className="px-3 py-2 rounded-md border border-border text-muted-foreground">Reset</button>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <button onClick={applyPrice} className="w-full sm:flex-1 px-3 py-2 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">Apply</button>
+          <button onClick={resetPrice} className="w-full sm:flex-1 px-3 py-2 rounded-md border border-border text-muted-foreground text-sm hover:bg-muted/50 transition-colors">Reset</button>
         </div>
       </div>
     </aside>

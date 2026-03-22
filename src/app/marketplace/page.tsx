@@ -141,16 +141,17 @@ export default function MarketplacePage() {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
         <h1 className="text-2xl font-bold">Smart Component Marketplace</h1>
 
-        <div className="flex items-center gap-3">
-          <div className="relative flex items-center">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+          {/* Search Bar Sub-row */}
+          <div className="relative flex items-center w-full md:w-auto">
             <input
               value={q}
               onChange={e => setQ(e.target.value)}
-              placeholder="Search components by name, part number, or specifications..."
-              className="w-72 pr-10 px-4 py-2 rounded-full bg-background text-foreground font-semibold shadow-md border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+              placeholder="Search components by name, part number, or specs..."
+              className="w-full md:w-72 pr-10 px-4 py-2 rounded-full bg-background text-foreground font-semibold shadow-md border border-border focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:text-primary-foreground"
+              className="absolute right-2 text-primary hover:text-primary-foreground p-1"
               aria-label="Search"
               onClick={() => {}}
               tabIndex={-1}
@@ -159,23 +160,26 @@ export default function MarketplacePage() {
             </button>
           </div>
 
-          <select
-            value={sort}
-            onChange={e => setSort(e.target.value)}
-            className="px-4 py-2 rounded-full bg-background text-foreground font-semibold shadow-md border border-border focus:outline-none focus:ring-2 focus:ring-primary"
-          >
-            <option value="relevant">Most Relevant</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="has-variants">Has Variants Only</option>
-          </select>
+          {/* Sort & Cart Sub-row */}
+          <div className="flex items-center gap-3 w-full md:w-auto justify-between">
+            <select
+              value={sort}
+              onChange={e => setSort(e.target.value)}
+              className="flex-1 md:flex-none px-4 py-2 rounded-full bg-background text-foreground font-semibold shadow-md border border-border focus:outline-none focus:ring-2 focus:ring-primary appearance-none truncate"
+            >
+              <option value="relevant">Most Relevant</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="has-variants">Has Variants Only</option>
+            </select>
 
-          <button onClick={() => setOpen(true)} className="relative">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-primary text-primary-foreground font-semibold shadow-md">Cart</span>
-            {items.length > 0 && (
-              <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-destructive text-destructive-foreground rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold border-2 border-background shadow">{items.length}</span>
-            )}
-          </button>
+            <button onClick={() => setOpen(true)} className="relative shrink-0">
+              <span className="inline-flex items-center px-6 py-2 rounded-full bg-primary text-primary-foreground font-semibold shadow-md">Cart</span>
+              {items.length > 0 && (
+                <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-destructive text-destructive-foreground rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold border-2 border-background shadow">{items.length}</span>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -185,7 +189,7 @@ export default function MarketplacePage() {
         </div>
 
         <div className="md:col-span-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
             {filtered.map(p => (
               <ProductCard key={p.id} product={p} />
             ))}

@@ -8,7 +8,6 @@ import { AuthProvider } from '@/context/auth-context';
 import { CartProvider } from '@/context/cart-context';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AnalyticsProvider } from '@/components/analytics-provider';
-import { FloatingActionMenu } from '@/components/ui/floating-action-menu';
 import { MobileNav } from '@/components/layout/mobile-nav';
 
 const geistSans = Geist({
@@ -130,7 +129,6 @@ export default function RootLayout({
             <Footer />
             <MobileNav />
             <Toaster />
-            <FloatingActionMenu />
           </CartProvider>
         </AuthProvider>
         </ThemeProvider>

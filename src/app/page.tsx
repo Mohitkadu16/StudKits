@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/carousel";
 import { StatsCounter } from '@/components/ui/stats-counter';
 import { TrustBadges } from '@/components/ui/trust-badges';
-import { FloatingActionMenu } from '@/components/ui/floating-action-menu';
 import { LogoMarquee } from '@/components/ui/logo-marquee';
 
 export default function HomePage() {

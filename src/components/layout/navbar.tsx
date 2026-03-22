@@ -129,7 +129,7 @@ export function Navbar() {
   );
 
   return (
-    <header className="bg-primary text-primary-foreground shadow-md sticky top-0 z-50 relative" role="banner">
+    <header className="bg-primary text-primary-foreground shadow-md sticky top-0 z-[60]" role="banner">
       {/* Scroll Progress Bar */}
       <div 
         className="absolute top-0 left-0 h-1 bg-primary-foreground/30 transition-all duration-100 ease-out"

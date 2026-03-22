@@ -41,10 +41,10 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <>
       <Dialog>
-        <div className="card p-0 flex flex-col min-h-[260px] relative group overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-300">
+        <div className="card p-0 flex flex-col min-h-[220px] sm:min-h-[260px] relative group overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-300">
           
           <DialogTrigger asChild>
-            <div onClick={recordRecentView} className="h-40 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center overflow-hidden cursor-pointer relative">
+            <div onClick={recordRecentView} className="h-32 sm:h-40 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center overflow-hidden cursor-pointer relative">
               {product.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={product.image} alt={product.title} className="object-contain h-[80%] w-[80%] group-hover:scale-110 transition-transform duration-500" />
@@ -60,11 +60,11 @@ export default function ProductCard({ product }: { product: Product }) {
             </div>
           </DialogTrigger>
 
-          <div className="flex-1 p-4 flex flex-col gap-1">
-            <h3 className="text-sm font-semibold line-clamp-1 group-hover:text-primary transition-colors">{product.title}</h3>
+          <div className="flex-1 p-3 sm:p-4 flex flex-col gap-1">
+            <h3 className="text-xs sm:text-sm font-semibold line-clamp-2 sm:line-clamp-1 group-hover:text-primary transition-colors leading-tight">{product.title}</h3>
             
-            <div className="flex items-center gap-1.5 text-xs text-orange-600 dark:text-orange-400 font-medium">
-                <Users className="w-3.5 h-3.5" />
+            <div className="flex items-start gap-1 text-[10px] sm:text-xs text-orange-600 dark:text-orange-400 font-medium leading-tight mt-1">
+                <Users className="w-3.5 h-3.5 shrink-0" />
                 <span>{boughtCount} students bought this</span>
             </div>
             
