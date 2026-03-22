@@ -9,6 +9,7 @@ import { CartProvider } from '@/context/cart-context';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AnalyticsProvider } from '@/components/analytics-provider';
 import { FloatingActionMenu } from '@/components/ui/floating-action-menu';
+import { MobileNav } from '@/components/layout/mobile-nav';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -123,10 +124,11 @@ export default function RootLayout({
               Skip to main content
             </a>
             <Navbar />
-            <main id="main-content" tabIndex={-1} className="flex-grow outline-none focus:ring-0">
+            <main id="main-content" tabIndex={-1} className="flex-grow outline-none focus:ring-0 mb-16 md:mb-0">
               {children}
             </main>
             <Footer />
+            <MobileNav />
             <Toaster />
             <FloatingActionMenu />
           </CartProvider>

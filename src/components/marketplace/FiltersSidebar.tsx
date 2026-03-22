@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import { Cpu, Activity, BatteryCharging, Radio, Settings, CircuitBoard } from 'lucide-react';
 
 type Filters = {
   category?: string;
@@ -90,153 +91,161 @@ export default function FiltersSidebar({
         <div className="mt-2">
           <button
             onClick={() => toggle('micro')}
-            className="w-full text-left py-2 px-2 rounded-md hover:bg-muted/10"
+            className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
             aria-expanded={open.micro}
           >
-            Microcontrollers & Development Boards
+            <span className="flex items-center gap-3 font-medium"><Cpu className="w-5 h-5 text-primary" /> Microcontrollers</span>
+            <span className="text-muted-foreground text-xs">{open.micro ? '▼' : '▶'}</span>
           </button>
+          
           {open.micro && (
-            <ul className="pl-4 mt-2 text-sm space-y-2 text-muted-foreground" role="menu" aria-label="Microcontroller options">
+            <ul className="pl-4 mt-2 text-sm space-y-1 text-muted-foreground" role="menu" aria-label="Microcontroller options">
               <li>
-                <button onClick={() => pick('microcontrollers', 'Arduino')} className={`w-full text-left py-3 px-5 rounded-md hover:bg-muted/20 ${selectedClass('microcontrollers', 'Arduino')}`}>Arduino</button>
+                <button onClick={() => pick('microcontrollers', 'Arduino')} className={`w-full text-left py-2 px-5 rounded-lg hover:bg-muted/20 ${selectedClass('microcontrollers', 'Arduino')}`}>Arduino</button>
               </li>
               <li>
-                <button onClick={() => pick('microcontrollers', 'ESP')} className={`w-full text-left py-3 px-5 rounded-md hover:bg-muted/20 ${selectedClass('microcontrollers', 'ESP')}`}>ESP</button>
+                <button onClick={() => pick('microcontrollers', 'ESP')} className={`w-full text-left py-2 px-5 rounded-lg hover:bg-muted/20 ${selectedClass('microcontrollers', 'ESP')}`}>ESP</button>
               </li>
               <li>
-                <button onClick={() => pick('microcontrollers', 'Raspberry Pi')} className={`w-full text-left py-3 px-5 rounded-md hover:bg-muted/20 ${selectedClass('microcontrollers', 'Raspberry Pi')}`}>Raspberry Pi</button>
+                <button onClick={() => pick('microcontrollers', 'Raspberry Pi')} className={`w-full text-left py-2 px-5 rounded-lg hover:bg-muted/20 ${selectedClass('microcontrollers', 'Raspberry Pi')}`}>Raspberry Pi</button>
               </li>
             </ul>
           )}
         </div>
 
         {/* Sensors dropdown */}
-        <div className="mt-2">
+        <div className="mt-3">
           <button
             onClick={() => toggle('sensors')}
-            className="w-full text-left py-2 px-2 rounded-md hover:bg-muted/10"
+            className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
             aria-expanded={open.sensors}
           >
-            Sensors & Actuators
+            <span className="flex items-center gap-3 font-medium"><Activity className="w-5 h-5 text-green-500" /> Sensors</span>
+            <span className="text-muted-foreground text-xs">{open.sensors ? '▼' : '▶'}</span>
           </button>
+          
           {open.sensors && (
-            <ul className="pl-4 mt-2 text-sm space-y-2 text-muted-foreground" role="menu" aria-label="Sensor options">
+            <ul className="pl-4 mt-2 text-sm space-y-1 text-muted-foreground" role="menu" aria-label="Sensor options">
               <li>
-                <button onClick={() => pick('sensors', 'Motor & Displays')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('sensors', 'Motor & Displays')}`}>Motor & Displays</button>
+                <button onClick={() => pick('sensors', 'Motor & Displays')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('sensors', 'Motor & Displays')}`}>Motor & Displays</button>
               </li>
               <li>
-                <button onClick={() => pick('sensors', 'Motion Sensors')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('sensors', 'Motion Sensors')}`}>Motion Sensors</button>
+                <button onClick={() => pick('sensors', 'Motion Sensors')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('sensors', 'Motion Sensors')}`}>Motion Sensors</button>
               </li>
               <li>
-                <button onClick={() => pick('sensors', 'Environmental Sensors')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('sensors', 'Environmental Sensors')}`}>Environmental Sensors</button>
+                <button onClick={() => pick('sensors', 'Environmental Sensors')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('sensors', 'Environmental Sensors')}`}>Environmental Sensors</button>
               </li>
             </ul>
           )}
         </div>
 
         {/* Power Management dropdown */}
-        <div className="mt-2">
+        <div className="mt-3">
           <button
             onClick={() => toggle('power')}
-            className="w-full text-left py-2 px-2 rounded-md hover:bg-muted/10"
+            className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
             aria-expanded={open.power}
           >
-            Power Management
+            <span className="flex items-center gap-3 font-medium"><BatteryCharging className="w-5 h-5 text-yellow-500" /> Power</span>
+            <span className="text-muted-foreground text-xs">{open.power ? '▼' : '▶'}</span>
           </button>
           {open.power && (
-            <ul className="pl-4 mt-2 text-sm space-y-2 text-muted-foreground" role="menu" aria-label="Power options">
+            <ul className="pl-4 mt-2 text-sm space-y-1 text-muted-foreground" role="menu" aria-label="Power options">
               <li>
-                <button onClick={() => pick('power', 'Batteries & Chargers')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('power', 'Batteries & Chargers')}`}>Batteries & Chargers</button>
+                <button onClick={() => pick('power', 'Batteries & Chargers')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('power', 'Batteries & Chargers')}`}>Batteries & Chargers</button>
               </li>
               <li>
-                <button onClick={() => pick('power', 'Voltage Regulators')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('power', 'Voltage Regulators')}`}>Voltage Regulators</button>
+                <button onClick={() => pick('power', 'Voltage Regulators')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('power', 'Voltage Regulators')}`}>Voltage Regulators</button>
               </li>
               <li>
-                <button onClick={() => pick('power', 'DC-DC Converters')} className={`w-full text-left py-4 px-4 rounded-md hover:bg-muted/20 ${selectedClass('power', 'DC-DC Converters')}`}>DC - DC Converters</button>
+                <button onClick={() => pick('power', 'DC-DC Converters')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('power', 'DC-DC Converters')}`}>DC - DC Converters</button>
               </li>
             </ul>
           )}
         </div>
 
         {/* Communication dropdown */}
-        <div className="mt-2">
+        <div className="mt-3">
           <button
             onClick={() => toggle('comm')}
-            className="w-full text-left py-2 px-2 rounded-md hover:bg-muted/10"
+            className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
             aria-expanded={open.comm}
           >
-            Communication Modules
+            <span className="flex items-center gap-3 font-medium"><Radio className="w-5 h-5 text-indigo-500" /> Web & Radio</span>
+            <span className="text-muted-foreground text-xs">{open.comm ? '▼' : '▶'}</span>
           </button>
           {open.comm && (
-            <ul className="pl-4 mt-2 text-sm space-y-2 text-muted-foreground" role="menu" aria-label="Communication options">
+            <ul className="pl-4 mt-2 text-sm space-y-1 text-muted-foreground" role="menu" aria-label="Communication options">
               <li>
-                <button onClick={() => pick('communication', 'RF')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('communication', 'RF')}`}>RF (Radio Frequency)</button>
+                <button onClick={() => pick('communication', 'RF')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('communication', 'RF')}`}>RF (Radio Frequency)</button>
               </li>
               <li>
-                <button onClick={() => pick('communication', 'GSM')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('communication', 'GSM')}`}>GSM</button>
+                <button onClick={() => pick('communication', 'GSM')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('communication', 'GSM')}`}>GSM</button>
               </li>
               <li>
-                <button onClick={() => pick('communication', 'Bluetooth')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('communication', 'Bluetooth')}`}>Bluetooth</button>
+                <button onClick={() => pick('communication', 'Bluetooth')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('communication', 'Bluetooth')}`}>Bluetooth</button>
               </li>
               <li>
-                <button onClick={() => pick('communication', 'WiFi')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('communication', 'WiFi')}`}>WiFi</button>
+                <button onClick={() => pick('communication', 'WiFi')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('communication', 'WiFi')}`}>WiFi</button>
               </li>
             </ul>
           )}
         </div>
 
         {/* Components dropdown */}
-        <div className="mt-2">
+        <div className="mt-3">
           <button
             onClick={() => toggle('components')}
-            className="w-full text-left py-2 px-2 rounded-md hover:bg-muted/10"
+            className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
             aria-expanded={open.components}
           >
-            Components
+            <span className="flex items-center gap-3 font-medium"><Settings className="w-5 h-5 text-orange-500" /> Misc Components</span>
+            <span className="text-muted-foreground text-xs">{open.components ? '▼' : '▶'}</span>
           </button>
           {open.components && (
-            <ul className="pl-4 mt-2 text-sm space-y-2 text-muted-foreground" role="menu" aria-label="Component options">
+            <ul className="pl-4 mt-2 text-sm space-y-1 text-muted-foreground" role="menu" aria-label="Component options">
               <li>
-                <button onClick={() => pick('components', 'Resistors')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('components', 'Resistors')}`}>Resistors</button>
+                <button onClick={() => pick('components', 'Resistors')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('components', 'Resistors')}`}>Resistors</button>
               </li>
               <li>
-                <button onClick={() => pick('components', 'Capacitors')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('components', 'Capacitors')}`}>Capacitors</button>
+                <button onClick={() => pick('components', 'Capacitors')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('components', 'Capacitors')}`}>Capacitors</button>
               </li>
               <li>
-                <button onClick={() => pick('components', 'Transistors')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('components', 'Transistors')}`}>Transistors</button>
+                <button onClick={() => pick('components', 'Transistors')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('components', 'Transistors')}`}>Transistors</button>
               </li>
               <li>
-                <button onClick={() => pick('components', 'Diodes')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('components', 'Diodes')}`}>Diodes</button>
+                <button onClick={() => pick('components', 'Diodes')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('components', 'Diodes')}`}>Diodes</button>
               </li>
               <li>
-                <button onClick={() => pick('components', 'LEDs')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('components', 'LEDs')}`}>LEDs</button>
+                <button onClick={() => pick('components', 'LEDs')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('components', 'LEDs')}`}>LEDs</button>
               </li>
             </ul>
           )}
         </div>
 
         {/* Prototyping & Accessories dropdown */}
-        <div className="mt-2">
+        <div className="mt-3">
           <button
             onClick={() => toggle('proto')}
-            className="w-full text-left py-2 px-2 rounded-md hover:bg-muted/10"
+            className="w-full flex justify-between items-center py-2 px-3 rounded-xl hover:bg-muted/30 transition-colors"
             aria-expanded={open.proto}
           >
-            Prototyping & Accessories
+            <span className="flex items-center gap-3 font-medium"><CircuitBoard className="w-5 h-5 text-pink-500" /> Prototyping</span>
+            <span className="text-muted-foreground text-xs">{open.proto ? '▼' : '▶'}</span>
           </button>
           {open.proto && (
-            <ul className="pl-4 mt-2 text-sm space-y-2 text-muted-foreground" role="menu" aria-label="Prototyping options">
+            <ul className="pl-4 mt-2 text-sm space-y-1 text-muted-foreground" role="menu" aria-label="Prototyping options">
               <li>
-                <button onClick={() => pick('prototyping', 'Breadboards')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('prototyping', 'Breadboards')}`}>Breadboards</button>
+                <button onClick={() => pick('prototyping', 'Breadboards')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('prototyping', 'Breadboards')}`}>Breadboards</button>
               </li>
               <li>
-                <button onClick={() => pick('prototyping', 'Jumper Wires')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('prototyping', 'Jumper Wires')}`}>Jumper Wires</button>
+                <button onClick={() => pick('prototyping', 'Jumper Wires')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('prototyping', 'Jumper Wires')}`}>Jumper Wires</button>
               </li>
               <li>
-                <button onClick={() => pick('prototyping', 'Zero PCB')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('prototyping', 'Zero PCB')}`}>Zero PCB / Perfboard</button>
+                <button onClick={() => pick('prototyping', 'Zero PCB')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('prototyping', 'Zero PCB')}`}>Zero PCB / Perfboard</button>
               </li>
               <li>
-                <button onClick={() => pick('prototyping', 'Soldering')} className={`w-full text-left py-2 px-4 rounded-md hover:bg-muted/20 ${selectedClass('prototyping', 'Soldering')}`}>Soldering Supplies</button>
+                <button onClick={() => pick('prototyping', 'Soldering')} className={`w-full text-left py-2 px-4 rounded-lg hover:bg-muted/20 ${selectedClass('prototyping', 'Soldering')}`}>Soldering Supplies</button>
               </li>
             </ul>
           )}

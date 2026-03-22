@@ -21,6 +21,22 @@ export function middleware(request: NextRequest) {
   headers.set('Referrer-Policy', 'origin-when-cross-origin');
   headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 
+  // Strict Content Security Policy
+  const cspHeader = `
+    default-src 'self';
+    script-src 'self' 'unsafe-eval' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' blob: data: https://firebasestorage.googleapis.com;
+    font-src 'self';
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+    connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com;
+  `.replace(/\s{2,}/g, ' ').trim()
+
+  headers.set('Content-Security-Policy', cspHeader);
+
   // Add CDN caching headers for static assets
   if (
     request.nextUrl.pathname.match(/\.(jpg|jpeg|gif|png|ico|css|js|svg)$/i) ||

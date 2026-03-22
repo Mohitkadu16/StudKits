@@ -6,8 +6,8 @@ import { useCart } from '@/context/cart-context';
 import FiltersSidebar from '@/components/marketplace/FiltersSidebar';
 import ProductCard from '@/components/marketplace/ProductCard';
 import CartDrawer from '@/components/marketplace/CartDrawer';
-import { sampleProducts } from '@/lib/products';
-import { Loader2 } from 'lucide-react';
+import { sampleProducts, type Product } from '@/lib/products';
+import { Loader2, History } from 'lucide-react';
 
 type Filters = { category?: string; subcategory?: string; priceRange?: [number, number]; hasVariants?: boolean };
 
@@ -18,6 +18,7 @@ export default function MarketplacePage() {
   const [filters, setFilters] = useState<Filters>({});
   const [sort, setSort] = useState<string>('relevant');
   const [q, setQ] = useState('');
+  const [recentProducts, setRecentProducts] = useState<Product[]>([]);
 
   // Redirect to login if user is not authenticated
   useEffect(() => {
@@ -25,6 +26,23 @@ export default function MarketplacePage() {
       router.push('/login');
     }
   }, [user, isLoading, router]);
+
+  // Handle recently viewed synchronization
+  useEffect(() => {
+    const updateRecent = () => {
+      try {
+        const raw = localStorage.getItem('recentlyViewed');
+        if (raw) {
+          const ids: string[] = JSON.parse(raw);
+          const mapped = ids.map(id => sampleProducts.find(p => p.id === id)).filter(Boolean) as Product[];
+          setRecentProducts(mapped);
+        }
+      } catch (e) {}
+    };
+    updateRecent();
+    window.addEventListener('recentlyViewedEvent', updateRecent);
+    return () => window.removeEventListener('recentlyViewedEvent', updateRecent);
+  }, []);
 
   // Show loading state while checking authentication
   if (isLoading) {
@@ -177,6 +195,19 @@ export default function MarketplacePage() {
           </div>
         </div>
       </div>
+
+      {recentProducts.length > 0 && (
+        <div className="mt-16 pt-8 border-t border-border">
+          <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+            <History className="w-5 h-5 text-primary" /> Recently Viewed
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {recentProducts.map(p => (
+              <ProductCard key={`recent-${p.id}`} product={p} />
+            ))}
+          </div>
+        </div>
+      )}
 
       <CartDrawer />
     </div>

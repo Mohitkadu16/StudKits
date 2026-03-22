@@ -8,6 +8,7 @@ import type { ProjectRequest } from '@/lib/requests';
 import { revalidatePath } from 'next/cache';
 import { sendEmail as sendEmailFlow } from '@/ai/flows/send-email-flow';
 import { logAdminAction } from '@/lib/audit-logger';
+import { z } from 'zod';
 
 const MOCK_PROJECT_ID = 'SK-1024';
 const MOCK_USER_ID = 'user-abc-123';
@@ -70,14 +71,28 @@ export async function seedInitialProject(idToken: string): Promise<{ success: bo
   }
 }
 
+// Zod schema for partial project updates
+const updateProjectSchema = z.object({
+  currentStage: z.enum(['components_collected', 'circuit_design', 'programming', 'testing', 'shipping', 'completed']).optional(),
+  stages: z.record(z.object({
+    status: z.enum(['pending', 'in_progress', 'completed']),
+    timestamp: z.string().optional(),
+    notes: z.string().max(1000).optional(),
+    imageUrl: z.string().url().optional(),
+  })).optional()
+});
+
 export async function updateProjectInFirestore(idToken: string, projectId: string, dataToUpdate: Partial<ProjectTrackingInfo>): Promise<{ success: boolean, message: string }> {
   try {
     const decodedAdmin = await verifyAdmin(idToken);
     if (!decodedAdmin) throw new Error('Unauthorized');
+    
+    // Strict schema validation to prevent NoSQL injection via arbitrary payloads
+    const parsedData = updateProjectSchema.parse(dataToUpdate);
 
     const db = getFirestore(admin);
     const projectRef = db.collection('projects').doc(projectId);
-    await projectRef.update(dataToUpdate);
+    await projectRef.update(parsedData);
     
     await logAdminAction('PROJECT_UPDATED', decodedAdmin.email || 'unknown', `Updated project data (Stage: ${dataToUpdate.currentStage || 'N/A'})`, projectId);
     

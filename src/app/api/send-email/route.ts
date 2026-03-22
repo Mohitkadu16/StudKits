@@ -1,9 +1,30 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { checkRateLimit } from '@/lib/rate-limit';
+import { z } from 'zod';
+
+const emailSchema = z.object({
+  to: z.string().email(),
+  subject: z.string().min(1).max(200),
+  text: z.string().min(1).max(5000),
+  html: z.string().optional(),
+});
 
 export async function POST(request: Request) {
   try {
-    const { to, subject, text, html } = await request.json();
+    const ip = request.headers.get('x-forwarded-for') || '127.0.0.1';
+    if (!checkRateLimit(ip)) {
+      return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
+    const body = await request.json();
+    const result = emailSchema.safeParse(body);
+    
+    if (!result.success) {
+      return NextResponse.json({ error: 'Invalid email payload', details: result.error.errors }, { status: 400 });
+    }
+
+    const { to, subject, text, html } = result.data;
 
     // Create a test account or use your SMTP settings
     const transporter = nodemailer.createTransport({
