@@ -13,8 +13,8 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { auth, createUserWithEmailAndPassword, db } from '@/lib/firebase';
-import { updateProfile } from 'firebase/auth';
+import { auth, createUserWithEmailAndPassword, db, signOut } from '@/lib/firebase';
+import { updateProfile, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { Loader2 } from 'lucide-react';
 import { Eye, EyeOff } from 'lucide-react';
@@ -25,6 +25,10 @@ const signupSchema = z.object({
   mobile: z.string().min(10, { message: 'Mobile number must be at least 10 digits' })
     .regex(/^[0-9]+$/, { message: 'Must be a valid mobile number' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
 });
 
 type SignupFormValues = z.infer<typeof signupSchema>;
@@ -41,6 +45,7 @@ export default function SignupPage() {
       email: '',
       mobile: '',
       password: '',
+      confirmPassword: '',
     },
   });
 
@@ -62,6 +67,18 @@ export default function SignupPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
       const user = userCredential.user;
 
+      // Send Email Verification via custom Nodemailer backend
+      const res = await fetch('/api/auth/send-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: data.email })
+      });
+      
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Failed to send custom verification email.");
+      }
+
       // Store additional user data in Firestore
       await setDoc(doc(db, 'users', user.uid), {
         email: data.email,
@@ -77,10 +94,10 @@ export default function SignupPage() {
 
       toast({
         title: 'Account Created',
-        description: "Welcome! You have been successfully signed up.",
+        description: "Welcome! A verification email has been sent. Please check your inbox and verify before continuing.",
       });
       
-      // Check if there's a redirect URL stored
+      // Redirect to profile (AuthProvider will intercept and block until verified)
       const redirectUrl = sessionStorage.getItem('redirectAfterLogin');
       if (redirectUrl) {
         sessionStorage.removeItem('redirectAfterLogin');
@@ -90,9 +107,15 @@ export default function SignupPage() {
       }
     } catch (error: any) {
       console.error('Signup error:', error);
+      let errorMessage = error.message || 'An unexpected error occurred. Please try again.';
+      
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'This email is already registered. Please log in instead.';
+      }
+
       toast({
         title: 'Signup Failed',
-        description: error.message || 'An unexpected error occurred. Please try again.',
+        description: errorMessage,
         variant: 'destructive',
       });
     } finally {
@@ -194,6 +217,30 @@ export default function SignupPage() {
                       </div>
                     </FormControl>
                     <span id="password-description" className="sr-only">Choose a secure password that is at least 6 characters long.</span>
+                    <FormMessage role="alert" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password <span className="text-destructive" aria-hidden="true">*</span></FormLabel>
+                    <FormControl>
+                      <div className="relative w-full">
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          {...field}
+                          disabled={isLoading}
+                          className="pr-10"
+                          aria-required="true"
+                          aria-describedby="confirm-password-description"
+                          aria-invalid={!!form.formState.errors.confirmPassword}
+                        />
+                      </div>
+                    </FormControl>
+                    <span id="confirm-password-description" className="sr-only">Re-enter your password to confirm it matches.</span>
                     <FormMessage role="alert" />
                   </FormItem>
                 )}

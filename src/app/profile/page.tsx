@@ -12,13 +12,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Loader2, User, Edit, Save, Upload, School, CreditCard } from 'lucide-react';
 import { updateProfile } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage, db, createDocument, readDocument } from '@/lib/firebase';
+import { auth, storage, db, createDocument, readDocument } from '@/lib/firebase';
 
 
 // Wrapper for updating user profile
-async function updateUserProfileClient(user: import('firebase/auth').User, profileData: { displayName?: string; photoURL?: string }) {
-  if (!user) throw new Error("User not authenticated");
-  await updateProfile(user, profileData);
+async function updateUserProfileClient(profileData: { displayName?: string; photoURL?: string }) {
+  const currentUser = auth.currentUser;
+  if (!currentUser) throw new Error("User not authenticated");
+  await updateProfile(currentUser, profileData);
 };
 
 // Wrapper for uploading profile photo
@@ -106,7 +107,7 @@ export default function ProfilePage() {
         updatedPhotoURL = await uploadProfilePhotoClient(user.uid, newPhoto);
       }
 
-      await updateUserProfileClient(user, {
+      await updateUserProfileClient({
         displayName: displayName,
         photoURL: updatedPhotoURL || undefined,
       });

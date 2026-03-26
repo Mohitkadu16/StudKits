@@ -5,6 +5,7 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from '
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { auth, getUserProfile } from '@/lib/firebase';
 import { Loader2 } from 'lucide-react';
+import { VerifyEmailBlocker } from '@/components/auth/verify-email-blocker';
 
 interface AuthContextType {
   user: (User & { college?: string; isAdmin?: boolean }) | null;
@@ -14,7 +15,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({ user: null, isLoading: true });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<(User & { college?: string; isAdmin?: boolean }) | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -67,6 +68,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         <Loader2 className="h-16 w-16 animate-spin text-primary" />
       </div>
     );
+  }
+
+  // Intercept unverified users (ignoring admins to prevent lockout issues)
+  if (user && !user.emailVerified && !user.isAdmin) {
+    return <VerifyEmailBlocker user={user as User} />;
   }
 
   return <AuthContext.Provider value={{ user, isLoading }}>{children}</AuthContext.Provider>;
