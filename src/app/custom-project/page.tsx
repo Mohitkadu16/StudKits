@@ -18,7 +18,10 @@ import { createProjectRequest } from '@/lib/project-store';
 import { z } from 'zod';
 import { contactSchema } from '@/components/custom-project/contact-section';
 import { projectDetailsSchema } from '@/components/custom-project/project-details-section';
-
+import { PageSchema } from '@/components/page-schema';
+import { customProjectFaqSchema, howToCustomProjectSchema } from '@/lib/schema';
+import { FaqSection } from '@/components/ui/faq-section';
+import { HowItWorksSection } from '@/components/ui/how-it-works-section';
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgvlyklz";
 
 const ContactSection = dynamic(
@@ -229,7 +232,7 @@ StudKits Team`,
             Project Details
           </CardTitle>
           <CardDescription>
-            Fill out the form below to request a custom project kit. We'll review your requirements and get back to you.
+            Fill out the form below to request a custom project. We'll review your requirements and get back to you.
           </CardDescription>
         </CardHeader>
         <FormErrorBoundary>
@@ -256,6 +259,31 @@ StudKits Team`,
           </Form>
         </FormErrorBoundary>
       </Card>
+
+      {/* AEO/GEO Structured Data */}
+      <PageSchema faqSchema={customProjectFaqSchema} howToSchema={howToCustomProjectSchema} />
+
+      {/* How It Works Section */}
+      <HowItWorksSection
+        title="How to Request a Custom Project"
+        description="The step-by-step process for requesting and receiving a custom-built engineering project."
+        steps={[
+          { title: 'Submit Requirements', description: 'Fill out our detailed custom project request form with your specific problem statement, desired features, and deadlines.' },
+          { title: 'Consultation & Quote', description: 'Our engineering team reviews your request, discusses technical feasibility, and provides a timeline and cost estimate.' },
+          { title: 'Development Phase', description: 'Upon approval, our experts design the PCB, write the microcontroller code, and assemble the hardware.' },
+          { title: 'Testing & Delivery', description: 'The project undergoes rigorous functionality testing before being securely shipped to you with comprehensive documentation.' },
+        ]}
+      />
+
+      {/* FAQ Section */}
+      <FaqSection
+        title="Custom Project FAQs"
+        description="Answers to common questions about our custom engineering projects."
+        faqs={[
+          { question: 'How long does a custom project take to build?', answer: 'Depending on the complexity, custom projects typically take between 1 to 3 weeks. Simple embedded systems take less time, while complex IoT and robotics solutions require more testing.' },
+          { question: 'What information do I need to provide for a custom request?', answer: 'Provide a detailed problem statement, required hardware components, desired functionalities, and any specific deadlines. The more detailed your request, the faster we can deliver an accurate solution.' },
+        ]}
+      />
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default function AboutUsPage() {
             About StudKits
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Your partner in innovative project kits and learning.
+            Your partner in innovative working projects and learning.
           </p>
         </div>
       </section>
@@ -45,7 +45,7 @@ export default function AboutUsPage() {
           
           <CardContent className="relative">
             <p className="text-lg text-foreground/90 leading-relaxed">
-              At StudKits, we are passionate about <span className="font-semibold text-primary">empowering students, hobbyists, and professionals</span> by providing high-quality, ready-to-assemble project kits and expert services. We believe that <span className="font-semibold text-primary">hands-on experience</span> is key to mastering technical skills, and our goal is to make innovative projects and professional presentations accessible to everyone.
+              At StudKits, we are passionate about <span className="font-semibold text-primary">empowering students, hobbyists, and professionals</span> by providing high-quality, full-fledged working projects and expert services. Based in Mumbai, we believe that <span className="font-semibold text-primary">hands-on experience</span> is key to mastering technical skills, and our goal is to make innovative projects and professional presentations accessible to everyone across India.
             </p>
           </CardContent>
         </Card>
@@ -75,7 +75,7 @@ export default function AboutUsPage() {
             
             <CardContent className="relative space-y-4">
               <p className="text-base text-foreground/80 leading-relaxed">
-                We specialize in a wide range of project kits and services:
+                We specialize in a wide range of working projects and services:
               </p>
               
               <div className="space-y-2.5">
@@ -163,7 +163,7 @@ export default function AboutUsPage() {
               { year: '2025', title: 'Founded', description: 'StudKits was born from a passion to make technical education accessible', icon: Rocket },
               { year: '2025', title: '10+ Projects', description: 'Completed & Delivered 10+ successful projects', icon: Award },
               { year: '2025', title: '5+ Colleges', description: 'Collaborated with students from over 5+ colleges across India', icon: TrendingUp },
-              { year: '2026', title: 'Marketplace', description: 'Launching marketplace for project kits', icon: Lightbulb },
+              { year: '2026', title: 'Marketplace', description: 'Launching marketplace for working projects', icon: Lightbulb },
             ].map((milestone, index) => (
               <motion.div
                 key={index}

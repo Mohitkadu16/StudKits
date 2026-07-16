@@ -2,11 +2,11 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Our Projects - StudKits',
-  description: 'Browse our collection of IoT, robotics, and electronics project kits. Find the perfect tech project for your needs, from simple microcontroller setups to advanced automation solutions.',
-  keywords: ['project kits', 'IoT projects', 'robotics kits', 'electronics projects', 'student projects', 'engineering projects'],
+  description: 'Browse our collection of IoT, robotics, and electronics working projects. Find the perfect tech project for your needs, from simple microcontroller setups to advanced automation solutions.',
+  keywords: ['working projects', 'IoT projects', 'robotics projects', 'electronics projects', 'student projects', 'engineering projects'],
   openGraph: {
-    title: 'Browse Our Tech Project Kits - StudKits',
-    description: 'Explore our range of IoT, robotics, and electronics project kits. From basic microcontroller setups to advanced automation solutions.',
+    title: 'Browse Our Tech Projects - StudKits',
+    description: 'Explore our range of IoT, robotics, and electronics working projects. From basic microcontroller setups to advanced automation solutions.',
     url: 'https://studkits.shop/projects',
     type: 'website',
     images: [
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Browse Our Tech Project Kits - StudKits',
-    description: 'Explore our range of IoT, robotics, and electronics project kits. Perfect for students and tech enthusiasts.',
+    title: 'Browse Our Tech Projects - StudKits',
+    description: 'Explore our range of IoT, robotics, and electronics working projects. Perfect for students and tech enthusiasts.',
     images: ['/images/projects-overview.png'],
   },
   alternates: {

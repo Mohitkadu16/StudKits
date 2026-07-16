@@ -71,7 +71,7 @@ export const customerReviews = [
     name: 'Aditya Patel',
     college: 'PICT Pune',
     rating: 4,
-    comment: 'Great project kit with detailed instructions. The only minor issue was shipping time, but the quality made up for it.',
+    comment: 'Great working project with detailed instructions. The only minor issue was shipping time, but the quality made up for it.',
     date: '2025-09-05',
     projectTitle: 'Gesture Controlled Robot',
   },

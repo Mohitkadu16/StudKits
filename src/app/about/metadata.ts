@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'About StudKits - Our Mission & Services',
-  description: 'Learn about StudKits - your trusted partner for tech project kits, custom PCB design, and engineering solutions. Expert support for students and professionals.',
-  keywords: ['about studkits', 'tech education', 'project kits', 'engineering solutions', 'PCB design', 'student support'],
+  description: 'Learn about StudKits - your trusted partner for tech working projects, custom PCB design, and engineering solutions. Expert support for students and professionals.',
+  keywords: ['about studkits', 'tech education', 'working projects', 'engineering solutions', 'PCB design', 'student support'],
   openGraph: {
     title: 'About StudKits - Empowering Tech Innovation',
     description: 'Discover how StudKits helps students and professionals bring their tech projects to life with quality kits and expert support.',

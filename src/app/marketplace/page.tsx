@@ -8,7 +8,9 @@ import ProductCard from '@/components/marketplace/ProductCard';
 import CartDrawer from '@/components/marketplace/CartDrawer';
 import { sampleProducts, type Product } from '@/lib/products';
 import { Loader2, History } from 'lucide-react';
-
+import { PageSchema } from '@/components/page-schema';
+import { marketplaceFaqSchema } from '@/lib/schema';
+import { FaqSection } from '@/components/ui/faq-section';
 type Filters = { category?: string; subcategory?: string; priceRange?: [number, number]; hasVariants?: boolean };
 
 export default function MarketplacePage() {
@@ -212,6 +214,21 @@ export default function MarketplacePage() {
           </div>
         </div>
       )}
+
+      {/* AEO/GEO Structured Data */}
+      <PageSchema faqSchema={marketplaceFaqSchema} />
+
+      {/* FAQ Section */}
+      <div className="mt-16">
+        <FaqSection
+          title="Marketplace FAQs"
+          description="Answers to common questions about purchasing our pre-built components and projects."
+          faqs={[
+            { question: 'Are the marketplace projects ready to use immediately?', answer: 'Yes, all marketplace projects are pre-built, tested, and guaranteed to work upon delivery. They serve as excellent practical learning tools and foundation systems for engineering students.' },
+            { question: 'Can I request modifications to a marketplace project?', answer: 'Minor modifications can sometimes be accommodated before shipping. If you need significant changes, we recommend requesting a custom project instead so we can build exactly what you need.' },
+          ]}
+        />
+      </div>
 
       <CartDrawer />
     </div>

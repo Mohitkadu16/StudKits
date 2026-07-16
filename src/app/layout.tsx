@@ -32,11 +32,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "StudKits - Tech Project Kits & Engineering Solutions",
+    default: "StudKits - Tech Projects & Engineering Solutions",
     template: "%s | StudKits"
   },
-  description: "Expert provider of IoT, Robotics, and Electronics project kits. Custom PCB design and microcontroller solutions for students and tech enthusiasts.",
-  keywords: ["project kits", "robotics", "IoT", "electronics", "PCB design", "microcontroller", "Arduino", "ESP32", "student projects", "tech education"],
+  description: "Expert provider of IoT, Robotics, and Electronics full-fledged working projects in Mumbai. Custom PCB design and microcontroller solutions for engineering students and tech enthusiasts.",
+  keywords: ["working projects", "engineering solutions", "robotics", "IoT", "electronics", "PCB design", "microcontroller", "Arduino", "ESP32", "student projects", "tech education", "projects in Mumbai", "electronics projects provider in Mumbai", "Maharashtra"],
   authors: [{ name: "Mohit Kadu, StudKits Team" }],
   creator: "Mohit Kadu",
   publisher: "StudKits",
@@ -49,8 +49,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.studkits.shop",
     siteName: "StudKits",
-    title: "StudKits - Tech Project Kits & Engineering Solutions",
-    description: "Expert provider of IoT, Robotics, and Electronics project kits. Custom PCB design and microcontroller solutions for students and tech enthusiasts.",
+    title: "StudKits - Tech Projects & Engineering Solutions",
+    description: "Expert provider of IoT, Robotics, and Electronics working projects in Mumbai. Custom PCB design and microcontroller solutions for students and tech enthusiasts.",
     images: [
       {
         url: "/images/android-chrome-512x512.png",
@@ -62,8 +62,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "StudKits - Tech Project Kits & Engineering Solutions",
-    description: "Expert provider of IoT, Robotics, and Electronics project kits. Custom solutions for students and tech enthusiasts.",
+    title: "StudKits - Tech Projects & Engineering Solutions",
+    description: "Expert provider of IoT, Robotics, and Electronics projects in Mumbai. Custom solutions for students and tech enthusiasts.",
     images: ["/images/android-chrome-512x512.png"],
   },
   icons: {

@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   }
 
   return {
-    title: `${project.title} - StudKits Project Kit`,
+    title: `${project.title} - StudKits Working Project`,
     description: project.longDescription || project.description,
     openGraph: {
       title: project.title,

@@ -21,7 +21,10 @@ import {
 import { StatsCounter } from '@/components/ui/stats-counter';
 import { TrustBadges } from '@/components/ui/trust-badges';
 import { LogoMarquee } from '@/components/ui/logo-marquee';
-
+import { PageSchema } from '@/components/page-schema';
+import { homeFaqSchema, howToOrderSchema } from '@/lib/schema';
+import { FaqSection } from '@/components/ui/faq-section';
+import { HowItWorksSection } from '@/components/ui/how-it-works-section';
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<'Micro Project' | 'Capstone Project' | null>(null);
@@ -116,7 +119,7 @@ export default function HomePage() {
                 Turn Your College Projects into Real Innovations <span aria-hidden="true">🚀</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8">
-                We provide high-quality, ready-to-assemble project kits and expert services to empower students, hobbyists, and professionals. From IoT and Robotics to custom PCB design, start building today!
+                We provide high-quality, full-fledged working projects and expert services to empower students, hobbyists, and professionals. From IoT and Robotics to custom PCB design, start building today!
               </p>
               <div className="flex flex-wrap justify-center lg:justify-start gap-4">
                 <Button 
@@ -280,8 +283,8 @@ export default function HomePage() {
       >
         <MaxWidthWrapper className="space-y-8">
           <div className="text-center">
-            <h2 id="projects-heading" className="text-3xl font-bold text-primary">Explore Our Project Kits</h2>
-            <p className="text-lg text-muted-foreground">Find the perfect kit to kickstart your next build.</p>
+            <h2 id="projects-heading" className="text-3xl font-bold text-primary">Explore Our Working Projects</h2>
+            <p className="text-lg text-muted-foreground">Find the perfect project to kickstart your next build.</p>
           </div>
 
           {/* Container for Search and Filters */} 
@@ -329,13 +332,38 @@ export default function HomePage() {
 
 
 
+      {/* AEO/GEO Structured Data */}
+      <PageSchema faqSchema={homeFaqSchema} howToSchema={howToOrderSchema} />
+
+      {/* How It Works Section */}
+      <HowItWorksSection
+        title="How to Order Your Project"
+        description="A simple step-by-step guide to browsing and ordering a full-fledged working project."
+        steps={[
+          { title: 'Browse Projects', description: 'Explore our catalog of IoT, robotics, and embedded systems to find the project that matches your academic or professional needs.' },
+          { title: 'Review Specifications', description: 'Read the detailed hardware components, capabilities, and technical documentation provided on the specific project page.' },
+          { title: 'Place Order', description: 'Add the project to your cart and complete the secure checkout process to initiate your order.' },
+          { title: 'Receive and Learn', description: 'Receive your fully assembled, tested working project along with presentation materials, and start learning immediately.' },
+        ]}
+      />
+
+      {/* FAQ Section */}
+      <FaqSection
+        title="Frequently Asked Questions"
+        faqs={[
+          { question: 'What types of working projects do you offer?', answer: 'We offer full-fledged working projects in IoT, robotics, automation, and embedded systems. Our projects are fully assembled, tested, and include comprehensive documentation for students and professionals.' },
+          { question: 'Do you provide custom project solutions?', answer: 'Yes, we specialize in custom project solutions tailored to your unique specifications. Share your project requirements with our engineering team, and we will build it from scratch.' },
+          { question: 'Is technical support included with the projects?', answer: 'Absolutely. We provide dedicated technical support and troubleshooting guidance to help you understand your working project completely. Our expert team is accessible via WhatsApp and email.' },
+        ]}
+      />
+
       {/* Caution/Disclaimer Section */}
       <div 
         className="max-w-3xl mx-auto mt-12 text-center text-sm text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-md p-3"
       role="alert"
       aria-label="Product disclaimer"
     >
-      <strong><span aria-hidden="true">⚠️</span> Caution:</strong> Project kits will not look exactly like the images shown. Actual products will be similar and functionally equivalent.
+      <strong><span aria-hidden="true">⚠️</span> Caution:</strong> Working projects will not look exactly like the images shown. Actual products will be similar and functionally equivalent.
     </div>
   </div>
   );
